@@ -1,7 +1,7 @@
 # ###########
 # SSH aliases
-alias cpid="ssh-copy-id"
-alias ssh="ssh -A"
+alias cpid="~/bin/ssh-copy-id"
+alias ssh="~/bin/ssh"
 
 # ###########
 # SVN aliases
