@@ -13,10 +13,24 @@ DEFAULT='\033[0m'
 # Current path
 CUR_PATH=$(pwd)
 
+if [[ "$(uname -s)" == "Darwin" ]]; then
+    OS='mac'
+elif [[ "$(uname -s)" == "Linux" ]]; then
+    if [[ "lsb_release -si" == "Debian" ]]; then
+        OS='debian'
+    elif [[ "lsb_release -si" == "Rhel" ]]; then
+        OS='redhat'
+    fi
+fi
+
 symlink_config()
 {
     CONFFILE=$1
     SYMLINKNAME=$2
+    if [ -f ${CUR_PATH}/config/$1.$OS ]; then
+        CONFFILE=$1.$OS
+    fi
+
     echo ${INFO}"Adding ${CONFFILE} configuration ..."${DEFAULT}
     if [ -L ~/${SYMLINKNAME} ]; then
         echo ${WARN}"Removing old symlinked config ~/${SYMLINKNAME}"${DEFAULT}

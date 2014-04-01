@@ -1,9 +1,23 @@
 
 " Start personnal conf
 
+" Use Vim settings, rather than Vi settings (much better!).
+" This must be first, because it changes other options as a side effect.
 set nocompatible
 
+" allow backspacing over everything in insert mode
 set backspace=indent,eol,start
+
+if has("vms")
+  set nobackup      " do not keep a backup file, use versions instead
+else
+  set backup        " keep a backup file
+  set backupdir=~/.vim/backup/
+endif
+set history=50      " keep 50 lines of command line history
+set ruler           " show the cursor position all the time
+set showcmd         " display incomplete commands
+set incsearch       " do incremental searching
 
 set guifont=fixed
 set shiftwidth=4
@@ -11,18 +25,9 @@ set expandtab
 set tabstop=4
 set autoindent
 set number
-set ruler 
+set ruler
 set showmode
 " set nowrap
-set backup
-set backupdir=~/.vim/backup/
 
 let Tlist_GainFocus_On_ToggleOpen=1
 
-" symfony shortcut
-map <Leader>sf :!php symfony 
-map <Leader>sfc :!php symfony cc<cr> 
-
-" eZ publish shortcut
-map <Leader>ezcc :!php bin/php/ezcache.php --clear-all<cr> 
-map <Leader>ezga :!php bin/php/ezpgenerateautoloads.php<cr> 
