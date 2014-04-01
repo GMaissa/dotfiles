@@ -1,7 +1,5 @@
 #!/bin/sh
 
-#aptitude install 'git zsh tmux vim'
-
 # Repository of the oh-my-zsh project
 OHMYZSHREPO=git@github.com:GMaissa/oh-my-zsh.git
 
@@ -11,6 +9,9 @@ OK='\033[0;32m'
 WARN='\033[0;33m'
 ERROR='\033[1;31m'
 DEFAULT='\033[0m'
+
+# Current path
+CUR_PATH=$(pwd)
 
 symlink_config()
 {
@@ -44,45 +45,53 @@ symlink_bin()
     echo ${OK}"Done.\n"${DEFAULT}
 }
 
+# We need Git, Zsh Tmux to be installed
+# (ex: aptitude install git zsh tmux vim)
 if ! type "zsh" > /dev/null ;then
     echo ${ERROR}"\nZSH needs to be installed\n"${DEFAULT}
     exit 1
-fi
-if ! type "tmux" > /dev/null ;then
+elif ! type "tmux" > /dev/null ;then
     echo ${ERROR}"\nTMUX needs to be installed\n"${DEFAULT}
     exit 1
-fi
-if ! type "vim" > /dev/null ;then
+elif ! type "vim" > /dev/null ;then
     echo ${ERROR}"\nVIM needs to be installed\n"${DEFAULT}
     exit 1
 fi
 
-CUR_PATH=$(pwd)
-
+# Cloning the oh-my-zsh project if not already done
 if [ ! -d ~/.oh-my-zsh ]; then
     echo ${INFO}"Cloning OH MY ZSH repo ..."${DEFAULT}
     git clone ${OHMYZSHREPO} ~/.oh-my-zsh
     echo ${OK}"Done.\n"${DEFAULT}
 fi
 
+# Apply configuration for zsh
 symlink_config "zsh" ".zshrc"
 
+# Enable common aliases
 symlink_config "aliases" ".aliases"
 
+# Apply configuration for tmux
 symlink_config "tmux" ".tmux.conf"
 
+# Apply configuration for vim
 symlink_config "vim" ".vimrc"
 if [ ! -d ~/.vim/backup ]; then
     mkdir -p ~/.vim/backup
 fi
 
+# Apply configuration for git
 symlink_config "git" ".gitconfig"
 
+# Apply configuration for ssh
+# You will be able to split the ssh configuration into multiple files
+# ex: config.work config.personal ...
 if [ ! -d ~/.ssh ]; then
     mkdir ~/.ssh
 fi
 symlink_config "ssh" ".ssh/config"
 
+# Adding a few usefull scripts
 if [ ! -d ~/bin ]; then
     mkdir ~/bin
 fi
