@@ -27,9 +27,11 @@ fi
 
 CUR_PATH=$(pwd)
 
-echo ${INFO}"Cloning OH MY ZSH repo ..."${DEFAULT}
-git clone ${OHMYZSHREPO} ~/.oh-my-zsh
-echo ${OK}"Done.\n"${DEFAULT}
+if [ ! -d ~/.oh-my)zsh ]; then
+    echo ${INFO}"Cloning OH MY ZSH repo ..."${DEFAULT}
+    git clone ${OHMYZSHREPO} ~/.oh-my-zsh
+    echo ${OK}"Done.\n"${DEFAULT}
+fi
 
 symlinkConfig "zsh" ".zshrc"
 
@@ -39,7 +41,7 @@ symlinkConfig "tmux" ".tmux.conf"
 
 symlinkConfig "vim" ".vimrc"
 if [ ! -d ~/.vim/backup ]; then
-	mkdir -p ~/.vim/backup
+    mkdir -p ~/.vim/backup
 fi
 
 symlinkConfig "git" ".gitconfig"
@@ -50,22 +52,22 @@ if
 symlinkConfig "ssh" ".ssh/config"
 
 if [ ! -d ~/bin ]; then
-	mkdir ~/bin
+    mkdir ~/bin
 fi
 ln -s ${CUR_PATH}/bin/ssh ~/bin/ssh
 ln -s ${CUR_PATH}/bin/ssh-copy-id ~/bin/ssh-copy-id
 
 symlinkConfig()
 {
-	CONFFILE=$1
-	SYMLINKNAME=$2
+    CONFFILE=$1
+    SYMLINKNAME=$2
     echo ${INFO}"Adding ${CONFFILE} configuration ..."${DEFAULT}
     if [ -f ~/${SYMLINKNAME} ];then
         echo ${WARN}"Moving old config to ~/${SYMLINKNAME}.bak"${DEFAULT}
         mv ~/${SYMLINKNAME} ~/${SYMLINKNAME}.bak
     elif [ -L ~/${SYMLINKNAME} ];then
         echo ${WARN}"Removing old symlinked config ~/${SYMLINKNAME}"${DEFAULT}
-    	rm ~/${SYMLINKNAME}
+        rm ~/${SYMLINKNAME}
     fi
     ln -s ${CUR_PATH}/config/${CONFFILE} ~/${SYMLINKNAME}
     echo ${OK}"Done.\n"${DEFAULT}
