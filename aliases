@@ -1,0 +1,49 @@
+# ###########
+# SSH aliases
+alias cpid="ssh-copy-id"
+alias ssh="ssh -A"
+
+# ###########
+# SVN aliases
+alias sup="svn up"
+alias sco="svn co"
+alias sadd="svn add"
+alias scom="svn commit -m"
+alias sstat="svn status"
+alias svndiff="svn diff --ignore-eol-style -w"
+
+# ##########
+# LS aliases
+alias ls="ls $LS_OPTIONS"
+alias ll="ls $LS_OPTIONS -lh"
+alias la="ls $LS_OPTIONS -lah"
+alias lt="ls $LS_OPTIONS -lhtr"
+
+# ####################
+# EDIT CONFIGS aliases
+alias zshconfig="vim ~/.zshrc"
+alias ohmyzsh="vim ~/.oh-my-zsh"
+alias tmuxconfig="vim ~/.tmux.conf"
+
+# ############
+# MISC aliases
+alias vi="vim"
+alias fixkey="~/Dropbox/dotfiles/scripts/keyboard.sh"
+alias record-training='avconv -f pulse -i bluez_source.00_1E_DE_61_A4_A5 -acodec libmp3lame -f x11grab -r 20 -s 1280x960 -i :0.0 -vcodec libx264  -preset ultrafast '
+alias rsyncplus="rsync -P --rsh=\"/usr/bin/ssh\" --bwlimit="
+alias restart-vb='sudo /Library/StartupItems/VirtualBox/VirtualBox restart'
+
+# ##############
+# APACHE aliases
+alias aph="sudo /etc/init.d/apache2"
+alias a2es="a2ensite"
+alias a2ds="a2dissite"
+alias a2em="a2enmode"
+alias a2dm="a2dismode"
+alias a2se="cd /etc/apache2/sites-enabled"
+
+# ###########
+# LXC aliases
+alias lxcrm='sudo cremove'
+alias lxcstart='sudo lxc-start -dn'
+alias lxcstatus='sudo lxc-status'
