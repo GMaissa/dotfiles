@@ -1,26 +1,38 @@
-#!/bin/sh
+#!/bin/bash
 
 # Repository of the oh-my-zsh project
 OHMYZSHREPO=git@github.com:GMaissa/oh-my-zsh.git
 
 # COLOR STYLES
-INFO='\033[0;36m'
-OK='\033[0;32m'
-WARN='\033[0;33m'
-ERROR='\033[1;31m'
-DEFAULT='\033[0m'
+INFO="\033[0;36m "
+OK="\033[0;32m "
+WARN="\033[0;33m "
+ERROR="\033[1;31m "
+DEFAULT="\033[0m "
 
 # Current path
 CUR_PATH=$(pwd)
 
+# Distributions
+DEBIAN=( "Debian" "Ubuntu" )
+REDHAT=( "Rhel" "CentOS" )
+
+
 if [[ "$(uname -s)" == "Darwin" ]]; then
     OS='mac'
 elif [[ "$(uname -s)" == "Linux" ]]; then
-    if [[ "lsb_release -si" == "Debian" ]]; then
-        OS='debian'
-    elif [[ "lsb_release -si" == "Rhel" ]]; then
-        OS='redhat'
+    if ! type "lsb_release" > /dev/null ;then
+        echo -e ${ERROR}"\nlsb_release is needed to identify your Linux distribution\n"${DEFAULT}
+        exit 1
     fi
+
+    TESTVAR=$(lsb_release -si)
+    
+    if [[ ${DEBIAN[@]} =~ ${TESTVAR} ]]; then
+        OS='debian'
+    elif [[ ${REDHAT[@]} =~ ${TESTVAR} ]]; then
+        OS='redhat'
+    fi  
 fi
 
 symlink_config()
@@ -31,52 +43,52 @@ symlink_config()
         CONFFILE=$1.$OS
     fi
 
-    echo ${INFO}"Adding ${CONFFILE} configuration ..."${DEFAULT}
+    echo -e ${INFO}"Adding ${CONFFILE} configuration ..."${DEFAULT}
     if [ -L ~/${SYMLINKNAME} ]; then
-        echo ${WARN}"Removing old symlinked config ~/${SYMLINKNAME}"${DEFAULT}
+        echo -e ${WARN}"Removing old symlinked config ~/${SYMLINKNAME}"${DEFAULT}
         rm ~/${SYMLINKNAME}
     elif [ -f ~/${SYMLINKNAME} ]; then
-        echo ${WARN}"Moving old config to ~/${SYMLINKNAME}.bak"${DEFAULT}
+        echo -e ${WARN}"Moving old config to ~/${SYMLINKNAME}.bak"${DEFAULT}
         mv ~/${SYMLINKNAME} ~/${SYMLINKNAME}.bak
     fi
     ln -s ${CUR_PATH}/config/${CONFFILE} ~/${SYMLINKNAME}
-    echo ${OK}"Done.\n"${DEFAULT}
+    echo -e ${OK}"Done.\n"${DEFAULT}
 }
 
 symlink_bin()
 {
     BINFILE=$1
     SYMLINKNAME=$1
-    echo ${INFO}"Adding ${CONFFILE} script ..."${DEFAULT}
+    echo -e ${INFO}"Adding ${CONFFILE} script ..."${DEFAULT}
     if [ -L ~/bin/${SYMLINKNAME} ]; then
-        echo ${WARN}"Removing old symlinked script ~/bin/${SYMLINKNAME}"${DEFAULT}
+        echo -e ${WARN}"Removing old symlinked script ~/bin/${SYMLINKNAME}"${DEFAULT}
         rm ~/bin/${SYMLINKNAME}
     elif [ -f ~/bin/${SYMLINKNAME} ]; then
-        echo ${WARN}"Moving old script to ~/bin/${SYMLINKNAME}.bak"${DEFAULT}
+        echo -e ${WARN}"Moving old script to ~/bin/${SYMLINKNAME}.bak"${DEFAULT}
         mv ~/bin/${SYMLINKNAME} ~/bin/${SYMLINKNAME}.bak
     fi
     ln -s ${CUR_PATH}/bin/${BINFILE} ~/bin/${SYMLINKNAME}
-    echo ${OK}"Done.\n"${DEFAULT}
+    echo -e ${OK}"Done.\n"${DEFAULT}
 }
 
 # We need Git, Zsh Tmux to be installed
 # (ex: aptitude install git zsh tmux vim)
 if ! type "zsh" > /dev/null ;then
-    echo ${ERROR}"\nZSH needs to be installed\n"${DEFAULT}
+    echo -e ${ERROR}"\nZSH needs to be installed\n"${DEFAULT}
     exit 1
 elif ! type "tmux" > /dev/null ;then
-    echo ${ERROR}"\nTMUX needs to be installed\n"${DEFAULT}
+    echo -e ${ERROR}"\nTMUX needs to be installed\n"${DEFAULT}
     exit 1
 elif ! type "vim" > /dev/null ;then
-    echo ${ERROR}"\nVIM needs to be installed\n"${DEFAULT}
+    echo -e ${ERROR}"\nVIM needs to be installed\n"${DEFAULT}
     exit 1
 fi
 
 # Cloning the oh-my-zsh project if not already done
 if [ ! -d ~/.oh-my-zsh ]; then
-    echo ${INFO}"Cloning OH MY ZSH repo ..."${DEFAULT}
+    echo -e ${INFO}"Cloning OH MY ZSH repo ..."${DEFAULT}
     git clone ${OHMYZSHREPO} ~/.oh-my-zsh
-    echo ${OK}"Done.\n"${DEFAULT}
+    echo -e ${OK}"Done.\n"${DEFAULT}
 fi
 
 # Apply configuration for zsh
