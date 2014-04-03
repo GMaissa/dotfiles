@@ -13,6 +13,7 @@ DEFAULT="\033[0m "
 # Current path
 CUR_PATH=$(pwd)
 
+# Define the current distrib and the install command
 if [[ "$(uname -s)" == "Darwin" ]]; then
     OS='mac'
     INSTALLCMD='brew install'
@@ -67,6 +68,7 @@ check_commands()
     CMD=$1
     if ! type "${CMD}" > /dev/null ;then
         echo -e ${WARN}"\n${CMD} needs to be installed\n"${DEFAULT}
+        # Install the command or exit the script (option -e in the shebang) if failed
         EXEC=`$INSTALLCMD ${CMD}`
         echo -e ${OK}"Successfully installed."${DEFAULT}
     fi
@@ -119,3 +121,5 @@ if [ $# -eq 1 -a "$1" = "with-ssh" ]; then
     fi
     symlink_config "ssh" ".ssh/config"
 fi
+
+echo -e ${OK}"\n\n You are all set. You can now define zsh as your default shell using the command :\nchsh -s $(which zsh)"${DEFAULT}
