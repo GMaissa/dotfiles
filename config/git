@@ -8,8 +8,8 @@
 # [mergetool "extMerge"]
 #       cmd = extMerge \"$BASE\" \"$LOCAL\" \"$REMOTE\" \"$MERGED\"
 #       trustExitCode = false
-[diff]
-      external = extDiff
+# [diff]
+#       external = extDiff
 [alias]
     tree = log --graph --decorate --oneline --all
     st = status
