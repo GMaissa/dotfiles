@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/bash -e
 
 # Repository of the oh-my-zsh project
 OHMYZSHREPO=git@github.com:GMaissa/oh-my-zsh.git
@@ -73,21 +73,21 @@ symlink_bin()
     echo -e ${OK}"Done.\n"${DEFAULT}
 }
 
+check_commands()
+{
+    CMD=$1
+    if ! type "${CMD}" > /dev/null ;then
+        echo -e ${WARN}"\n${CMD} needs to be installed\n"${DEFAULT}
+        EXEC=`$INSTALLCMD ${CMD}`
+        echo -e ${OK}"Successfully installed."${DEFAULT}
+    fi
+}
+
 # We need Git, Zsh Tmux to be installed
 # (ex: aptitude install git zsh tmux vim)
-if ! type "zsh" > /dev/null ;then
-    `$INSTALLCMD zsh`
-    echo -e ${ERROR}"\nZSH needs to be installed\n"${DEFAULT}
-    exit 1
-elif ! type "tmux" > /dev/null ;then
-    `$INSTALLCMD tmux`
-    echo -e ${ERROR}"\nTMUX needs to be installed\n"${DEFAULT}
-    exit 1
-elif ! type "vim" > /dev/null ;then
-    `$INSTALLCMD vim`
-    echo -e ${ERROR}"\nVIM needs to be installed\n"${DEFAULT}
-    exit 1
-fi
+check_commands "zsh"
+check_commands "tmux"
+check_commands "vim"
 
 # Cloning the oh-my-zsh project if not already done
 if [ ! -d ~/.oh-my-zsh ]; then
