@@ -2,6 +2,10 @@
 
 ssh() {
     TMPDIR=~/tmp
+    if [ ! -d $TMPDIR ]; then
+        mkdir $TMPDIR
+    fi
+
     case "$(uname -s)" in
         Linux)
             tmp_fifo=$(mktemp -u --suffix=._ssh_fifo)
@@ -16,7 +20,7 @@ ssh() {
     esac
 
     # cleanup first
-    rm ~/tmp/._ssh_fifo* 2>/dev/null
+    rm $TMPDIR/._ssh_fifo* 2>/dev/null
 
     mkfifo "$tmp_fifo" 
     cat ~/.ssh/config.* ~/.ssh/config >"$tmp_fifo" 2>/dev/null & 
