@@ -13,25 +13,14 @@ DEFAULT="\033[0m "
 # Current path
 CUR_PATH=$(pwd)
 
-# Distributions
-DEBIAN=( "Debian" "Ubuntu" )
-REDHAT=( "Rhel" "CentOS" )
-
 if [[ "$(uname -s)" == "Darwin" ]]; then
     OS='mac'
     INSTALLCMD='brew install'
-elif [[ "$(uname -s)" == "Linux" ]]; then
-    if ! type "lsb_release" > /dev/null ;then
-        echo -e ${ERROR}"\nlsb_release is needed to identify your Linux distribution\n"${DEFAULT}
-        exit 1
-    fi
-
-    TESTVAR=$(lsb_release -si)
-    
-    if [[ ${DEBIAN[@]} =~ ${TESTVAR} ]]; then
+elif [[ "$(uname -s)" == "Linux" ]]; then  
+    if [ -f /etc/debian_version ]; then
         OS='debian'
         INSTALLCMD='aptitude install -y'
-    elif [[ ${REDHAT[@]} =~ ${TESTVAR} ]]; then
+    elif [ -f /etc/redhat-release ]; then
         OS='redhat'
         INSTALLCMD='yum install -y'
     fi  
