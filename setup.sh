@@ -17,9 +17,9 @@ CUR_PATH=$(pwd)
 DEBIAN=( "Debian" "Ubuntu" )
 REDHAT=( "Rhel" "CentOS" )
 
-
 if [[ "$(uname -s)" == "Darwin" ]]; then
     OS='mac'
+    INSTALLCMD='brew install'
 elif [[ "$(uname -s)" == "Linux" ]]; then
     if ! type "lsb_release" > /dev/null ;then
         echo -e ${ERROR}"\nlsb_release is needed to identify your Linux distribution\n"${DEFAULT}
@@ -30,8 +30,10 @@ elif [[ "$(uname -s)" == "Linux" ]]; then
     
     if [[ ${DEBIAN[@]} =~ ${TESTVAR} ]]; then
         OS='debian'
+        INSTALLCMD='aptitude install -y'
     elif [[ ${REDHAT[@]} =~ ${TESTVAR} ]]; then
         OS='redhat'
+        INSTALLCMD='yum install -y'
     fi  
 fi
 
@@ -74,12 +76,15 @@ symlink_bin()
 # We need Git, Zsh Tmux to be installed
 # (ex: aptitude install git zsh tmux vim)
 if ! type "zsh" > /dev/null ;then
+    `$INSTALLCMD zsh`
     echo -e ${ERROR}"\nZSH needs to be installed\n"${DEFAULT}
     exit 1
 elif ! type "tmux" > /dev/null ;then
+    `$INSTALLCMD tmux`
     echo -e ${ERROR}"\nTMUX needs to be installed\n"${DEFAULT}
     exit 1
 elif ! type "vim" > /dev/null ;then
+    `$INSTALLCMD vim`
     echo -e ${ERROR}"\nVIM needs to be installed\n"${DEFAULT}
     exit 1
 fi
@@ -110,16 +115,18 @@ fi
 symlink_config "git" ".gitconfig"
 
 # Apply configuration for ssh
-# You will be able to split the ssh configuration into multiple files
-# ex: config.work config.personal ...
-if [ ! -d ~/.ssh ]; then
-    mkdir ~/.ssh
-fi
-symlink_config "ssh" ".ssh/config"
+if [ $# -eq 1 -a "$1" = "with-ssh" ]; then
+    # Adding a few usefull scripts
+    # You will be able to split the ssh configuration into multiple files
+    # ex: config.work config.personal ...
+    if [ ! -d ~/bin ]; then
+        mkdir ~/bin
+    fi
+    symlink_bin "ssh"
+    symlink_bin "ssh-copy-id"
 
-# Adding a few usefull scripts
-if [ ! -d ~/bin ]; then
-    mkdir ~/bin
+    if [ ! -d ~/.ssh ]; then
+        mkdir ~/.ssh
+    fi
+    symlink_config "ssh" ".ssh/config"
 fi
-symlink_bin "ssh"
-symlink_bin "ssh-copy-id"
