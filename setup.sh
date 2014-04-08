@@ -31,15 +31,15 @@ symlink_config()
 {
     CONFFILE=$1
     SYMLINKNAME=$2
-    if [ -f ${CUR_PATH}/config/$1.$OS ]; then
+    if [ -f "${CUR_PATH}/config/$1.$OS" ]; then
         CONFFILE=$1.$OS
     fi
 
     echo -e ${INFO}"Adding ${CONFFILE} configuration ..."${DEFAULT}
-    if [ -L ~/${SYMLINKNAME} ]; then
+    if [ -L ~/"${SYMLINKNAME}" ]; then
         echo -e ${WARN}"Removing old symlinked config ~/${SYMLINKNAME}"${DEFAULT}
         rm ~/${SYMLINKNAME}
-    elif [ -f ~/${SYMLINKNAME} ]; then
+    elif [ -f ~/"${SYMLINKNAME}" ]; then
         echo -e ${WARN}"Moving old config to ~/${SYMLINKNAME}.bak"${DEFAULT}
         mv ~/${SYMLINKNAME} ~/${SYMLINKNAME}.bak
     fi
@@ -52,10 +52,10 @@ symlink_bin()
     BINFILE=$1
     SYMLINKNAME=$1
     echo -e ${INFO}"Adding ${CONFFILE} script ..."${DEFAULT}
-    if [ -L ~/bin/${SYMLINKNAME} ]; then
+    if [ -L ~/bin/"${SYMLINKNAME}" ]; then
         echo -e ${WARN}"Removing old symlinked script ~/bin/${SYMLINKNAME}"${DEFAULT}
         rm ~/bin/${SYMLINKNAME}
-    elif [ -f ~/bin/${SYMLINKNAME} ]; then
+    elif [ -f ~/bin/"${SYMLINKNAME}" ]; then
         echo -e ${WARN}"Moving old script to ~/bin/${SYMLINKNAME}.bak"${DEFAULT}
         mv ~/bin/${SYMLINKNAME} ~/bin/${SYMLINKNAME}.bak
     fi
@@ -69,7 +69,11 @@ check_commands()
     if ! type "${CMD}" > /dev/null ;then
         echo -e ${WARN}"\n${CMD} needs to be installed\n"${DEFAULT}
         # Install the command or exit the script (option -e in the shebang) if failed
-        EXEC=`$INSTALLCMD ${CMD}`
+        if [[ -e $( which sudo 2>&1 ) ]]; then
+            EXEC=`sudo $INSTALLCMD ${CMD}`
+        else
+            EXEC=`$INSTALLCMD ${CMD}`
+        fi
         echo -e ${OK}"Successfully installed."${DEFAULT}
     fi
 }
