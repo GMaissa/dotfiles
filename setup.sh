@@ -69,7 +69,11 @@ check_commands()
     if ! type "${CMD}" > /dev/null ;then
         echo -e ${WARN}"\n${CMD} needs to be installed\n"${DEFAULT}
         # Install the command or exit the script (option -e in the shebang) if failed
-        EXEC=`$INSTALLCMD ${CMD}`
+        if [[ -e $( which sudo 2>&1 ) ]]; then
+            EXEC=`sudo $INSTALLCMD ${CMD}`
+        else
+            EXEC=`$INSTALLCMD ${CMD}`
+        fi
         echo -e ${OK}"Successfully installed."${DEFAULT}
     fi
 }
