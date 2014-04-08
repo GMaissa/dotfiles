@@ -30,7 +30,7 @@ alias tmuxconfig="vim ~/.tmux.conf"
 alias vi="vim"
 alias fixkey="~/Dropbox/dotfiles/scripts/keyboard.sh"
 alias record-training='avconv -f pulse -i bluez_source.00_1E_DE_61_A4_A5 -acodec libmp3lame -f x11grab -r 20 -s 1280x960 -i :0.0 -vcodec libx264  -preset ultrafast '
-alias rsyncplus="rsync -P --rsh=\"/usr/bin/ssh\" --bwlimit="
+alias rsyncplus="rsync -P --rsh=\"/usr/bin/ssh\" --bwlimit=100"
 alias restart-vb='sudo /Library/StartupItems/VirtualBox/VirtualBox restart'
 
 # ##############
