@@ -24,6 +24,7 @@ alias lt="ls $LS_OPTIONS -lhtr"
 alias zshconfig="vim ~/.zshrc"
 alias ohmyzsh="vim ~/.oh-my-zsh"
 alias tmuxconfig="vim ~/.tmux.conf"
+alias hostsconfig="sudo vim /etc/hosts"
 
 # ############
 # MISC aliases
