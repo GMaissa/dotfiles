@@ -1,3 +1,5 @@
+# vim: ft=sh
+
 # Path to your oh-my-zsh installation.
 export ZSH=$HOME/.oh-my-zsh
 
@@ -21,7 +23,7 @@ plugins=(git brew vagrant composer fabric git-flow phing sublime sudo symfony2 t
 source $ZSH/oh-my-zsh.sh
 
 # User configuration
-export PATH="/opt/local/bin:/opt/local/sbin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/bin"
+export PATH="/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/bin"
 
 # Enable vi-mode
 bindkey -v

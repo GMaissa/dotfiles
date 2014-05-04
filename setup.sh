@@ -17,14 +17,14 @@ CUR_PATH=$(pwd)
 if [[ "$(uname -s)" == "Darwin" ]]; then
     OS='mac'
     INSTALLCMD='brew install'
-elif [[ "$(uname -s)" == "Linux" ]]; then  
+elif [[ "$(uname -s)" == "Linux" ]]; then
     if [ -f /etc/debian_version ]; then
         OS='debian'
         INSTALLCMD='aptitude install -y'
     elif [ -f /etc/redhat-release ]; then
         OS='redhat'
         INSTALLCMD='yum install -y'
-    fi  
+    fi
 fi
 
 symlink_config()
@@ -78,8 +78,16 @@ check_commands()
     fi
 }
 
+install_vim_bundle()
+{
+    REPO=$1
+    BUNDLE=$(echo $REPO | cut -d'/' -f 2)
+    if [ ! -d ~/.vim/bundle/"${BUNDLE}" ]; then
+        git clone https://github.com/${REPO} ~/.vim/bundle/${BUNDLE}
+    fi
+}
+
 # We need Git, Zsh Tmux to be installed
-# (ex: aptitude install git zsh tmux vim)
 check_commands "zsh"
 check_commands "tmux"
 check_commands "vim"
@@ -105,6 +113,25 @@ symlink_config "vim" ".vimrc"
 if [ ! -d ~/.vim/backup ]; then
     mkdir -p ~/.vim/backup
 fi
+if [ ! -d ~/.vim/autoload ]; then
+    mkdir -p ~/.vim/autoload
+fi
+if [ ! -d ~/.vim/bundle ]; then
+    mkdir -p ~/.vim/bundle
+fi
+# Install pathogen to manage vim plugins as bundles
+curl -so ~/.vim/autoload/pathogen.vim https://raw.github.com/tpope/vim-pathogen/master/autoload/pathogen.vim
+# Install plugins
+install_vim_bundle scrooloose/nerdtree
+install_vim_bundle kien/ctrlp.vim
+install_vim_bundle kien/rainbow_parentheses.vim
+install_vim_bundle chilicuil/conque
+install_vim_bundle Lokaltog/vim-easymotion
+install_vim_bundle nathanaelkane/vim-indent-guides
+install_vim_bundle edsono/vim-matchit
+install_vim_bundle tpope/vim-speeddating
+install_vim_bundle maxbrunsfeld/vim-yankstack
+install_vim_bundle tpope/vim-surround
 
 # Apply configuration for git
 symlink_config "git" ".gitconfig"
@@ -127,3 +154,4 @@ if [ $# -eq 1 -a "$1" = "with-ssh" ]; then
 fi
 
 echo -e ${OK}"\n\n You are all set. You can now define zsh as your default shell using the command :\nchsh -s $(which zsh)"${DEFAULT}
+
