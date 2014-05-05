@@ -1,5 +1,7 @@
-
 " Start personnal conf
+
+" enable pathogen to manage plugins as bundles
+execute pathogen#infect()
 
 " Use Vim settings, rather than Vi settings (much better!).
 " This must be first, because it changes other options as a side effect.
@@ -29,5 +31,11 @@ set ruler
 set showmode
 " set nowrap
 
+syn on
+
 let Tlist_GainFocus_On_ToggleOpen=1
 
+" Map Ctrl+n keys to NERDTree toggle
+map <C-n> :NERDTreeToggle<CR>
+" Close vim if the only open window is NERDTree
+autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTreeType") && b:NERDTreeType == "primary") | q | endif
