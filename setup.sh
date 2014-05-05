@@ -1,14 +1,9 @@
-#!/bin/bash -e
+#!/bin/bash
+
+. $(dirname $0)/abstract.sh
 
 # Repository of the oh-my-zsh project
 OHMYZSHREPO=git@github.com:GMaissa/oh-my-zsh.git
-
-# COLOR STYLES
-INFO="\033[0;36m "
-OK="\033[0;32m "
-WARN="\033[0;33m "
-ERROR="\033[1;31m "
-DEFAULT="\033[0m "
 
 # Current path
 CUR_PATH=$(pwd)
@@ -34,17 +29,28 @@ symlink_config()
     if [ -f "${CUR_PATH}/config/$1.$OS" ]; then
         CONFFILE=$1.$OS
     fi
+    STEPMSG=$(printf "%-45s" "Adding ${CONFFILE} configuration")
+    ADDIMSG=""
 
-    echo -e ${INFO}"Adding ${CONFFILE} configuration ..."${DEFAULT}
     if [ -L ~/"${SYMLINKNAME}" ]; then
-        echo -e ${WARN}"Removing old symlinked config ~/${SYMLINKNAME}"${DEFAULT}
         rm ~/${SYMLINKNAME}
+        ADDIMSG=${WARN}"Old symlinked config ~/${SYMLINKNAME} removed"${DEFAULT}
     elif [ -f ~/"${SYMLINKNAME}" ]; then
-        echo -e ${WARN}"Moving old config to ~/${SYMLINKNAME}.bak"${DEFAULT}
         mv ~/${SYMLINKNAME} ~/${SYMLINKNAME}.bak
+        ADDIMSG=${WARN}"Old config moved to ~/${SYMLINKNAME}.bak"${DEFAULT}
     fi
-    ln -s ${CUR_PATH}/config/${CONFFILE} ~/${SYMLINKNAME}
-    echo -e ${OK}"Done.\n"${DEFAULT}
+
+    echo -ne "${STEPMSG}${PROCESSMSG}"\\r
+    OUTPUT=$(ln -s ${CUR_PATH}/config/${CONFFILE} ~/${SYMLINKNAME} 2>&1 >/dev/null)
+    if [ $? -ne 0 ]; then
+        echo -e "${STEPMSG}${ERRORMSG}"
+        echo -e ${OUTPUT}
+        exit 1
+    fi
+    echo -e "${STEPMSG}${SUCCESSMSG}"
+    if [ "${ADDIMSG}" != "" ];then
+        echo -e ${ADDIMSG} 
+    fi
 }
 
 symlink_bin()
@@ -66,15 +72,21 @@ symlink_bin()
 check_commands()
 {
     CMD=$1
-    if ! type "${CMD}" > /dev/null ;then
-        echo -e ${WARN}"\n${CMD} needs to be installed\n"${DEFAULT}
+    STEPMSG=$(printf "%-45s" "Installing ${CMD}")
+    if ! type "${CMD}" >/dev/null 2>&1 ;then
+        echo -ne "${STEPMSG}${PROCESSMSG}"\\r
         # Install the command or exit the script (option -e in the shebang) if failed
-        if [[ -e $( which sudo 2>&1 ) ]]; then
-            EXEC=`sudo $INSTALLCMD ${CMD}`
+        if [[ "${OS}" != "mac" && -e $( which sudo 2>&1 ) ]]; then
+            OUTPUT=$(sudo $INSTALLCMD ${CMD} 2>&1 >/dev/null)
         else
-            EXEC=`$INSTALLCMD ${CMD}`
+            OUTPUT=$($INSTALLCMD ${CMD} 2>&1 >/dev/null)
         fi
-        echo -e ${OK}"Successfully installed."${DEFAULT}
+        if [ $? -ne 0 ]; then
+            echo -e "${STEPMSG}${ERRORMSG}"
+            echo -e ${OUTPUT}
+            exit 1
+        fi
+        echo -e "${STEPMSG}${SUCCESSMSG}"
     fi
 }
 
@@ -83,7 +95,15 @@ install_vim_bundle()
     REPO=$1
     BUNDLE=$(echo $REPO | cut -d'/' -f 2)
     if [ ! -d ~/.vim/bundle/"${BUNDLE}" ]; then
-        git clone https://github.com/${REPO} ~/.vim/bundle/${BUNDLE}
+        STEPMSG=$(printf "%-45s" "Installing VIM bundle ${BUNDLE}")
+        echo -ne "${STEPMSG}${PROCESSMSG}"\\r
+        OUTPUT=$(git clone https://github.com/${REPO} ~/.vim/bundle/${BUNDLE} 2>&1 >/dev/null)
+        if [ $? -ne 0 ]; then
+            echo -e "${STEPMSG}${ERRORMSG}"
+            echo -e ${OUTPUT}
+            exit 1
+        fi
+        echo -e "${STEPMSG}${SUCCESSMSG}"
     fi
 }
 
@@ -130,7 +150,6 @@ install_vim_bundle Lokaltog/vim-easymotion
 install_vim_bundle nathanaelkane/vim-indent-guides
 install_vim_bundle edsono/vim-matchit
 install_vim_bundle tpope/vim-speeddating
-install_vim_bundle maxbrunsfeld/vim-yankstack
 install_vim_bundle tpope/vim-surround
 
 # Apply configuration for git
@@ -153,5 +172,5 @@ if [ $# -eq 1 -a "$1" = "with-ssh" ]; then
     symlink_config "ssh" ".ssh/config"
 fi
 
-echo -e ${OK}"\n\n You are all set. You can now define zsh as your default shell using the command :\nchsh -s $(which zsh)"${DEFAULT}
+echo -e ${OK}"\n\nYou are all set. You can now define zsh as your default shell using the command :\nchsh -s $(which zsh)"${DEFAULT}
 
