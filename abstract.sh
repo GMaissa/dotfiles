@@ -1,0 +1,12 @@
+#!/bin/bash -x
+
+# COLOR STYLES
+INFO="\033[0;36m"
+OK="\033[0;32m"
+WARN="\033[0;33m"
+ERROR="\033[1;31m"
+DEFAULT="\033[0m"
+PROCESSMSG="[  ]"
+SUCCESSMSG="["${OK}"OK"${DEFAULT}"]"
+ERRORMSG="["${ERROR}"KO"${DEFAULT}"]"
+
