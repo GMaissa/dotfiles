@@ -7,3 +7,16 @@ unbind-key h
 bind-key h select-pane -L
 unbind-key l
 bind-key l select-pane -R
+
+# enable activity alerts
+setw -g monitor-activity on
+set -g visual-activity on
+
+# Set status bar
+set -g status-left '#[fg=white]#H'
+set -g status-right '#[fg=gray]#(uptime | cut -d "," -f 2-)'
+
+# Highlight active window
+set-window-option -g window-status-current-bg black
+set-window-option -g window-status-current-fg white
+
