@@ -1,15 +1,10 @@
+[core]
+    editor = vim
 [user]
 	name = Guillaume Maïssa
 	email = guillaume@maissa.fr
 [mergetool]
     keepBackup = true
-# [merge]
-#       tool = extMerge
-# [mergetool "extMerge"]
-#       cmd = extMerge \"$BASE\" \"$LOCAL\" \"$REMOTE\" \"$MERGED\"
-#       trustExitCode = false
-# [diff]
-#       external = extDiff
 [alias]
     tree = log --graph --decorate --oneline --all
     st = status
