@@ -13,10 +13,39 @@ setw -g monitor-activity on
 set -g visual-activity on
 
 # Set status bar
-set -g status-left '#[fg=white]#H'
+# set -g status-left '#[fg=gray]#H'
 set -g status-right '#[fg=gray]#(uptime | cut -d "," -f 2-)'
 
 # Highlight active window
-set-window-option -g window-status-current-bg black
+set-window-option -g window-status-current-bg red
 set-window-option -g window-status-current-fg white
 
+# start window numbering at 1 for easier switching
+set -g base-index 1
+
+# unicode
+setw -g utf8 on
+set -g status-utf8 on
+
+# bind resize commands to keys
+bind = resize-pane -D 10
+bind + resize-pane -U 10
+bind < resize-pane -L 10
+bind > resize-pane -R 10
+
+# set window split
+bind-key v split-window -h
+bind-key b split-window
+
+# reload config
+bind r source-file ~/.tmux.conf \; display-message "Config reloaded..."
+
+# Using C-a instead of C-b
+set-option -g prefix C-a
+bind-key C-a last-window
+
+# color
+set -g default-terminal "screen-256color"
+
+# Disable windows automatic renaming
+set-window-option -g automatic-rename off
