@@ -35,3 +35,7 @@ bindkey '^R' history-incremental-search-backward
 
 # SVN Config
 export SVN_EDITOR=vim
+
+# GPG config
+GPG_TTY=`tty`
+export GPG_TTY
