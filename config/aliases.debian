@@ -57,6 +57,6 @@ alias lxcstatus='sudo lxc-status'
 
 # ######################
 # Terminal theme aliases
-alias dark="${HOME}/.solarized-terminal/set_dark.sh"
-alias light="${HOME}/.solarized-terminal/set_light.sh"
+alias dark="${HOME}/.solarized/gnome-terminal-colors-solarized/set_dark.sh"
+alias light="${HOME}/.solarized/gnome-terminal-colors-solarized/set_light.sh"
 
