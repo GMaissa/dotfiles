@@ -32,3 +32,7 @@ bindkey -v
 
 # Enable search in command history
 bindkey '^R' history-incremental-search-backward
+
+# GPG config
+GPG_TTY=`tty`
+export GPG_TTY

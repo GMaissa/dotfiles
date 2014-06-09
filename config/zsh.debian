@@ -35,3 +35,7 @@ bindkey '^R' history-incremental-search-backward
 if [ -x /usr/bin/dircolors ]; then
     test -r ~/.dircolors && eval "$(dircolors -b ~/.dircolors)" || eval "$(dircolors -b)"
 fi
+
+# GPG config
+GPG_TTY=`tty`
+export GPG_TTY

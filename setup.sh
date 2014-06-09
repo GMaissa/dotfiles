@@ -107,6 +107,26 @@ install_vim_bundle()
     fi
 }
 
+install_vim_plugin()
+{
+    REPO=$1
+    PLUGIN=$2
+    if [ ! -d ~/.vim/plugin ]; then
+        mkdir ~/.vim/plugin
+    fi
+    if [ ! -d ~/.vim/plugin/"${PLUGIN}" ]; then
+        STEPMSG=$(printf "%-45s" "Installing VIM plugin ${PLUGIN}")
+        echo -ne "${PROCESSMSG}${STEPMSG}"\\r
+        OUTPUT=$(wget https://raw.githubusercontent.com/${REPO}/master/plugin/${PLUGIN} ~/.vim/plugin/ 2>&1 >/dev/null)
+        if [ $? -ne 0 ]; then
+            echo -e "${ERRORMSG}${STEPMSG}"
+            echo -e ${OUTPUT}
+            exit 1
+        fi
+        echo -e "${SUCCESSMSG}${STEPMSG}"
+    fi
+}
+
 # We need Git, Zsh Tmux to be installed
 check_commands "zsh"
 check_commands "tmux"
@@ -161,7 +181,7 @@ if [ ! -d ~/.vim/bundle ]; then
 fi
 # Install pathogen to manage vim plugins as bundles
 curl -so ~/.vim/autoload/pathogen.vim https:#raw.github.com/tpope/vim-pathogen/master/autoload/pathogen.vim
-# Install plugins
+# Install bundles
 install_vim_bundle scrooloose/nerdtree
 install_vim_bundle kien/ctrlp.vim
 install_vim_bundle kien/rainbow_parentheses.vim
@@ -171,6 +191,9 @@ install_vim_bundle nathanaelkane/vim-indent-guides
 install_vim_bundle edsono/vim-matchit
 install_vim_bundle tpope/vim-speeddating
 install_vim_bundle tpope/vim-surround
+
+# Install plugins
+install_vim_plugin jamessan/vim-gnupg gnupg.vim
 
 # Apply configuration for git
 symlink_config "config/git" ".gitconfig"
