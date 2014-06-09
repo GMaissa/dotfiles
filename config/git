@@ -1,7 +1,7 @@
 [core]
     editor = vim
 [user]
-	name = Guillaume Maïssa
+	name = Guillaume Maïssa
 	email = guillaume@maissa.fr
 [mergetool]
     keepBackup = true
