@@ -32,3 +32,6 @@ bindkey -v
 
 # Enable search in command history
 bindkey '^R' history-incremental-search-backward
+
+# SVN Config
+export SVN_EDITOR=vim
