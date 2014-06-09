@@ -2,6 +2,13 @@
 
 . $(dirname $0)/abstract.sh
 
+echo -e ${INFO} "        __  ___             __      __  _____ __             "${DEFAULT};
+echo -e ${INFO} "       /  |/  /_  __   ____/ /___  / /_/ __(_) /__  _____    "${DEFAULT};
+echo -e ${INFO} "      / /|_/ / / / /  / __  / __ \/ __/ /_/ / / _ \/ ___/    "${DEFAULT};
+echo -e ${INFO} "     / /  / / /_/ /  / /_/ / /_/ / /_/ __/ / /  __(__  )     "${DEFAULT};
+echo -e ${INFO} "    /_/  /_/\__  /   \____/\____/\__/_/ /_/_/\___/____/      "${DEFAULT};
+echo -e ${INFO} "           /____/                                            \n\n"${DEFAULT};
+
 # Repository of the oh-my-zsh project
 OHMYZSHREPO=git@github.com:robbyrussell/oh-my-zsh.git
 
@@ -43,11 +50,11 @@ symlink_config()
     echo -ne "${PROCESSMSG}${STEPMSG}"\\r
     OUTPUT=$(ln -s ${CUR_PATH}/${CONFFILE} ~/${SYMLINKNAME} 2>&1 >/dev/null)
     if [ $? -ne 0 ]; then
-        echo -e "${ERRORMSG}${STEPMSG}"
+        echo -e "${ERRORMSG}"
         echo -e ${OUTPUT}
         exit 1
     fi
-    echo -e "${SUCCESSMSG}${STEPMSG}"
+    echo -e "${SUCCESSMSG}"
     if [ "${ADDIMSG}" != "" ];then
         echo -e ${ADDIMSG} 
     fi
@@ -83,7 +90,7 @@ check_commands()
         fi
         if [ $? -ne 0 ]; then
             echo -e "${ERRORMSG}${STEPMSG}"
-            echo -e ${OUTPUT}
+            echo -e ${WARN}${OUTPUT}${DEFAULT}
             exit 1
         fi
         echo -e "${SUCCESSMSG}${STEPMSG}"
@@ -100,7 +107,7 @@ install_vim_bundle()
         OUTPUT=$(git clone https:#github.com/${REPO} ~/.vim/bundle/${BUNDLE} 2>&1 >/dev/null)
         if [ $? -ne 0 ]; then
             echo -e "${ERRORMSG}${STEPMSG}"
-            echo -e ${OUTPUT}
+            echo -e ${WARN}${OUTPUT}${DEFAULT}
             exit 1
         fi
         echo -e "${SUCCESSMSG}${STEPMSG}"
@@ -120,7 +127,7 @@ install_vim_plugin()
         OUTPUT=$(wget -P ~/.vim/plugin/ https://raw.githubusercontent.com/${REPO}/master/plugin/${PLUGIN} 2>&1 >/dev/null)
         if [ $? -ne 0 ]; then
             echo -e "${ERRORMSG}${STEPMSG}"
-            echo -e ${OUTPUT}
+            echo -e ${WARN}${OUTPUT}${DEFAULT}
             exit 1
         fi
         echo -e "${SUCCESSMSG}${STEPMSG}"
@@ -139,7 +146,7 @@ if [ ! -d ~/.oh-my-zsh ]; then
     OUTPUT=$(git clone ${OHMYZSHREPO} ~/.oh-my-zsh 2>&1 >/dev/null)
     if [ $? -ne 0 ]; then
         echo -e "${ERRORMSG}${STEPMSG}"
-        echo -e ${OUTPUT}
+        echo -e ${WARN}${OUTPUT}${DEFAULT}
         exit 1
     fi
     echo -e "${SUCCESSMSG}${STEPMSG}"
@@ -219,5 +226,5 @@ if [ -f "$(dirname $0)/setup-${OS}.sh" ];then
     . $(dirname $0)/setup-${OS}.sh
 fi
 
-echo -e ${OK}"\nYou are all set. You can now define zsh as your default shell using the command :\nchsh -s $(which zsh)"${DEFAULT}
+echo -e ${INFO}"\nYou are all set. You can now define zsh as your default shell using the command :\nchsh -s $(which zsh)"${DEFAULT}
 
