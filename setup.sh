@@ -117,7 +117,7 @@ install_vim_plugin()
     if [ ! -d ~/.vim/plugin/"${PLUGIN}" ]; then
         STEPMSG="Installing VIM plugin ${PLUGIN}"
         echo -ne "${PROCESSMSG}${STEPMSG}"\\r
-        OUTPUT=$(wget https://raw.githubusercontent.com/${REPO}/master/plugin/${PLUGIN} ~/.vim/plugin/ 2>&1 >/dev/null)
+        OUTPUT=$(wget -P ~/.vim/plugin/ https://raw.githubusercontent.com/${REPO}/master/plugin/${PLUGIN} 2>&1 >/dev/null)
         if [ $? -ne 0 ]; then
             echo -e "${ERRORMSG}${STEPMSG}"
             echo -e ${OUTPUT}
