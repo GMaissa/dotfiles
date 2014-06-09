@@ -29,7 +29,7 @@ symlink_config()
     if [ -f "${CUR_PATH}/$1.$OS" ]; then
         CONFFILE=$1.$OS
     fi
-    STEPMSG=$(printf "%-45s" "Applying ${CONFFILE} config")
+    STEPMSG="Applying ${CONFFILE} config"
     ADDIMSG=""
 
     if [ -L ~/"${SYMLINKNAME}" ]; then
@@ -72,7 +72,7 @@ symlink_bin()
 check_commands()
 {
     CMD=$1
-    STEPMSG=$(printf "%-45s" "Installing ${CMD}")
+    STEPMSG="Installing ${CMD}"
     if ! type "${CMD}" >/dev/null 2>&1 ;then
         echo -ne "${PROCESSMSG}${STEPMSG}"\\r
         # Install the command or exit the script (option -e in the shebang) if failed
@@ -95,7 +95,7 @@ install_vim_bundle()
     REPO=$1
     BUNDLE=$(echo $REPO | cut -d'/' -f 2)
     if [ ! -d ~/.vim/bundle/"${BUNDLE}" ]; then
-        STEPMSG=$(printf "%-45s" "Installing VIM bundle ${BUNDLE}")
+        STEPMSG="Installing VIM bundle ${BUNDLE}"
         echo -ne "${PROCESSMSG}${STEPMSG}"\\r
         OUTPUT=$(git clone https:#github.com/${REPO} ~/.vim/bundle/${BUNDLE} 2>&1 >/dev/null)
         if [ $? -ne 0 ]; then
@@ -115,7 +115,7 @@ install_vim_plugin()
         mkdir ~/.vim/plugin
     fi
     if [ ! -d ~/.vim/plugin/"${PLUGIN}" ]; then
-        STEPMSG=$(printf "%-45s" "Installing VIM plugin ${PLUGIN}")
+        STEPMSG="Installing VIM plugin ${PLUGIN}"
         echo -ne "${PROCESSMSG}${STEPMSG}"\\r
         OUTPUT=$(wget https://raw.githubusercontent.com/${REPO}/master/plugin/${PLUGIN} ~/.vim/plugin/ 2>&1 >/dev/null)
         if [ $? -ne 0 ]; then
@@ -134,7 +134,7 @@ check_commands "vim"
 
 # Cloning the oh-my-zsh project if not already done
 if [ ! -d ~/.oh-my-zsh ]; then
-    STEPMSG=$(printf "%-45s" "Cloning OH-MY-ZSH repo")
+    STEPMSG="Cloning OH-MY-ZSH repo"
     echo -ne "${PROCESSMSG}${STEPMSG}"\\r
     OUTPUT=$(git clone ${OHMYZSHREPO} ~/.oh-my-zsh 2>&1 >/dev/null)
     if [ $? -ne 0 ]; then

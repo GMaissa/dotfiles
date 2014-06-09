@@ -1,6 +1,6 @@
 #!/bin/bash
 
-STEPMSG=$(printf "%-45s" "Applying Solarized theme")
+STEPMSG="Applying Solarized theme"
 echo -ne "${PROCESSMSG}${STEPMSG}"\\r
 if [[ ! -f ${HOME}/.dircolors ]];then
     wget --no-check-certificate https://raw.github.com/seebi/dircolors-solarized/master/dircolors.ansi-dark ${HOME}/.dircolors >/dev/null 2>&1

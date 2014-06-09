@@ -1,6 +1,6 @@
 #!/bin/bash
 
-STEPMSG=$(printf "%-45s" "Installing AnonymousPro fonts")
+STEPMSG="Installing AnonymousPro fonts"
 echo -ne "${PROCESSMSG}${STEPMSG}"\\r
 OUTPUT1=$(sudo wget --no-check-certificate -P /Library/Fonts/ https://raw.githubusercontent.com/Lokaltog/powerline-fonts/master/AnonymousPro/Anonymice%20Powerline%20Bold%20Italic.ttf 2>&1 >/dev/null)
 OUTPUT2=$(sudo wget --no-check-certificate -P /Library/Fonts/ https://raw.githubusercontent.com/Lokaltog/powerline-fonts/master/AnonymousPro/Anonymice%20Powerline%20Bold.ttf 2>&1 >/dev/null)
