@@ -64,16 +64,27 @@ symlink_bin()
 {
     BINFILE=$1
     SYMLINKNAME=$1
-    echo -e ${INFO}"Adding ${CONFFILE} script ..."${DEFAULT}
+    STEPMSG="Adding ${BINFILE} script ..."
+    ADDIMSG=""
+
     if [ -L ~/bin/"${SYMLINKNAME}" ]; then
         #echo -e ${WARN}"Removing old symlinked script ~/bin/${SYMLINKNAME}"${DEFAULT}
         rm ~/bin/${SYMLINKNAME}
     elif [ -f ~/bin/"${SYMLINKNAME}" ]; then
-        echo -e ${WARN}"Moving old script to ~/bin/${SYMLINKNAME}.bak"${DEFAULT}
         mv ~/bin/${SYMLINKNAME} ~/bin/${SYMLINKNAME}.bak
+        ADDIMSG=${WARN}"Moving old script to ~/bin/${SYMLINKNAME}.bak"${DEFAULT}
     fi
-    ln -s ${CUR_PATH}/bin/${BINFILE} ~/bin/${SYMLINKNAME}
-    echo -e ${OK}"Done.\n"${DEFAULT}
+    echo -ne "${PROCESSMSG}${STEPMSG}"\\r
+    OUTPUT=$(ln -s ${CUR_PATH}/bin/${BINFILE} ~/bin/${SYMLINKNAME} 2>&1 >/dev/null)
+    if [ $? -ne 0 ]; then
+        echo -e "${ERRORMSG}"
+        echo -e ${OUTPUT}
+        exit 1
+    fi
+    echo -e "${SUCCESSMSG}"
+    if [ "${ADDIMSG}" != "" ];then
+        echo -e ${ADDIMSG} 
+    fi
 }
 
 check_commands()
@@ -213,7 +224,7 @@ if [ $# -eq 1 -a "$1" = "with-ssh" ]; then
     if [ ! -d ~/bin ]; then
         mkdir ~/bin
     fi
-    symlink_bin "ssh"
+    symlink_bin "ssh_cmds"
     symlink_bin "ssh-copy-id"
 
     if [ ! -d ~/.ssh ]; then
