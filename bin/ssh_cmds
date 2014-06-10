@@ -1,7 +1,18 @@
-#!/bin/bash
+#!/bin/bash -x
 
-ssh() {
+ssh_cmds() {
+    CMD=$1
+    case "$CMD" in
+        "rsync")
+            CONF_ARG="--config"
+            ;;
+        "ssh" | "scp")
+            CONF_ARG="-F"
+            ;;
+    esac
+
     TMPDIR=~/tmp
+
     if [ ! -d $TMPDIR ]; then
         mkdir $TMPDIR
     fi
@@ -24,8 +35,8 @@ ssh() {
 
     mkfifo "$tmp_fifo" 
     cat ~/.ssh/config.* ~/.ssh/config >"$tmp_fifo" 2>/dev/null & 
-    /usr/bin/ssh -A -F "$tmp_fifo" "$@"
+    /usr/bin/${CMD} ${CONF_ARG} "$tmp_fifo" ${*:2}
     rm "$tmp_fifo"
 }
 
-ssh $*
+ssh_cmds $*

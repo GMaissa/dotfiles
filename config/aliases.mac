@@ -7,7 +7,9 @@
 # ###########
 # SSH aliases
 alias cpid="~/bin/ssh-copy-id"
-alias ssh="~/bin/ssh"
+alias ssh="~/bin/ssh_cmds ssh"
+alias scp="~/bin/ssh_cmds scp"
+alias rsync="~/bin/ssh_cmds rsync"
 
 # ###########
 # SVN aliases
@@ -35,6 +37,6 @@ alias hostsconfig="sudo vim /etc/hosts"
 # ############
 # MISC aliases
 alias vi="vim"
-alias rsyncplus="rsync -P --rsh=\"/usr/bin/ssh\" --bwlimit=100"
+alias rsyncplus="rsync -P --bwlimit=100"
 alias restart-vb='sudo /Library/StartupItems/VirtualBox/VirtualBox restart'
 

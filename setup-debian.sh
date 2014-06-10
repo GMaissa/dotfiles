@@ -1,6 +1,6 @@
 #!/bin/bash
 
-STEPMSG=$(printf "%-45s" "Applying Solarized theme")
+STEPMSG="Applying Solarized theme"
 echo -ne "${PROCESSMSG}${STEPMSG}"\\r
 if [[ ! -f ${HOME}/.dircolors ]];then
     wget --no-check-certificate https://raw.github.com/seebi/dircolors-solarized/master/dircolors.ansi-dark ${HOME}/.dircolors >/dev/null 2>&1
@@ -10,9 +10,9 @@ if [[ ! -d ${HOME}/.solarized ]]; then
 fi
 OUTPUT=$(${HOME}/.solarized/gnome-terminal-colors-solarized/set_dark.sh 2>&1 >/dev/null)
 if [ $? -ne 0 ]; then
-    echo -e "${ERRORMSG}${STEPMSG}"
-    echo -e ${OUTPUT}
+    echo -e "${ERRORMSG}"
+    echo -e ${WARN}${OUTPUT}${DEFAULT}
     exit 1
 fi
-echo -e "${SUCCESSMSG}${STEPMSG}"
+echo -e "${SUCCESSMSG}"
     
