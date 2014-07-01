@@ -1,14 +1,19 @@
 [core]
     editor = vim
 [user]
-	name = Guillaume Maïssa
+	name = Guillaume Maïssa
 	email = guillaume@maissa.fr
 [mergetool]
     keepBackup = true
 [alias]
     tree = log --graph --decorate --oneline --all
-    st = status
+    st = status -sb
 [color]
+    branch = auto
+    diff = auto
+    interactive = auto
+    pager = true
+    status = auto
     ui = true
 [color "branch"]
     current = yellow bold
@@ -21,9 +26,11 @@
     new = green bold
     whitespace = red reverse
 [color "status"]
-    added = green bold
-    changed = yellow bold
-    untracked = red bold
+    added = green
+    changed = yellow
+    untracked = red
 [filter "media"]
 	clean = git-media-clean %f
 	smudge = git-media-smudge %f
+[push]
+    default = simple

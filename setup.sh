@@ -2,6 +2,13 @@
 
 . $(dirname $0)/abstract.sh
 
+echo -e ${INFO} "        __  ___             __      __  _____ __             "${DEFAULT};
+echo -e ${INFO} "       /  |/  /_  __   ____/ /___  / /_/ __(_) /__  _____    "${DEFAULT};
+echo -e ${INFO} "      / /|_/ / / / /  / __  / __ \/ __/ /_/ / / _ \/ ___/    "${DEFAULT};
+echo -e ${INFO} "     / /  / / /_/ /  / /_/ / /_/ / /_/ __/ / /  __(__  )     "${DEFAULT};
+echo -e ${INFO} "    /_/  /_/\__  /   \____/\____/\__/_/ /_/_/\___/____/      "${DEFAULT};
+echo -e ${INFO} "           /____/                                            \n\n"${DEFAULT};
+
 # Repository of the oh-my-zsh project
 OHMYZSHREPO=git@github.com:robbyrussell/oh-my-zsh.git
 
@@ -29,7 +36,7 @@ symlink_config()
     if [ -f "${CUR_PATH}/$1.$OS" ]; then
         CONFFILE=$1.$OS
     fi
-    STEPMSG=$(printf "%-45s" "Applying ${CONFFILE} config")
+    STEPMSG="Applying ${CONFFILE} config"
     ADDIMSG=""
 
     if [ -L ~/"${SYMLINKNAME}" ]; then
@@ -43,11 +50,11 @@ symlink_config()
     echo -ne "${PROCESSMSG}${STEPMSG}"\\r
     OUTPUT=$(ln -s ${CUR_PATH}/${CONFFILE} ~/${SYMLINKNAME} 2>&1 >/dev/null)
     if [ $? -ne 0 ]; then
-        echo -e "${ERRORMSG}${STEPMSG}"
+        echo -e "${ERRORMSG}"
         echo -e ${OUTPUT}
         exit 1
     fi
-    echo -e "${SUCCESSMSG}${STEPMSG}"
+    echo -e "${SUCCESSMSG}"
     if [ "${ADDIMSG}" != "" ];then
         echo -e ${ADDIMSG} 
     fi
@@ -57,22 +64,33 @@ symlink_bin()
 {
     BINFILE=$1
     SYMLINKNAME=$1
-    echo -e ${INFO}"Adding ${CONFFILE} script ..."${DEFAULT}
+    STEPMSG="Adding ${BINFILE} script ..."
+    ADDIMSG=""
+
     if [ -L ~/bin/"${SYMLINKNAME}" ]; then
         #echo -e ${WARN}"Removing old symlinked script ~/bin/${SYMLINKNAME}"${DEFAULT}
         rm ~/bin/${SYMLINKNAME}
     elif [ -f ~/bin/"${SYMLINKNAME}" ]; then
-        echo -e ${WARN}"Moving old script to ~/bin/${SYMLINKNAME}.bak"${DEFAULT}
         mv ~/bin/${SYMLINKNAME} ~/bin/${SYMLINKNAME}.bak
+        ADDIMSG=${WARN}"Moving old script to ~/bin/${SYMLINKNAME}.bak"${DEFAULT}
     fi
-    ln -s ${CUR_PATH}/bin/${BINFILE} ~/bin/${SYMLINKNAME}
-    echo -e ${OK}"Done.\n"${DEFAULT}
+    echo -ne "${PROCESSMSG}${STEPMSG}"\\r
+    OUTPUT=$(ln -s ${CUR_PATH}/bin/${BINFILE} ~/bin/${SYMLINKNAME} 2>&1 >/dev/null)
+    if [ $? -ne 0 ]; then
+        echo -e "${ERRORMSG}"
+        echo -e ${OUTPUT}
+        exit 1
+    fi
+    echo -e "${SUCCESSMSG}"
+    if [ "${ADDIMSG}" != "" ];then
+        echo -e ${ADDIMSG} 
+    fi
 }
 
 check_commands()
 {
     CMD=$1
-    STEPMSG=$(printf "%-45s" "Installing ${CMD}")
+    STEPMSG="Installing ${CMD}"
     if ! type "${CMD}" >/dev/null 2>&1 ;then
         echo -ne "${PROCESSMSG}${STEPMSG}"\\r
         # Install the command or exit the script (option -e in the shebang) if failed
@@ -83,7 +101,7 @@ check_commands()
         fi
         if [ $? -ne 0 ]; then
             echo -e "${ERRORMSG}${STEPMSG}"
-            echo -e ${OUTPUT}
+            echo -e ${WARN}${OUTPUT}${DEFAULT}
             exit 1
         fi
         echo -e "${SUCCESSMSG}${STEPMSG}"
@@ -95,12 +113,12 @@ install_vim_bundle()
     REPO=$1
     BUNDLE=$(echo $REPO | cut -d'/' -f 2)
     if [ ! -d ~/.vim/bundle/"${BUNDLE}" ]; then
-        STEPMSG=$(printf "%-45s" "Installing VIM bundle ${BUNDLE}")
+        STEPMSG="Installing VIM bundle ${BUNDLE}"
         echo -ne "${PROCESSMSG}${STEPMSG}"\\r
         OUTPUT=$(git clone https:#github.com/${REPO} ~/.vim/bundle/${BUNDLE} 2>&1 >/dev/null)
         if [ $? -ne 0 ]; then
             echo -e "${ERRORMSG}${STEPMSG}"
-            echo -e ${OUTPUT}
+            echo -e ${WARN}${OUTPUT}${DEFAULT}
             exit 1
         fi
         echo -e "${SUCCESSMSG}${STEPMSG}"
@@ -115,12 +133,12 @@ install_vim_plugin()
         mkdir ~/.vim/plugin
     fi
     if [ ! -d ~/.vim/plugin/"${PLUGIN}" ]; then
-        STEPMSG=$(printf "%-45s" "Installing VIM plugin ${PLUGIN}")
+        STEPMSG="Installing VIM plugin ${PLUGIN}"
         echo -ne "${PROCESSMSG}${STEPMSG}"\\r
-        OUTPUT=$(wget https://raw.githubusercontent.com/${REPO}/master/plugin/${PLUGIN} ~/.vim/plugin/ 2>&1 >/dev/null)
+        OUTPUT=$(wget -P ~/.vim/plugin/ https://raw.githubusercontent.com/${REPO}/master/plugin/${PLUGIN} 2>&1 >/dev/null)
         if [ $? -ne 0 ]; then
             echo -e "${ERRORMSG}${STEPMSG}"
-            echo -e ${OUTPUT}
+            echo -e ${WARN}${OUTPUT}${DEFAULT}
             exit 1
         fi
         echo -e "${SUCCESSMSG}${STEPMSG}"
@@ -134,12 +152,12 @@ check_commands "vim"
 
 # Cloning the oh-my-zsh project if not already done
 if [ ! -d ~/.oh-my-zsh ]; then
-    STEPMSG=$(printf "%-45s" "Cloning OH-MY-ZSH repo")
+    STEPMSG="Cloning OH-MY-ZSH repo"
     echo -ne "${PROCESSMSG}${STEPMSG}"\\r
     OUTPUT=$(git clone ${OHMYZSHREPO} ~/.oh-my-zsh 2>&1 >/dev/null)
     if [ $? -ne 0 ]; then
         echo -e "${ERRORMSG}${STEPMSG}"
-        echo -e ${OUTPUT}
+        echo -e ${WARN}${OUTPUT}${DEFAULT}
         exit 1
     fi
     echo -e "${SUCCESSMSG}${STEPMSG}"
@@ -206,7 +224,7 @@ if [ $# -eq 1 -a "$1" = "with-ssh" ]; then
     if [ ! -d ~/bin ]; then
         mkdir ~/bin
     fi
-    symlink_bin "ssh"
+    symlink_bin "ssh_cmds"
     symlink_bin "ssh-copy-id"
 
     if [ ! -d ~/.ssh ]; then
@@ -219,5 +237,5 @@ if [ -f "$(dirname $0)/setup-${OS}.sh" ];then
     . $(dirname $0)/setup-${OS}.sh
 fi
 
-echo -e ${OK}"\nYou are all set. You can now define zsh as your default shell using the command :\nchsh -s $(which zsh)"${DEFAULT}
+echo -e ${INFO}"\nYou are all set. You can now define zsh as your default shell using the command :\nchsh -s $(which zsh)"${DEFAULT}
 

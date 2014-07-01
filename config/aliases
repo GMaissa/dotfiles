@@ -7,7 +7,9 @@
 # ###########
 # SSH aliases
 alias cpid="~/bin/ssh-copy-id"
-alias ssh="~/bin/ssh"
+alias ssh="~/bin/ssh_cmds ssh"
+alias scp="~/bin/ssh_cmds scp"
+alias rsync="~/bin/ssh_cmds rsync"
 
 # ###########
 # SVN aliases
