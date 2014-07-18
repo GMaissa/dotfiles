@@ -115,7 +115,7 @@ install_vim_bundle()
     if [ ! -d ~/.vim/bundle/"${BUNDLE}" ]; then
         STEPMSG="Installing VIM bundle ${BUNDLE}"
         echo -ne "${PROCESSMSG}${STEPMSG}"\\r
-        OUTPUT=$(git clone https:#github.com/${REPO} ~/.vim/bundle/${BUNDLE} 2>&1 >/dev/null)
+        OUTPUT=$(git clone https://github.com/${REPO} ~/.vim/bundle/${BUNDLE} 2>&1 >/dev/null)
         if [ $? -ne 0 ]; then
             echo -e "${ERRORMSG}${STEPMSG}"
             echo -e ${WARN}${OUTPUT}${DEFAULT}
@@ -149,6 +149,7 @@ install_vim_plugin()
 check_commands "zsh"
 check_commands "tmux"
 check_commands "vim"
+check_commands "wget"
 
 # Cloning the oh-my-zsh project if not already done
 if [ ! -d ~/.oh-my-zsh ]; then
