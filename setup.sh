@@ -199,7 +199,7 @@ if [ ! -d ~/.vim/bundle ]; then
     mkdir -p ~/.vim/bundle
 fi
 # Install pathogen to manage vim plugins as bundles
-curl -so ~/.vim/autoload/pathogen.vim https:#raw.github.com/tpope/vim-pathogen/master/autoload/pathogen.vim
+curl -so ~/.vim/autoload/pathogen.vim https://raw.github.com/tpope/vim-pathogen/master/autoload/pathogen.vim
 # Install bundles
 install_vim_bundle scrooloose/nerdtree
 install_vim_bundle kien/ctrlp.vim
