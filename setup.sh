@@ -216,6 +216,7 @@ install_vim_plugin jamessan/vim-gnupg gnupg.vim
 
 # Apply configuration for git
 symlink_config "config/git" ".gitconfig"
+symlink_config "config/gitignore" ".gitignore_global"
 
 # Apply configuration for ssh
 if [ $# -eq 1 -a "$1" = "with-ssh" ]; then

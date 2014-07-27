@@ -1,5 +1,6 @@
 [core]
     editor = vim
+	excludesfile = /Users/g.maissa/.gitignore_global
 [user]
 	name = Guillaume Maïssa
 	email = guillaume@maissa.fr
