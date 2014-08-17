@@ -4,6 +4,7 @@
 [user]
 	name = Guillaume Maïssa
 	email = guillaume@maissa.fr
+	signingkey = 1D8E1988
 [mergetool]
     keepBackup = true
 [alias]
