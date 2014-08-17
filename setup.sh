@@ -210,6 +210,7 @@ install_vim_bundle nathanaelkane/vim-indent-guides
 install_vim_bundle edsono/vim-matchit
 install_vim_bundle tpope/vim-speeddating
 install_vim_bundle tpope/vim-surround
+install_vim_bundle rizzatti/dash.vim
 
 # Install plugins
 install_vim_plugin jamessan/vim-gnupg gnupg.vim
