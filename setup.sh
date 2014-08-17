@@ -145,11 +145,26 @@ install_vim_plugin()
     fi
 }
 
+install_gpg_key()
+{
+    GPGKEY=$1
+    STEPMSG="Installing GPG key ${GPGKEY}"
+    echo -ne "${PROCESSMSG}${STEPMSG}"\\r
+    OUTPUT=$(gpg --keyserver pgp.mit.edu--recv-key ${GPGKEY} 2>&1 >/dev/null)
+    if [ $? -ne 0 ]; then
+        echo -e "${ERRORMSG}${STEPMSG}"
+        echo -e ${WARN}${OUTPUT}${DEFAULT}
+        exit 1
+    fi
+    echo -e "${SUCCESSMSG}${STEPMSG}"
+}
+
 # We need Git, Zsh Tmux to be installed
 check_commands "zsh"
 check_commands "tmux"
 check_commands "vim"
 check_commands "wget"
+check_commands "gnupg2"
 
 # Cloning the oh-my-zsh project if not already done
 if [ ! -d ~/.oh-my-zsh ]; then
