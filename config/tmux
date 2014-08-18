@@ -42,7 +42,8 @@ bind r source-file ~/.tmux.conf \; display-message "Config reloaded..."
 
 # Using C-a instead of C-b
 set-option -g prefix C-a
-bind-key C-a last-window
+unbind-key C-b
+bind-key C-a send-prefix
 
 # color
 set -g default-terminal "screen-256color"
