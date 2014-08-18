@@ -39,6 +39,7 @@ alias hostsconfig="sudo vim /etc/hosts"
 alias vi="vim"
 alias rsyncplus="rsync -P --bwlimit=100"
 alias restart-vb='sudo /Library/StartupItems/VirtualBox/VirtualBox restart'
+alias rgrep="grep -r"
 
 # ################
 # FIX TYPO aliases
