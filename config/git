@@ -8,7 +8,9 @@
 [mergetool]
     keepBackup = true
 [alias]
-    tree = log --graph --decorate --oneline --all
+    tree = log --graph --abbrev-commit --decorate --date=relative --format=format:'%C(blue)%h%C(reset) - %C(green)(%ar)%C(reset) %C(white)%s%C(reset) %C(magenta)- %an%C(reset)%C(yellow)%d%C(reset)' --all
+    tree2 = log --graph --abbrev-commit --decorate --format=format:'%C(blue)%h%C(reset) - %C(cyan)%aD%C(reset) %C(green)(%ar)%C(reset)%C(yellow)%d%C(reset)%n''          %C(white)%s%C(reset) %C(white)- %an%C(reset)' --all
+    lg = !"git tree"
     st = status -sb
 [color]
     branch = auto
