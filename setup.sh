@@ -132,7 +132,7 @@ install_vim_plugin()
     if [ ! -d ~/.vim/plugin ]; then
         mkdir ~/.vim/plugin
     fi
-    if [ ! -d ~/.vim/plugin/"${PLUGIN}" ]; then
+    if [ ! -f ~/.vim/plugin/"${PLUGIN}" ]; then
         STEPMSG="Installing VIM plugin ${PLUGIN}"
         echo -ne "${PROCESSMSG}${STEPMSG}"\\r
         OUTPUT=$(wget -P ~/.vim/plugin/ https://raw.githubusercontent.com/${REPO}/master/plugin/${PLUGIN} 2>&1 >/dev/null)
@@ -165,6 +165,9 @@ check_commands "tmux"
 check_commands "vim"
 check_commands "wget"
 check_commands "gnupg2"
+check_commands "git-flow"
+check_commands "tree"
+check_commands "openssl"
 
 # Cloning the oh-my-zsh project if not already done
 if [ ! -d ~/.oh-my-zsh ]; then
@@ -214,7 +217,20 @@ if [ ! -d ~/.vim/bundle ]; then
     mkdir -p ~/.vim/bundle
 fi
 # Install pathogen to manage vim plugins as bundles
-curl -so ~/.vim/autoload/pathogen.vim https://raw.github.com/tpope/vim-pathogen/master/autoload/pathogen.vim
+if [ ! -f ~/.vim/autoload/pathogen.vim ]; then
+    STEPMSG="Installing VIM plugin pathogen"
+    echo -ne "${PROCESSMSG}${STEPMSG}"\\r
+    OUTPUT=$(wget -P ~/.vim/autoload/ https://raw.github.com/tpope/vim-pathogen/master/autoload/pathogen.vim 2>&1 >/dev/null)
+    if [ $? -ne 0 ]; then
+        echo -e "${ERRORMSG}${STEPMSG}"
+        echo -e ${WARN}${OUTPUT}${DEFAULT}
+        exit 1
+    fi
+    echo -e "${SUCCESSMSG}${STEPMSG}"
+fi
+# Install plugins
+install_vim_plugin jamessan/vim-gnupg gnupg.vim
+
 # Install bundles
 install_vim_bundle scrooloose/nerdtree
 install_vim_bundle kien/ctrlp.vim
@@ -226,9 +242,6 @@ install_vim_bundle edsono/vim-matchit
 install_vim_bundle tpope/vim-speeddating
 install_vim_bundle tpope/vim-surround
 install_vim_bundle rizzatti/dash.vim
-
-# Install plugins
-install_vim_plugin jamessan/vim-gnupg gnupg.vim
 
 # Apply configuration for git
 symlink_config "config/git" ".gitconfig"
