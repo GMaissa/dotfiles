@@ -165,6 +165,9 @@ check_commands "tmux"
 check_commands "vim"
 check_commands "wget"
 check_commands "gnupg2"
+check_commands "git-flow"
+check_commands "tree"
+check_commands "openssl"
 
 # Cloning the oh-my-zsh project if not already done
 if [ ! -d ~/.oh-my-zsh ]; then
