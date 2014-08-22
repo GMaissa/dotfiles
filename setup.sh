@@ -217,7 +217,18 @@ if [ ! -d ~/.vim/bundle ]; then
     mkdir -p ~/.vim/bundle
 fi
 # Install pathogen to manage vim plugins as bundles
-curl -so ~/.vim/autoload/pathogen.vim https://raw.github.com/tpope/vim-pathogen/master/autoload/pathogen.vim
+if [ ! -f ~/.vim/autoload/pathogen.vim ]; then
+    STEPMSG="Installing VIM plugin pathogen"
+    echo -ne "${PROCESSMSG}${STEPMSG}"\\r
+    OUTPUT=$(wget -P ~/.vim/autoload/ https://raw.github.com/tpope/vim-pathogen/master/autoload/pathogen.vim 2>&1 >/dev/null)
+    if [ $? -ne 0 ]; then
+        echo -e "${ERRORMSG}${STEPMSG}"
+        echo -e ${WARN}${OUTPUT}${DEFAULT}
+        exit 1
+    fi
+    echo -e "${SUCCESSMSG}${STEPMSG}"
+fi
+
 # Install bundles
 install_vim_bundle scrooloose/nerdtree
 install_vim_bundle kien/ctrlp.vim
