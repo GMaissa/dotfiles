@@ -132,7 +132,7 @@ install_vim_plugin()
     if [ ! -d ~/.vim/plugin ]; then
         mkdir ~/.vim/plugin
     fi
-    if [ ! -d ~/.vim/plugin/"${PLUGIN}" ]; then
+    if [ ! -f ~/.vim/plugin/"${PLUGIN}" ]; then
         STEPMSG="Installing VIM plugin ${PLUGIN}"
         echo -ne "${PROCESSMSG}${STEPMSG}"\\r
         OUTPUT=$(wget -P ~/.vim/plugin/ https://raw.githubusercontent.com/${REPO}/master/plugin/${PLUGIN} 2>&1 >/dev/null)
