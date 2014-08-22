@@ -228,6 +228,8 @@ if [ ! -f ~/.vim/autoload/pathogen.vim ]; then
     fi
     echo -e "${SUCCESSMSG}${STEPMSG}"
 fi
+# Install plugins
+install_vim_plugin jamessan/vim-gnupg gnupg.vim
 
 # Install bundles
 install_vim_bundle scrooloose/nerdtree
@@ -240,9 +242,6 @@ install_vim_bundle edsono/vim-matchit
 install_vim_bundle tpope/vim-speeddating
 install_vim_bundle tpope/vim-surround
 install_vim_bundle rizzatti/dash.vim
-
-# Install plugins
-install_vim_plugin jamessan/vim-gnupg gnupg.vim
 
 # Apply configuration for git
 symlink_config "config/git" ".gitconfig"
