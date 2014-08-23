@@ -242,6 +242,7 @@ install_vim_bundle edsono/vim-matchit
 install_vim_bundle tpope/vim-speeddating
 install_vim_bundle tpope/vim-surround
 install_vim_bundle rizzatti/dash.vim
+install_vim_bundle altercation/vim-colors-solarized
 
 # Apply configuration for git
 symlink_config "config/git" ".gitconfig"

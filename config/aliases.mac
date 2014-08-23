@@ -40,3 +40,7 @@ alias vi="vim"
 alias rsyncplus="rsync -P --bwlimit=100"
 alias restart-vb='sudo /Library/StartupItems/VirtualBox/VirtualBox restart'
 
+# ################
+# FIX TYPO aliases
+alias gti="git"
+
