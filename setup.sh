@@ -7,7 +7,7 @@ echo -e ${INFO} "       /  |/  /_  __   ____/ /___  / /_/ __(_) /__  _____    "$
 echo -e ${INFO} "      / /|_/ / / / /  / __  / __ \/ __/ /_/ / / _ \/ ___/    "${DEFAULT};
 echo -e ${INFO} "     / /  / / /_/ /  / /_/ / /_/ / /_/ __/ / /  __(__  )     "${DEFAULT};
 echo -e ${INFO} "    /_/  /_/\__  /   \____/\____/\__/_/ /_/_/\___/____/      "${DEFAULT};
-echo -e ${INFO} "           /____/                                            \n\n"${DEFAULT};
+echo -e ${INFO} "           /____/                                            \n"${DEFAULT};
 
 # Repository of the oh-my-zsh project
 OHMYZSHREPO=git@github.com:robbyrussell/oh-my-zsh.git
@@ -160,6 +160,7 @@ install_gpg_key()
 }
 
 # We need Git, Zsh Tmux to be installed
+echo -e "\n${INFO}COMMANDS${DEFAULT}"
 check_commands "zsh"
 check_commands "tmux"
 check_commands "vim"
@@ -169,6 +170,7 @@ check_commands "git-flow"
 check_commands "tree"
 check_commands "openssl"
 
+echo -e "\n${INFO}SHELL${DEFAULT}"
 # Cloning the oh-my-zsh project if not already done
 if [ ! -d ~/.oh-my-zsh ]; then
     STEPMSG="Cloning OH-MY-ZSH repo"
@@ -206,6 +208,7 @@ symlink_config "config/aliases" ".aliases"
 symlink_config "config/tmux" ".tmux.conf"
 
 # Apply configuration for vim
+echo -e "\n${INFO}VIM${DEFAULT}"
 symlink_config "config/vim" ".vimrc"
 if [ ! -d ~/.vim/backup ]; then
     mkdir -p ~/.vim/backup
@@ -245,11 +248,13 @@ install_vim_bundle rizzatti/dash.vim
 install_vim_bundle altercation/vim-colors-solarized
 
 # Apply configuration for git
+echo -e "\n${INFO}GIT${DEFAULT}"
 symlink_config "config/git" ".gitconfig"
 symlink_config "config/gitignore" ".gitignore_global"
 
 # Apply configuration for ssh
 if [ $# -eq 1 -a "$1" = "with-ssh" ]; then
+    echo -e "\n${INFO}SSH${DEFAULT}"
     # Adding a few usefull scripts
     # You will be able to split the ssh configuration into multiple files
     # ex: config.work config.personal ...
