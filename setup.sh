@@ -15,6 +15,8 @@ OHMYZSHREPO=git@github.com:robbyrussell/oh-my-zsh.git
 # Current path
 CUR_PATH=$(pwd)
 
+WITH_SSH=0
+
 # Define the current distrib and the install command
 if [[ "$(uname -s)" == "Darwin" ]]; then
     OS='mac'
@@ -28,6 +30,19 @@ elif [[ "$(uname -s)" == "Linux" ]]; then
         INSTALLCMD='yum install -y'
     fi
 fi
+
+display_help()
+{
+#    echo -e $INFO
+    echo -e "Usage :"
+    echo -e "   ./setup.sh <options>\n"
+    echo -e "Options :"
+    echo -e "   -h, --help         Display this help"
+    echo -e "   --with-composer    Install composer and the static analysis / unit test tools"
+    echo -e "   --with-ssh         Install ssh 'bins' and configuration\n"
+#    echo -e $DEFAULT
+    exit
+}
 
 symlink_config()
 {
@@ -159,6 +174,20 @@ install_gpg_key()
     echo -e "${SUCCESSMSG}${STEPMSG}"
 }
 
+# Check command arguments
+while test $# -gt 0
+do
+    case "$1" in
+        -h)                 display_help
+                            ;;
+        --help)             display_help
+                            ;;
+        --with-ssh)         WITH_SSH=1
+                            ;;
+    esac
+    shift
+done
+
 # We need Git, Zsh Tmux to be installed
 echo -e "\n${INFO}COMMANDS${DEFAULT}"
 check_commands "zsh"
@@ -253,7 +282,7 @@ symlink_config "config/git" ".gitconfig"
 symlink_config "config/gitignore" ".gitignore_global"
 
 # Apply configuration for ssh
-if [ $# -eq 1 -a "$1" = "with-ssh" ]; then
+if [[ ${WITH_SSH} -eq 1 ]]; then
     echo -e "\n${INFO}SSH${DEFAULT}"
     # Adding a few usefull scripts
     # You will be able to split the ssh configuration into multiple files
