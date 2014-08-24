@@ -15,6 +15,7 @@ OHMYZSHREPO=git@github.com:robbyrussell/oh-my-zsh.git
 # Current path
 CUR_PATH=$(pwd)
 
+WITH_COMPOSER=0
 WITH_SSH=0
 
 # Define the current distrib and the install command
@@ -174,6 +175,22 @@ install_gpg_key()
     echo -e "${SUCCESSMSG}${STEPMSG}"
 }
 
+install_composer_pkg()
+{
+    PKG=$1
+#    if [ ! -d ~/.vim/bundle/"${PKG}" ]; then
+        STEPMSG="Installing Composer package ${PKG}"
+        echo -ne "${PROCESSMSG}${STEPMSG}"\\r
+        OUTPUT=$(composer global require "${PKG}=*" 2>&1 >/dev/null)
+        if [ $? -ne 0 ]; then
+            echo -e "${ERRORMSG}${STEPMSG}"
+            echo -e ${WARN}${OUTPUT}${DEFAULT}
+            exit 1
+        fi
+        echo -e "${SUCCESSMSG}${STEPMSG}"
+#    fi
+}
+
 # Check command arguments
 while test $# -gt 0
 do
@@ -181,6 +198,8 @@ do
         -h)                 display_help
                             ;;
         --help)             display_help
+                            ;;
+        --with-composer)    WITH_COMPOSER=1
                             ;;
         --with-ssh)         WITH_SSH=1
                             ;;
@@ -280,6 +299,26 @@ install_vim_bundle altercation/vim-colors-solarized
 echo -e "\n${INFO}GIT${DEFAULT}"
 symlink_config "config/git" ".gitconfig"
 symlink_config "config/gitignore" ".gitignore_global"
+
+# Install composer
+if [[ ${WITH_COMPOSER} -eq 1 ]]; then
+    echo -e "\n${INFO}COMPOSER${DEFAULT}"
+    if [ ! -f /usr/local/bin/composer ]; then
+        STEPMSG="Installing Composer"
+        echo -ne "${PROCESSMSG}${STEPMSG}"\\r
+        OUTPUT=$(curl -sS https://getcomposer.org/installer | php && mv composer.phar /usr/local/bin/composer 2>&1 >/dev/null)
+        if [ $? -ne 0 ]; then
+            echo -e "${ERRORMSG}${STEPMSG}"
+            echo -e ${WARN}${OUTPUT}${DEFAULT}
+            exit 1
+        fi
+        echo -e "${SUCCESSMSG}${STEPMSG}"
+    fi
+    install_composer_pkg "squizlabs/php_codesniffer"
+    install_composer_pkg "phpunit/phpunit"
+    install_composer_pkg "phpmd/phpmd"
+    install_composer_pkg "sebastian/phpcpd"
+fi
 
 # Apply configuration for ssh
 if [[ ${WITH_SSH} -eq 1 ]]; then
