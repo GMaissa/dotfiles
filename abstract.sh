@@ -1,7 +1,7 @@
 #!/bin/bash -x
 
 # COLOR STYLES
-INFO="\033[0;36m"
+INFO="\033[0;34m"
 OK="\033[0;32m"
 WARN="\033[0;33m"
 ERROR="\033[1;31m"
