@@ -26,6 +26,9 @@ source $ZSH/oh-my-zsh.sh
 
 # User configuration
 export PATH="/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/bin"
+if [[ -d ${HOME}/.composer/vendor/bin ]]; then
+    export PATH="$PATH:${HOME}/.composer/vendor/bin"
+fi
 
 # Enable vi-mode
 bindkey -v
