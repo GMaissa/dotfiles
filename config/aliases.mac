@@ -38,6 +38,13 @@ alias hostsconfig="sudo vim /etc/hosts"
 # FIX TYPO aliases
 alias gti="git"
 
+# ###############
+# VAGRANT aliases
+alias vup="vagrant up"
+alias vssh"vagrant ssh"
+alias vdest="vagrant destroy"
+alias vba="vagrant box add -name"
+
 # ############
 # MISC aliases
 alias vi="vim"
