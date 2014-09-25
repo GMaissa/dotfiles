@@ -34,11 +34,14 @@ alias ohmyzsh="vim ~/.oh-my-zsh"
 alias tmuxconfig="vim ~/.tmux.conf"
 alias hostsconfig="sudo vim /etc/hosts"
 
+# ################
+# FIX TYPO aliases
+alias gti="git"
+
 # ############
 # MISC aliases
 alias vi="vim"
 alias rsyncplus="rsync -P --bwlimit=100"
-alias restart-vb='sudo /Library/StartupItems/VirtualBox/VirtualBox restart'
 
 # ##############
 # APACHE aliases
@@ -49,18 +52,8 @@ alias a2em="a2enmode"
 alias a2dm="a2dismode"
 alias a2se="cd /etc/apache2/sites-enabled"
 
-# ###########
-# LXC aliases
-alias lxcrm='sudo cremove'
-alias lxcstart='sudo lxc-start -dn'
-alias lxcstatus='sudo lxc-status'
-
 # ######################
 # Terminal theme aliases
 alias dark="${HOME}/.solarized/gnome-terminal-colors-solarized/set_dark.sh"
 alias light="${HOME}/.solarized/gnome-terminal-colors-solarized/set_light.sh"
-
-# ################
-# FIX TYPO aliases
-alias gti="git"
 
