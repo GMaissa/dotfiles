@@ -217,6 +217,7 @@ check_commands "gnupg2"
 check_commands "git-flow"
 check_commands "tree"
 check_commands "openssl"
+check_commands "sshfs"
 
 echo -e "\n${INFO}SHELL${DEFAULT}"
 # Cloning the oh-my-zsh project if not already done
