@@ -7,13 +7,16 @@ echo -e ${INFO} "       /  |/  /_  __   ____/ /___  / /_/ __(_) /__  _____    "$
 echo -e ${INFO} "      / /|_/ / / / /  / __  / __ \/ __/ /_/ / / _ \/ ___/    "${DEFAULT};
 echo -e ${INFO} "     / /  / / /_/ /  / /_/ / /_/ / /_/ __/ / /  __(__  )     "${DEFAULT};
 echo -e ${INFO} "    /_/  /_/\__  /   \____/\____/\__/_/ /_/_/\___/____/      "${DEFAULT};
-echo -e ${INFO} "           /____/                                            \n\n"${DEFAULT};
+echo -e ${INFO} "           /____/                                            \n"${DEFAULT};
 
 # Repository of the oh-my-zsh project
 OHMYZSHREPO=git@github.com:robbyrussell/oh-my-zsh.git
 
 # Current path
 CUR_PATH=$(pwd)
+
+WITH_COMPOSER=0
+WITH_SSH=0
 
 # Define the current distrib and the install command
 if [[ "$(uname -s)" == "Darwin" ]]; then
@@ -28,6 +31,19 @@ elif [[ "$(uname -s)" == "Linux" ]]; then
         INSTALLCMD='yum install -y'
     fi
 fi
+
+display_help()
+{
+#    echo -e $INFO
+    echo -e "Usage :"
+    echo -e "   ./setup.sh <options>\n"
+    echo -e "Options :"
+    echo -e "   -h, --help         Display this help"
+    echo -e "   --with-composer    Install composer and the static analysis / unit test tools"
+    echo -e "   --with-ssh         Install ssh 'bins' and configuration\n"
+#    echo -e $DEFAULT
+    exit
+}
 
 symlink_config()
 {
@@ -132,7 +148,7 @@ install_vim_plugin()
     if [ ! -d ~/.vim/plugin ]; then
         mkdir ~/.vim/plugin
     fi
-    if [ ! -d ~/.vim/plugin/"${PLUGIN}" ]; then
+    if [ ! -f ~/.vim/plugin/"${PLUGIN}" ]; then
         STEPMSG="Installing VIM plugin ${PLUGIN}"
         echo -ne "${PROCESSMSG}${STEPMSG}"\\r
         OUTPUT=$(wget -P ~/.vim/plugin/ https://raw.githubusercontent.com/${REPO}/master/plugin/${PLUGIN} 2>&1 >/dev/null)
@@ -159,14 +175,50 @@ install_gpg_key()
     echo -e "${SUCCESSMSG}${STEPMSG}"
 }
 
+install_composer_pkg()
+{
+    PKG=$1
+#    if [ ! -d ~/.vim/bundle/"${PKG}" ]; then
+        STEPMSG="Installing Composer package ${PKG}"
+        echo -ne "${PROCESSMSG}${STEPMSG}"\\r
+        OUTPUT=$(composer global require "${PKG}=*" 2>&1 >/dev/null)
+        if [ $? -ne 0 ]; then
+            echo -e "${ERRORMSG}${STEPMSG}"
+            echo -e ${WARN}${OUTPUT}${DEFAULT}
+            exit 1
+        fi
+        echo -e "${SUCCESSMSG}${STEPMSG}"
+#    fi
+}
+
+# Check command arguments
+while test $# -gt 0
+do
+    case "$1" in
+        -h)                 display_help
+                            ;;
+        --help)             display_help
+                            ;;
+        --with-composer)    WITH_COMPOSER=1
+                            ;;
+        --with-ssh)         WITH_SSH=1
+                            ;;
+    esac
+    shift
+done
+
 # We need Git, Zsh Tmux to be installed
+echo -e "\n${INFO}COMMANDS${DEFAULT}"
 check_commands "zsh"
 check_commands "tmux"
 check_commands "vim"
 check_commands "wget"
 check_commands "gnupg2"
+check_commands "git-flow"
 check_commands "tree"
+check_commands "openssl"
 
+echo -e "\n${INFO}SHELL${DEFAULT}"
 # Cloning the oh-my-zsh project if not already done
 if [ ! -d ~/.oh-my-zsh ]; then
     STEPMSG="Cloning OH-MY-ZSH repo"
@@ -204,6 +256,7 @@ symlink_config "config/aliases" ".aliases"
 symlink_config "config/tmux" ".tmux.conf"
 
 # Apply configuration for vim
+echo -e "\n${INFO}VIM${DEFAULT}"
 symlink_config "config/vim" ".vimrc"
 if [ ! -d ~/.vim/backup ]; then
     mkdir -p ~/.vim/backup
@@ -215,7 +268,20 @@ if [ ! -d ~/.vim/bundle ]; then
     mkdir -p ~/.vim/bundle
 fi
 # Install pathogen to manage vim plugins as bundles
-curl -so ~/.vim/autoload/pathogen.vim https://raw.github.com/tpope/vim-pathogen/master/autoload/pathogen.vim
+if [ ! -f ~/.vim/autoload/pathogen.vim ]; then
+    STEPMSG="Installing VIM plugin pathogen"
+    echo -ne "${PROCESSMSG}${STEPMSG}"\\r
+    OUTPUT=$(wget -P ~/.vim/autoload/ https://raw.github.com/tpope/vim-pathogen/master/autoload/pathogen.vim 2>&1 >/dev/null)
+    if [ $? -ne 0 ]; then
+        echo -e "${ERRORMSG}${STEPMSG}"
+        echo -e ${WARN}${OUTPUT}${DEFAULT}
+        exit 1
+    fi
+    echo -e "${SUCCESSMSG}${STEPMSG}"
+fi
+# Install plugins
+install_vim_plugin jamessan/vim-gnupg gnupg.vim
+
 # Install bundles
 install_vim_bundle scrooloose/nerdtree
 install_vim_bundle kien/ctrlp.vim
@@ -227,16 +293,39 @@ install_vim_bundle edsono/vim-matchit
 install_vim_bundle tpope/vim-speeddating
 install_vim_bundle tpope/vim-surround
 install_vim_bundle rizzatti/dash.vim
+install_vim_bundle altercation/vim-colors-solarized
 
 # Install plugins
 install_vim_plugin jamessan/vim-gnupg gnupg.vim
 
 # Apply configuration for git
+echo -e "\n${INFO}GIT${DEFAULT}"
 symlink_config "config/git" ".gitconfig"
 symlink_config "config/gitignore" ".gitignore_global"
 
+# Install composer
+if [[ ${WITH_COMPOSER} -eq 1 ]]; then
+    echo -e "\n${INFO}COMPOSER${DEFAULT}"
+    if [ ! -f /usr/local/bin/composer ]; then
+        STEPMSG="Installing Composer"
+        echo -ne "${PROCESSMSG}${STEPMSG}"\\r
+        OUTPUT=$(curl -sS https://getcomposer.org/installer | php && mv composer.phar /usr/local/bin/composer 2>&1 >/dev/null)
+        if [ $? -ne 0 ]; then
+            echo -e "${ERRORMSG}${STEPMSG}"
+            echo -e ${WARN}${OUTPUT}${DEFAULT}
+            exit 1
+        fi
+        echo -e "${SUCCESSMSG}${STEPMSG}"
+    fi
+    install_composer_pkg "squizlabs/php_codesniffer"
+    install_composer_pkg "phpunit/phpunit"
+    install_composer_pkg "phpmd/phpmd"
+    install_composer_pkg "sebastian/phpcpd"
+fi
+
 # Apply configuration for ssh
-if [ $# -eq 1 -a "$1" = "with-ssh" ]; then
+if [[ ${WITH_SSH} -eq 1 ]]; then
+    echo -e "\n${INFO}SSH${DEFAULT}"
     # Adding a few usefull scripts
     # You will be able to split the ssh configuration into multiple files
     # ex: config.work config.personal ...

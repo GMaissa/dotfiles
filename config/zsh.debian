@@ -1,3 +1,5 @@
+# vim: ft=sh
+
 # Path to your oh-my-zsh installation.
 export ZSH=$HOME/.oh-my-zsh
 
@@ -24,12 +26,18 @@ source $ZSH/oh-my-zsh.sh
 
 # User configuration
 export PATH="/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/bin"
+if [[ -d ${HOME}/.composer/vendor/bin ]]; then
+    export PATH="$PATH:${HOME}/.composer/vendor/bin"
+fi
 
 # Enable vi-mode
 bindkey -v
 
 # Enable search in command history
 bindkey '^R' history-incremental-search-backward
+
+# SVN Config
+export SVN_EDITOR=vim
 
 # Load the solarized color set
 if [ -x /usr/bin/dircolors ]; then

@@ -37,9 +37,7 @@ alias hostsconfig="sudo vim /etc/hosts"
 # ############
 # MISC aliases
 alias vi="vim"
-alias fixkey="~/Dropbox/dotfiles/scripts/keyboard.sh"
-alias record-training='avconv -f pulse -i bluez_source.00_1E_DE_61_A4_A5 -acodec libmp3lame -f x11grab -r 20 -s 1280x960 -i :0.0 -vcodec libx264  -preset ultrafast '
-alias rsyncplus="rsync -P --rsh=\"/usr/bin/ssh\" --bwlimit=100"
+alias rsyncplus="rsync -P --bwlimit=100"
 alias restart-vb='sudo /Library/StartupItems/VirtualBox/VirtualBox restart'
 
 # ##############
@@ -61,4 +59,8 @@ alias lxcstatus='sudo lxc-status'
 # Terminal theme aliases
 alias dark="${HOME}/.solarized/gnome-terminal-colors-solarized/set_dark.sh"
 alias light="${HOME}/.solarized/gnome-terminal-colors-solarized/set_light.sh"
+
+# ################
+# FIX TYPO aliases
+alias gti="git"
 

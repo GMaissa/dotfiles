@@ -37,10 +37,7 @@ alias hostsconfig="sudo vim /etc/hosts"
 # ############
 # MISC aliases
 alias vi="vim"
-alias fixkey="~/Dropbox/dotfiles/scripts/keyboard.sh"
-alias record-training='avconv -f pulse -i bluez_source.00_1E_DE_61_A4_A5 -acodec libmp3lame -f x11grab -r 20 -s 1280x960 -i :0.0 -vcodec libx264  -preset ultrafast '
-alias rsyncplus="rsync -P --rsh=\"/usr/bin/ssh\" --bwlimit=100"
-alias restart-vb='sudo /Library/StartupItems/VirtualBox/VirtualBox restart'
+alias rsyncplus="rsync -P --bwlimit=100"
 
 # ##############
 # APACHE aliases
@@ -56,3 +53,8 @@ alias a2se="cd /etc/apache2/sites-enabled"
 alias lxcrm='sudo cremove'
 alias lxcstart='sudo lxc-start -dn'
 alias lxcstatus='sudo lxc-status'
+
+# ################
+# FIX TYPO aliases
+alias gti="git"
+
