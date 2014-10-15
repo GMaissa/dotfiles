@@ -349,6 +349,7 @@ if [[ ${WITH_NODE} -eq 1 ]]; then
 
     install_node_pkg "grunt-cli"
     install_node_pkg "bower"
+    install_node_pkg "bower-installer"
 fi
 
 # Apply configuration for ssh
