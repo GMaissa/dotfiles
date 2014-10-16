@@ -16,6 +16,7 @@ OHMYZSHREPO=git@github.com:robbyrussell/oh-my-zsh.git
 CUR_PATH=$(pwd)
 
 WITH_COMPOSER=0
+WITH_NODE=0
 WITH_SSH=0
 
 # Define the current distrib and the install command
@@ -40,6 +41,7 @@ display_help()
     echo -e "Options :"
     echo -e "   -h, --help         Display this help"
     echo -e "   --with-composer    Install composer and the static analysis / unit test tools"
+    echo -e "   --with-node        Install NodeJS, NPM and some NodeJS packages (grunt, bower)"
     echo -e "   --with-ssh         Install ssh 'bins' and configuration\n"
 #    echo -e $DEFAULT
     exit
@@ -191,6 +193,20 @@ install_composer_pkg()
 #    fi
 }
 
+install_node_pkg()
+{
+    PKG=$1
+    STEPMSG="Installing NodeJS package ${PKG}"
+    echo -ne "${PROCESSMSG}${STEPMSG}"\\r
+    OUTPUT=$(sudo npm install -g "${PKG}" 2>&1 >/dev/null)
+    if [ $? -ne 0 ]; then
+        echo -e "${ERRORMSG}${STEPMSG}"
+        echo -e ${WARN}${OUTPUT}${DEFAULT}
+        exit 1
+    fi
+    echo -e "${SUCCESSMSG}${STEPMSG}"
+}
+
 # Check command arguments
 while test $# -gt 0
 do
@@ -200,6 +216,8 @@ do
         --help)             display_help
                             ;;
         --with-composer)    WITH_COMPOSER=1
+                            ;;
+        --with-node)        WITH_NODE=1
                             ;;
         --with-ssh)         WITH_SSH=1
                             ;;
@@ -296,6 +314,9 @@ install_vim_bundle tpope/vim-surround
 install_vim_bundle rizzatti/dash.vim
 install_vim_bundle altercation/vim-colors-solarized
 
+# Install plugins
+install_vim_plugin jamessan/vim-gnupg gnupg.vim
+
 # Apply configuration for git
 echo -e "\n${INFO}GIT${DEFAULT}"
 symlink_config "config/git" ".gitconfig"
@@ -319,6 +340,17 @@ if [[ ${WITH_COMPOSER} -eq 1 ]]; then
     install_composer_pkg "phpunit/phpunit"
     install_composer_pkg "phpmd/phpmd"
     install_composer_pkg "sebastian/phpcpd"
+fi
+
+# Install NodeJS packages
+if [[ ${WITH_NODE} -eq 1 ]]; then
+    echo -e "\n${INFO}NodeJS${DEFAULT}"
+    
+    check_commands "node"
+
+    install_node_pkg "grunt-cli"
+    install_node_pkg "bower"
+    install_node_pkg "bower-installer"
 fi
 
 # Apply configuration for ssh
