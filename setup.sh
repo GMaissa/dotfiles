@@ -337,6 +337,9 @@ if [[ ${WITH_SSH} -eq 1 ]]; then
         mkdir ~/.ssh
     fi
     symlink_config "config/ssh" ".ssh/config"
+
+    # Installing ssh config files and ssh keys stored on Dropbox
+    . ~/Dropbox/dotfiles/ssh/setup.ssh
 fi
 
 if [ -f "$(dirname $0)/setup-${OS}.sh" ];then
