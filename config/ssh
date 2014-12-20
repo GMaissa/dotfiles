@@ -1,2 +1,12 @@
 Host *
     User root
+
+Host github.com
+     IdentityFile /Users/g.maissa/.ssh/nova_rsa
+
+Host bitbucket.org
+     IdentityFile /Users/g.maissa/.ssh/nova_rsa
+
+Host *.local
+     IdentityFile /Users/g.maissa/.ssh/id_rsa
+     #IdentityFile /Users/g.maissa/.vagrant.d/insecure_private_key
