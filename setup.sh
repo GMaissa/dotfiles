@@ -225,7 +225,7 @@ do
     shift
 done
 
-# We need Git, Zsh Tmux to be installed
+# We need Git, Zsh Tmux, ... to be installed
 echo -e "\n${INFO}COMMANDS${DEFAULT}"
 check_commands "zsh"
 check_commands "tmux"
