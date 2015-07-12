@@ -9,19 +9,25 @@ unbind-key l
 bind-key l select-pane -R
 
 # enable activity alerts
-setw -g monitor-activity on
+set -g monitor-activity on
 set -g visual-activity on
 
 # Set status bar
-# set -g status-left '#[fg=gray]#H'
-set -g status-right '#[fg=gray]#(uptime | cut -d "," -f 2-)'
+#set -g status-left '#[fg=blue]#H'
+set -g status-right '#[fg=foreground]#(uptime | cut -d "," -f 2-)'
+
+#On met la barre de status en gris
+set -g status-fg white
+set -g status-bg blue
+set -g status-attr dim
 
 # Highlight active window
-set-window-option -g window-status-current-bg red
-set-window-option -g window-status-current-fg white
+set-window-option -g window-status-current-bg white
+set-window-option -g window-status-current-fg blue
 
 # start window numbering at 1 for easier switching
 set -g base-index 1
+set -g pane-base-index 1
 
 # unicode
 setw -g utf8 on
