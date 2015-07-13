@@ -327,6 +327,7 @@ install_vim_bundle tpope/vim-speeddating
 install_vim_bundle tpope/vim-surround
 install_vim_bundle rizzatti/dash.vim
 install_vim_bundle altercation/vim-colors-solarized
+install_vim_bundle editorconfig/editorconfig-vim
 
 echo -e "\n${INFO}TMUX${DEFAULT}"
 # Install gem
