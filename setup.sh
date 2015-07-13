@@ -207,6 +207,20 @@ install_node_pkg()
     echo -e "${SUCCESSMSG}${STEPMSG}"
 }
 
+install_gem()
+{
+    GEM=$1
+    STEPMSG="Installing Gem ${GEM}"
+    echo -ne "${PROCESSMSG}${STEPMSG}"\\r
+    OUTPUT=$(sudo gem install "${GEM}" 2>&1 >/dev/null)
+    if [ $? -ne 0 ]; then
+        echo -e "${ERRORMSG}${STEPMSG}"
+        echo -e ${WARN}${OUTPUT}${DEFAULT}
+        exit 1
+    fi
+    echo -e "${SUCCESSMSG}${STEPMSG}"
+}
+
 # Check command arguments
 while test $# -gt 0
 do
@@ -314,8 +328,25 @@ install_vim_bundle tpope/vim-surround
 install_vim_bundle rizzatti/dash.vim
 install_vim_bundle altercation/vim-colors-solarized
 
-# Install plugins
-install_vim_plugin jamessan/vim-gnupg gnupg.vim
+echo -e "\n${INFO}TMUX${DEFAULT}"
+# Install gem
+install_gem tmuxinator
+
+# Install tmuxinator autocompletion script for zsh
+if [ ! -f ~/.bin/tmuxinator.zsh ]; then
+    if [ ! -d ~/.bin ]; then
+        mkdir -p ~/.bin
+    fi
+    STEPMSG="Installing tmuxinator autocompletion script for zsh"
+    echo -ne "${PROCESSMSG}${STEPMSG}"\\r
+    OUTPUT=$(wget -P ~/.bin/ https://raw.githubusercontent.com/tmuxinator/tmuxinator/master/completion/tmuxinator.zsh 2>&1 >/dev/null)
+    if [ $? -ne 0 ]; then
+        echo -e "${ERRORMSG}${STEPMSG}"
+        echo -e ${WARN}${OUTPUT}${DEFAULT}
+        exit 1
+    fi
+    echo -e "${SUCCESSMSG}${STEPMSG}"
+fi
 
 # Apply configuration for git
 echo -e "\n${INFO}GIT${DEFAULT}"
