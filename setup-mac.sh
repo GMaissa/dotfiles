@@ -1,5 +1,57 @@
 #!/bin/bash
 
+. $(dirname $0)/abstract.sh
+
+check_app()
+{
+    APP=$1
+    STEPMSG="Installing ${APP}"
+    if ! type "${APP}" >/dev/null 2>&1 ;then
+        echo -ne "${PROCESSMSG}${STEPMSG}"\\r
+        # Install the app or exit the script (option -e in the shebang) if failed
+        OUTPUT=$(brew cask install ${APP} 2>&1 >/dev/null)
+        if [ $? -ne 0 ]; then
+            echo -e "${ERRORMSG}${STEPMSG}"
+            echo -e ${WARN}${OUTPUT}${DEFAULT}
+            exit 1
+        fi
+        echo -e "${SUCCESSMSG}${STEPMSG}"
+    fi
+}
+
+check_commands "caskroom/cask/brew-cask"
+
+check_app "alfred"
+check_app "appcleaner"
+check_app "bartender"
+check_app "chromium"
+check_app "controlplane"
+check_app "dash"
+check_app "delibar"
+check_app "divvy"
+check_app "dropbox"
+check_app "evernote"
+check_app "firefox"
+check_app "flux"
+check_app "google-drive"
+check_app "google-hangout"
+check_app "gpgtools"
+check_app "hyperdock"
+check_app "istat-menus"
+check_app "iterm2"
+check_app "phpstorm"
+check_app "remote-desktop-connection"
+check_app "skype"
+check_app "spotify"
+check_app "stay"
+check_app "atom"
+check_app "the-unarchiver"
+check_app "transmission"
+check_app "tower"
+check_app "vagrant"
+check_app "virtualbox"
+check_app "vlc"
+
 if [ ! -f "/Library/Fonts/Anonymice Powerline.ttf" ]; then
     echo -e "\n${INFO}FONTS${DEFAULT}"
     STEPMSG="Installing AnonymousPro fonts"
