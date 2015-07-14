@@ -19,6 +19,25 @@ check_app()
     fi
 }
 
+install_atom_plugin()
+{
+    PLUGIN=$1
+    STEPMSG="Installing Atom plugin ${PLUGIN}"
+    if [ ! -d ~/.atom/packages/"${PLUGIN}" ] ;then
+        echo -ne "${PROCESSMSG}${STEPMSG}"\\r
+        # Install the plugin or exit the script (option -e in the shebang) if failed
+        OUTPUT=$(apm install ${PLUGIN} 2>&1 >/dev/null)
+        if [ $? -ne 0 ]; then
+            echo -e "${ERRORMSG}${STEPMSG}"
+            echo -e ${WARN}${OUTPUT}${DEFAULT}
+            exit 1
+        fi
+        echo -e "${SUCCESSMSG}${STEPMSG}"
+    else
+        echo -e "${SKIPMSG}${STEPMSG}"
+    fi
+}
+
 if [[ ${WITH_CASKS} -eq 1 ]]; then
     echo -e "\n${INFO}CASK APPS${DEFAULT}"
     check_commands "caskroom/cask/brew-cask"
@@ -56,6 +75,10 @@ if [[ ${WITH_CASKS} -eq 1 ]]; then
     check_app "vlc"
 fi
 
+echo -e "\n${INFO}ATOM PLUGINS${DEFAULT}"
+install_atom_plugin vim-mode
+install_atom_plugin editorconfig
+install_atom_plugin travis-ci-status
 
 if [ ! -f "/Library/Fonts/Anonymice Powerline.ttf" ]; then
     echo -e "\n${INFO}FONTS${DEFAULT}"
