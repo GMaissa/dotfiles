@@ -6,7 +6,8 @@ check_app()
 {
     APP=$1
     STEPMSG="Installing ${APP}"
-    if ! type "${APP}" >/dev/null 2>&1 ;then
+    INSTALLED=$(brew cask list | grep ${APP} | wc -l)
+    if [ ${INSTALLED} == null ]; then
         echo -ne "${PROCESSMSG}${STEPMSG}"\\r
         # Install the app or exit the script (option -e in the shebang) if failed
         OUTPUT=$(brew cask install ${APP} 2>&1 >/dev/null)
@@ -16,6 +17,8 @@ check_app()
             exit 1
         fi
         echo -e "${SUCCESSMSG}${STEPMSG}"
+    else
+        echo -e "${SKIPMSG}${STEPMSG}"
     fi
 }
 

@@ -125,6 +125,8 @@ check_commands()
             exit 1
         fi
         echo -e "${SUCCESSMSG}${STEPMSG}"
+    else
+        echo -e "${SKIPMSG}${STEPMSG}"
     fi
 }
 
@@ -132,8 +134,8 @@ install_vim_bundle()
 {
     REPO=$1
     BUNDLE=$(echo $REPO | cut -d'/' -f 2)
+    STEPMSG="Installing VIM bundle ${BUNDLE}"
     if [ ! -d ~/.vim/bundle/"${BUNDLE}" ]; then
-        STEPMSG="Installing VIM bundle ${BUNDLE}"
         echo -ne "${PROCESSMSG}${STEPMSG}"\\r
         OUTPUT=$(git clone https://github.com/${REPO} ~/.vim/bundle/${BUNDLE} 2>&1 >/dev/null)
         if [ $? -ne 0 ]; then
@@ -142,6 +144,8 @@ install_vim_bundle()
             exit 1
         fi
         echo -e "${SUCCESSMSG}${STEPMSG}"
+    else
+        echo -e "${SKIPMSG}${STEPMSG}"
     fi
 }
 
@@ -149,11 +153,11 @@ install_vim_plugin()
 {
     REPO=$1
     PLUGIN=$2
+    STEPMSG="Installing VIM plugin ${PLUGIN}"
     if [ ! -d ~/.vim/plugin ]; then
         mkdir ~/.vim/plugin
     fi
     if [ ! -f ~/.vim/plugin/"${PLUGIN}" ]; then
-        STEPMSG="Installing VIM plugin ${PLUGIN}"
         echo -ne "${PROCESSMSG}${STEPMSG}"\\r
         OUTPUT=$(wget -P ~/.vim/plugin/ https://raw.githubusercontent.com/${REPO}/master/plugin/${PLUGIN} 2>&1 >/dev/null)
         if [ $? -ne 0 ]; then
@@ -162,6 +166,8 @@ install_vim_plugin()
             exit 1
         fi
         echo -e "${SUCCESSMSG}${STEPMSG}"
+    else
+        echo -e "${SKIPMSG}${STEPMSG}"
     fi
 }
 
@@ -199,28 +205,38 @@ install_node_pkg()
 {
     PKG=$1
     STEPMSG="Installing NodeJS package ${PKG}"
-    echo -ne "${PROCESSMSG}${STEPMSG}"\\r
-    OUTPUT=$(sudo npm install -g "${PKG}" 2>&1 >/dev/null)
-    if [ $? -ne 0 ]; then
-        echo -e "${ERRORMSG}${STEPMSG}"
-        echo -e ${WARN}${OUTPUT}${DEFAULT}
-        exit 1
+    if [ ! -d /usr/local/lib/node_modules/"${PKG}" ]; then
+        echo -ne "${PROCESSMSG}${STEPMSG}"\\r
+        OUTPUT=$(sudo npm install -g "${PKG}" 2>&1 >/dev/null)
+        if [ $? -ne 0 ]; then
+            echo -e "${ERRORMSG}${STEPMSG}"
+            echo -e ${WARN}${OUTPUT}${DEFAULT}
+            exit 1
+        fi
+        echo -e "${SUCCESSMSG}${STEPMSG}"
+    else
+        echo -e "${SKIPMSG}${STEPMSG}"
     fi
-    echo -e "${SUCCESSMSG}${STEPMSG}"
+
 }
 
 install_gem()
 {
     GEM=$1
     STEPMSG="Installing Gem ${GEM}"
-    echo -ne "${PROCESSMSG}${STEPMSG}"\\r
-    OUTPUT=$(sudo gem install "${GEM}" 2>&1 >/dev/null)
-    if [ $? -ne 0 ]; then
-        echo -e "${ERRORMSG}${STEPMSG}"
-        echo -e ${WARN}${OUTPUT}${DEFAULT}
-        exit 1
+    INSTALLED=$(gem list --local | grep ${GEM} | wc -l)
+    if [ ${INSTALLED} == null ]; then
+        echo -ne "${PROCESSMSG}${STEPMSG}"\\r
+        OUTPUT=$(sudo gem install "${GEM}" 2>&1 >/dev/null)
+        if [ $? -ne 0 ]; then
+            echo -e "${ERRORMSG}${STEPMSG}"
+            echo -e ${WARN}${OUTPUT}${DEFAULT}
+            exit 1
+        fi
+        echo -e "${SUCCESSMSG}${STEPMSG}"
+    else
+        echo -e "${SKIPMSG}${STEPMSG}"
     fi
-    echo -e "${SUCCESSMSG}${STEPMSG}"
 }
 
 # Check command arguments
@@ -251,12 +267,11 @@ check_commands "gnupg2"
 check_commands "git-flow"
 check_commands "tree"
 check_commands "openssl"
-check_commands "sshfs"
 
 echo -e "\n${INFO}SHELL${DEFAULT}"
 # Cloning the oh-my-zsh project if not already done
+STEPMSG="Cloning OH-MY-ZSH repo"
 if [ ! -d ~/.oh-my-zsh ]; then
-    STEPMSG="Cloning OH-MY-ZSH repo"
     echo -ne "${PROCESSMSG}${STEPMSG}"\\r
     OUTPUT=$(git clone ${OHMYZSHREPO} ~/.oh-my-zsh 2>&1 >/dev/null)
     if [ $? -ne 0 ]; then
@@ -265,6 +280,8 @@ if [ ! -d ~/.oh-my-zsh ]; then
         exit 1
     fi
     echo -e "${SUCCESSMSG}${STEPMSG}"
+else
+    echo -e "${SKIPMSG}${STEPMSG}"
 fi
 for file in oh-my-zsh/themes/*
 do
@@ -303,8 +320,8 @@ if [ ! -d ~/.vim/bundle ]; then
     mkdir -p ~/.vim/bundle
 fi
 # Install pathogen to manage vim plugins as bundles
+STEPMSG="Installing VIM plugin pathogen"
 if [ ! -f ~/.vim/autoload/pathogen.vim ]; then
-    STEPMSG="Installing VIM plugin pathogen"
     echo -ne "${PROCESSMSG}${STEPMSG}"\\r
     OUTPUT=$(wget -P ~/.vim/autoload/ https://raw.github.com/tpope/vim-pathogen/master/autoload/pathogen.vim 2>&1 >/dev/null)
     if [ $? -ne 0 ]; then
@@ -313,6 +330,8 @@ if [ ! -f ~/.vim/autoload/pathogen.vim ]; then
         exit 1
     fi
     echo -e "${SUCCESSMSG}${STEPMSG}"
+else
+    echo -e "${SKIPMSG}${STEPMSG}"
 fi
 # Install plugins
 install_vim_plugin jamessan/vim-gnupg gnupg.vim
@@ -363,6 +382,16 @@ if [[ ${WITH_COMPOSER} -eq 1 ]]; then
         STEPMSG="Installing Composer"
         echo -ne "${PROCESSMSG}${STEPMSG}"\\r
         OUTPUT=$(curl -sS https://getcomposer.org/installer | php && mv composer.phar /usr/local/bin/composer 2>&1 >/dev/null)
+        if [ $? -ne 0 ]; then
+            echo -e "${ERRORMSG}${STEPMSG}"
+            echo -e ${WARN}${OUTPUT}${DEFAULT}
+            exit 1
+        fi
+        echo -e "${SUCCESSMSG}${STEPMSG}"
+    else
+        STEPMSG="Updating Composer"
+        echo -ne "${PROCESSMSG}${STEPMSG}"\\r
+        OUTPUT=$(composer self-update 2>&1 >/dev/null)
         if [ $? -ne 0 ]; then
             echo -e "${ERRORMSG}${STEPMSG}"
             echo -e ${WARN}${OUTPUT}${DEFAULT}
