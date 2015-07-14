@@ -41,19 +41,6 @@ if [[ ${WITH_CASKS} -eq 1 ]]; then
     done
 fi
 
-if type "atom" >/dev/null 2>&1 ;then
-    echo -e "\n${INFO}ATOM PLUGINS${DEFAULT}"
-    ATOM_PLUGIN_LIST=(
-        vim-mode
-        editorconfig
-        travis-ci-status
-    )
-    for i in "${ATOM_PLUGIN_LIST[@]}"
-    do
-        install_atom_plugin $i
-    done
-fi
-
 echo -e "\n${INFO}FONTS${DEFAULT}"
 STEPMSG="Installing AnonymousPro fonts"
 if [ ! -f "/Library/Fonts/Anonymice Powerline.ttf" ]; then

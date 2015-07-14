@@ -282,4 +282,18 @@ if [ -f "$(dirname $0)/setup-${OS}.sh" ];then
     . $(dirname $0)/setup-${OS}.sh
 fi
 
+if type "atom" >/dev/null 2>&1 ;then
+    echo -e "\n${INFO}ATOM PLUGINS${DEFAULT}"
+    ATOM_PLUGIN_LIST=(
+        vim-mode
+        editorconfig
+        travis-ci-status
+        language-go
+    )
+    for i in "${ATOM_PLUGIN_LIST[@]}"
+    do
+        install_atom_plugin $i
+    done
+fi
+
 echo -e ${INFO}"\nYou are all set. You can now define zsh as your default shell using the command :\nchsh -s $(which zsh)"${DEFAULT}
