@@ -18,6 +18,7 @@ CUR_PATH=$(pwd)
 WITH_COMPOSER=0
 WITH_NODE=0
 WITH_SSH=0
+WITH_CASKS=0
 
 # Define the current distrib and the install command
 if [[ "$(uname -s)" == "Darwin" ]]; then
@@ -39,10 +40,11 @@ display_help()
     echo -e "Usage :"
     echo -e "   ./setup.sh <options>\n"
     echo -e "Options :"
-    echo -e "   -h, --help         Display this help"
-    echo -e "   --with-composer    Install composer and the static analysis / unit test tools"
-    echo -e "   --with-node        Install NodeJS, NPM and some NodeJS packages (grunt, bower)"
-    echo -e "   --with-ssh         Install ssh 'bins' and configuration\n"
+    echo -e "   -h, --help            Display this help"
+    echo -e "   --with-composer       Install composer and the static analysis / unit test tools"
+    echo -e "   --with-node           Install NodeJS, NPM and some NodeJS packages (grunt, bower)"
+    echo -e "   --with-ssh            Install ssh 'bins' and configuration"
+    echo -e "   --with-casks          Install homebrew casks apps (only available for Mac OSX)\n"
 #    echo -e $DEFAULT
     exit
 }
@@ -101,7 +103,7 @@ symlink_bin()
     fi
     echo -e "${SUCCESSMSG}"
     if [ "${ADDIMSG}" != "" ];then
-        echo -e ${ADDIMSG} 
+        echo -e ${ADDIMSG}
     fi
 }
 
@@ -225,16 +227,16 @@ install_gem()
 while test $# -gt 0
 do
     case "$1" in
-        -h)                 display_help
-                            ;;
-        --help)             display_help
-                            ;;
-        --with-composer)    WITH_COMPOSER=1
-                            ;;
-        --with-node)        WITH_NODE=1
-                            ;;
-        --with-ssh)         WITH_SSH=1
-                            ;;
+        -h | --help)              display_help
+                                  ;;
+        --with-composer)          WITH_COMPOSER=1
+                                  ;;
+        --with-node)              WITH_NODE=1
+                                  ;;
+        --with-ssh)               WITH_SSH=1
+                                  ;;
+        --with-casks)             WITH_CASKS=1
+                                  ;;
     esac
     shift
 done
@@ -411,4 +413,3 @@ if [ -f "$(dirname $0)/setup-${OS}.sh" ];then
 fi
 
 echo -e ${INFO}"\nYou are all set. You can now define zsh as your default shell using the command :\nchsh -s $(which zsh)"${DEFAULT}
-
