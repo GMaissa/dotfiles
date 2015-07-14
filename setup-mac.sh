@@ -1,45 +1,7 @@
 #!/bin/bash
 
 . $(dirname $0)/abstract.sh
-
-check_app()
-{
-    APP=$1
-    STEPMSG="Installing ${APP}"
-    INSTALLED=$(brew cask list | grep ${APP} | wc -l)
-    if [ ${INSTALLED} == null ]; then
-        echo -ne "${PROCESSMSG}${STEPMSG}"\\r
-        # Install the app or exit the script (option -e in the shebang) if failed
-        OUTPUT=$(brew cask install ${APP} 2>&1 >/dev/null)
-        if [ $? -ne 0 ]; then
-            echo -e "${ERRORMSG}${STEPMSG}"
-            echo -e ${WARN}${OUTPUT}${DEFAULT}
-            exit 1
-        fi
-        echo -e "${SUCCESSMSG}${STEPMSG}"
-    else
-        echo -e "${SKIPMSG}${STEPMSG}"
-    fi
-}
-
-install_atom_plugin()
-{
-    PLUGIN=$1
-    STEPMSG="Installing Atom plugin ${PLUGIN}"
-    if [ ! -d ~/.atom/packages/"${PLUGIN}" ] ;then
-        echo -ne "${PROCESSMSG}${STEPMSG}"\\r
-        # Install the plugin or exit the script (option -e in the shebang) if failed
-        OUTPUT=$(apm install ${PLUGIN} 2>&1 >/dev/null)
-        if [ $? -ne 0 ]; then
-            echo -e "${ERRORMSG}${STEPMSG}"
-            echo -e ${WARN}${OUTPUT}${DEFAULT}
-            exit 1
-        fi
-        echo -e "${SUCCESSMSG}${STEPMSG}"
-    else
-        echo -e "${SKIPMSG}${STEPMSG}"
-    fi
-}
+. $(dirname $0)/functions.sh
 
 if [[ ${WITH_CASKS} -eq 1 ]]; then
     echo -e "\n${INFO}CASK APPS${DEFAULT}"
