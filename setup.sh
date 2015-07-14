@@ -74,14 +74,20 @@ done
 
 # We need Git, Zsh Tmux, ... to be installed
 echo -e "\n${INFO}COMMANDS${DEFAULT}"
-check_commands "zsh"
-check_commands "tmux"
-check_commands "vim"
-check_commands "wget"
-check_commands "gnupg2"
-check_commands "git-flow"
-check_commands "tree"
-check_commands "openssl"
+COMMANDS_LIST=(
+    "zsh"
+    "tmux"
+    "vim"
+    "wget"
+    "gnupg2"
+    "git-flow"
+    "tree"
+    "openssl"
+)
+for i in "${COMMANDS_LIST[@]}"
+do
+    check_command $i
+done
 
 echo -e "\n${INFO}SHELL${DEFAULT}"
 # Cloning the oh-my-zsh project if not already done
@@ -152,29 +158,35 @@ fi
 install_vim_plugin jamessan/vim-gnupg gnupg.vim
 
 # Install bundles
-install_vim_bundle scrooloose/nerdtree
-install_vim_bundle kien/ctrlp.vim
-install_vim_bundle kien/rainbow_parentheses.vim
-install_vim_bundle chilicuil/conque
-install_vim_bundle Lokaltog/vim-easymotion
-install_vim_bundle nathanaelkane/vim-indent-guides
-install_vim_bundle edsono/vim-matchit
-install_vim_bundle tpope/vim-speeddating
-install_vim_bundle tpope/vim-surround
-install_vim_bundle rizzatti/dash.vim
-install_vim_bundle altercation/vim-colors-solarized
-install_vim_bundle editorconfig/editorconfig-vim
+VIM_BUNDLE_LIST=(
+    scrooloose/nerdtree
+    kien/ctrlp.vim
+    kien/rainbow_parentheses.vim
+    chilicuil/conque
+    Lokaltog/vim-easymotion
+    nathanaelkane/vim-indent-guides
+    edsono/vim-matchit
+    tpope/vim-speeddating
+    tpope/vim-surround
+    rizzatti/dash.vim
+    altercation/vim-colors-solarized
+    editorconfig/editorconfig-vim
+)
+for i in "${VIM_BUNDLE_LIST[@]}"
+do
+    install_vim_bundle $i
+done
 
 echo -e "\n${INFO}TMUX${DEFAULT}"
 # Install gem
 install_gem tmuxinator
 
 # Install tmuxinator autocompletion script for zsh
+STEPMSG="Installing tmuxinator autocompletion script for zsh"
 if [ ! -f ~/.bin/tmuxinator.zsh ]; then
     if [ ! -d ~/.bin ]; then
         mkdir -p ~/.bin
     fi
-    STEPMSG="Installing tmuxinator autocompletion script for zsh"
     echo -ne "${PROCESSMSG}${STEPMSG}"\\r
     OUTPUT=$(wget -P ~/.bin/ https://raw.githubusercontent.com/tmuxinator/tmuxinator/master/completion/tmuxinator.zsh 2>&1 >/dev/null)
     if [ $? -ne 0 ]; then
@@ -183,6 +195,8 @@ if [ ! -f ~/.bin/tmuxinator.zsh ]; then
         exit 1
     fi
     echo -e "${SUCCESSMSG}${STEPMSG}"
+else
+    echo -e "${SKIPMSG}${STEPMSG}"
 fi
 
 # Apply configuration for git
@@ -214,21 +228,33 @@ if [[ ${WITH_COMPOSER} -eq 1 ]]; then
         fi
         echo -e "${SUCCESSMSG}${STEPMSG}"
     fi
-    install_composer_pkg "squizlabs/php_codesniffer"
-    install_composer_pkg "phpunit/phpunit"
-    install_composer_pkg "phpmd/phpmd"
-    install_composer_pkg "sebastian/phpcpd"
+    COMPOSER_PKG_LIST=(
+        "squizlabs/php_codesniffer"
+        "phpunit/phpunit"
+        "phpmd/phpmd"
+        "sebastian/phpcpd"
+    )
+    for i in "${COMPOSER_PKG_LIST[@]}"
+    do
+        install_composer_pkg $i
+    done
 fi
 
 # Install NodeJS packages
 if [[ ${WITH_NODE} -eq 1 ]]; then
     echo -e "\n${INFO}NODEJS${DEFAULT}"
 
-    check_commands "node"
+    check_command "node"
 
-    install_node_pkg "grunt-cli"
-    install_node_pkg "bower"
-    install_node_pkg "bower-installer"
+    NODE_PKG_LIST=(
+        "grunt-cli"
+        "bower"
+        "bower-installer"
+    )
+    for i in "${NODE_PKG_LIST[@]}"
+    do
+        install_node_pkg $i
+    done
 fi
 
 # Apply configuration for ssh
@@ -249,7 +275,7 @@ if [[ ${WITH_SSH} -eq 1 ]]; then
     symlink_config "config/ssh" ".ssh/config"
 
     # Installing ssh config files and ssh keys stored on Dropbox
-    . ~/Dropbox/dotfiles/ssh/setup.ssh
+    . ~/Dropbox/dotfiles/ssh/setup.sh
 fi
 
 if [ -f "$(dirname $0)/setup-${OS}.sh" ];then

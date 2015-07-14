@@ -11,7 +11,6 @@ symlink_config()
     if [ ${OVERRIDE_CONFS} -eq 1 ] || [ ! -e ~/"${SYMLINKNAME}" ]; then
         if [ -L ~/"${SYMLINKNAME}" ]; then
             rm ~/${SYMLINKNAME}
-            #ADDIMSG=${WARN}"Old symlinked config ~/${SYMLINKNAME} removed"${DEFAULT}
         elif [[ -f ~/"${SYMLINKNAME}" || -d ~/"${SYMLINKNAME}" ]]; then
             mv ~/${SYMLINKNAME} ~/${SYMLINKNAME}.bak
             ADDIMSG=${WARN}"Old config moved to ~/${SYMLINKNAME}.bak"${DEFAULT}
@@ -60,7 +59,7 @@ symlink_bin()
     fi
 }
 
-check_commands()
+check_command()
 {
     CMD=$1
     STEPMSG="Installing ${CMD}"
@@ -141,8 +140,8 @@ install_gpg_key()
 install_composer_pkg()
 {
     PKG=$1
-#    if [ ! -d ~/.vim/bundle/"${PKG}" ]; then
-        STEPMSG="Installing Composer package ${PKG}"
+    STEPMSG="Installing Composer package ${PKG}"
+    if [ ! -d ~/.composer/vendor/"${PKG}" ]; then
         echo -ne "${PROCESSMSG}${STEPMSG}"\\r
         OUTPUT=$(composer global require "${PKG}=*" 2>&1 >/dev/null)
         if [ $? -ne 0 ]; then
@@ -151,7 +150,9 @@ install_composer_pkg()
             exit 1
         fi
         echo -e "${SUCCESSMSG}${STEPMSG}"
-#    fi
+    else
+        echo -e "${SKIPMSG}${STEPMSG}"
+    fi
 }
 
 install_node_pkg()
@@ -192,7 +193,7 @@ install_gem()
     fi
 }
 
-check_app()
+install_cask_app()
 {
     APP=$1
     STEPMSG="Installing ${APP}"
