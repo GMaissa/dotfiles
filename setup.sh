@@ -16,6 +16,7 @@ OHMYZSHREPO=git@github.com:robbyrussell/oh-my-zsh.git
 CUR_PATH=$(pwd)
 
 WITH_COMPOSER=0
+OVERRIDE_CONFS=0
 WITH_NODE=0
 WITH_SSH=0
 WITH_CASKS=0
@@ -41,6 +42,7 @@ display_help()
     echo -e "   ./setup.sh <options>\n"
     echo -e "Options :"
     echo -e "   -h, --help            Display this help"
+    echo -e "   -o, --override-confs  Override configuration files if they exist"
     echo -e "   --with-composer       Install composer and the static analysis / unit test tools"
     echo -e "   --with-node           Install NodeJS, NPM and some NodeJS packages (grunt, bower)"
     echo -e "   --with-ssh            Install ssh 'bins' and configuration"
@@ -59,24 +61,28 @@ symlink_config()
     STEPMSG="Applying ${CONFFILE} config"
     ADDIMSG=""
 
-    if [ -L ~/"${SYMLINKNAME}" ]; then
-        rm ~/${SYMLINKNAME}
-        #ADDIMSG=${WARN}"Old symlinked config ~/${SYMLINKNAME} removed"${DEFAULT}
-    elif [[ -f ~/"${SYMLINKNAME}" || -d ~/"${SYMLINKNAME}" ]]; then
-        mv ~/${SYMLINKNAME} ~/${SYMLINKNAME}.bak
-        ADDIMSG=${WARN}"Old config moved to ~/${SYMLINKNAME}.bak"${DEFAULT}
-    fi
+    if [ ${OVERRIDE_CONFS} -eq 1 ] || [ ! -e ~/"${SYMLINKNAME}" ]; then
+        if [ -L ~/"${SYMLINKNAME}" ]; then
+            rm ~/${SYMLINKNAME}
+            #ADDIMSG=${WARN}"Old symlinked config ~/${SYMLINKNAME} removed"${DEFAULT}
+        elif [[ -f ~/"${SYMLINKNAME}" || -d ~/"${SYMLINKNAME}" ]]; then
+            mv ~/${SYMLINKNAME} ~/${SYMLINKNAME}.bak
+            ADDIMSG=${WARN}"Old config moved to ~/${SYMLINKNAME}.bak"${DEFAULT}
+        fi
 
-    echo -ne "${PROCESSMSG}${STEPMSG}"\\r
-    OUTPUT=$(ln -s ${CUR_PATH}/${CONFFILE} ~/${SYMLINKNAME} 2>&1 >/dev/null)
-    if [ $? -ne 0 ]; then
-        echo -e "${ERRORMSG}"
-        echo -e ${OUTPUT}
-        exit 1
-    fi
-    echo -e "${SUCCESSMSG}"
-    if [ "${ADDIMSG}" != "" ];then
-        echo -e ${ADDIMSG} 
+        echo -ne "${PROCESSMSG}${STEPMSG}"\\r
+        OUTPUT=$(ln -s ${CUR_PATH}/${CONFFILE} ~/${SYMLINKNAME} 2>&1 >/dev/null)
+        if [ $? -ne 0 ]; then
+            echo -e "${ERRORMSG}"
+            echo -e ${OUTPUT}
+            exit 1
+        fi
+        echo -e "${SUCCESSMSG}"
+        if [ "${ADDIMSG}" != "" ];then
+            echo -e ${ADDIMSG}
+        fi
+    else
+        echo -e "${SKIPMSG}${STEPMSG}"
     fi
 }
 
@@ -244,6 +250,8 @@ while test $# -gt 0
 do
     case "$1" in
         -h | --help)              display_help
+                                  ;;
+        -o | --override-confs)    OVERRIDE_CONFS=1
                                   ;;
         --with-composer)          WITH_COMPOSER=1
                                   ;;
