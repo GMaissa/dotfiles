@@ -25,7 +25,7 @@ plugins=(git brew vagrant composer fabric git-flow phing sublime sudo symfony2 t
 source $ZSH/oh-my-zsh.sh
 
 # User configuration
-export PATH="/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/bin"
+export PATH="/usr/local/sbin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/bin"
 if [[ -d ${HOME}/.composer/vendor/bin ]]; then
     export PATH="$PATH:${HOME}/.composer/vendor/bin"
 fi
@@ -42,3 +42,8 @@ export SVN_EDITOR=vim
 # GPG config
 GPG_TTY=`tty`
 export GPG_TTY
+
+# Default editor
+export EDITOR=vim
+
+source ~/.bin/tmuxinator.zsh
