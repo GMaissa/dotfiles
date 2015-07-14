@@ -415,8 +415,8 @@ fi
 
 # Install NodeJS packages
 if [[ ${WITH_NODE} -eq 1 ]]; then
-    echo -e "\n${INFO}NodeJS${DEFAULT}"
-    
+    echo -e "\n${INFO}NODEJS${DEFAULT}"
+
     check_commands "node"
 
     install_node_pkg "grunt-cli"
