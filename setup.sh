@@ -289,6 +289,7 @@ if type "atom" >/dev/null 2>&1 ;then
         editorconfig
         travis-ci-status
         language-go
+        dash
     )
     for i in "${ATOM_PLUGIN_LIST[@]}"
     do
