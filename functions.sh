@@ -1,3 +1,5 @@
+#!/bin/bash -x
+
 symlink_config()
 {
     CONFFILE=$1
