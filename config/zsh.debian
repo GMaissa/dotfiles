@@ -52,6 +52,8 @@ export GPG_TTY
 # Default editor
 export EDITOR=vim
 
+source ~/.bin/tmuxinator.zsh
+
 # Disable tmux windows autotitle
 export DISABLE_AUTO_TITLE=true
 
