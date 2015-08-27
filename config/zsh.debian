@@ -48,3 +48,7 @@ fi
 # GPG config
 GPG_TTY=`tty`
 export GPG_TTY
+
+# Disable tmux windows autotitle
+export DISABLE_AUTO_TITLE=true
+

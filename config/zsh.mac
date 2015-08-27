@@ -52,3 +52,6 @@ source ~/.bin/tmuxinator.zsh
 # Define Chrome path for chrome-driver, for TDD
 CHROME_BIN='/Applications/Chromium.app/Contents/MacOS/Chromium'
 export CHROME_BIN
+
+# Disable tmux windows autotitle
+export DISABLE_AUTO_TITLE=true
