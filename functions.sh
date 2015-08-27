@@ -199,7 +199,7 @@ install_cask_app()
 {
     APP=$1
     STEPMSG="Installing ${APP}"
-    INSTALLED=$(brew cask list | grep ${APP} | wc -l)
+    INSTALLED=$(brew cask list | grep "${APP}" | wc -l)
     if [ ${INSTALLED} == null ]; then
         echo -ne "${PROCESSMSG}${STEPMSG}"\\r
         # Install the app or exit the script (option -e in the shebang) if failed

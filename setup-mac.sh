@@ -22,7 +22,7 @@ if [[ ${WITH_CASKS} -eq 1 ]]; then
         "gpgtools"
         "hyperdock"
         "istat-menus"
-        "iterm2"
+        "iterm2-beta"
         "phpstorm"
         "skype"
         "spotify"
