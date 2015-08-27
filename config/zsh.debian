@@ -54,6 +54,9 @@ export EDITOR=vim
 
 source ~/.bin/tmuxinator.zsh
 
+# Disable cowsay with ansible
+export ANSIBLE_NOCOWS=1
+
 # Disable tmux windows autotitle
 export DISABLE_AUTO_TITLE=true
 

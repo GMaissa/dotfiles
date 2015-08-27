@@ -53,5 +53,8 @@ source ~/.bin/tmuxinator.zsh
 CHROME_BIN='/Applications/Chromium.app/Contents/MacOS/Chromium'
 export CHROME_BIN
 
+# Disable cowsay with ansible
+export ANSIBLE_NOCOWS=1
+
 # Disable tmux windows autotitle
 export DISABLE_AUTO_TITLE=true
