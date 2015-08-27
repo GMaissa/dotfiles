@@ -21,6 +21,7 @@ fi
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 plugins=(git vagrant composer fabric git-flow phing sublime sudo symfony2 tmux ezpublish4 debian)
+plugins=(git vagrant composer fabric git-flow phing sublime sudo symfony2 tmux ezpublish4 debian tmuxinator vi-mode golang github)
 
 source $ZSH/oh-my-zsh.sh
 
