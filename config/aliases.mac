@@ -52,7 +52,5 @@ alias rsyncplus="rsync -P --bwlimit=100"
 alias restart-vb='sudo /Library/StartupItems/VirtualBox/VirtualBox restart'
 alias rgrep="grep -r"
 alias getcomposer="curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer"
-alias getcomp="curl -sS https://getcomposer.org/installer | php"
-alias getnppm="wget http://nppm.novactive.net/downloads/nppm.phar"
 alias killtmux="tmux ls | grep : | cut -d. -f1 | awk '{print substr($1, 0, length($1)-1)}' | xargs ki"
 
