@@ -1,29 +1,30 @@
+# Using C-a instead of C-b
+set-option -g prefix C-a
+unbind-key C-b
+bind-key C-a send-prefix
+
+# bind resize commands to keys
+bind = resize-pane -D 10
+bind + resize-pane -U 10
+bind < resize-pane -L 10
+bind > resize-pane -R 10
+
+# reload config
+bind r source-file ~/.tmux.conf \; display-message "Config reloaded..."
+
 # Remap window navigation to vim
-unbind-key j
-bind-key j select-pane -D
-unbind-key k
-bind-key k select-pane -U
-unbind-key h
-bind-key h select-pane -L
-unbind-key l
-bind-key l select-pane -R
+#unbind-key j
+#bind-key j select-pane -D
+#unbind-key k
+#bind-key k select-pane -U
+#unbind-key h
+#bind-key h select-pane -L
+#unbind-key l
+#bind-key l select-pane -R
 
 # enable activity alerts
 set -g monitor-activity on
 set -g visual-activity on
-
-# Set status bar
-#set -g status-left '#[fg=blue]#H'
-set -g status-right '#[fg=foreground]#(uptime | cut -d "," -f 2-)'
-
-#On met la barre de status en gris
-set -g status-fg white
-set -g status-bg blue
-set -g status-attr dim
-
-# Highlight active window
-set-window-option -g window-status-current-bg white
-set-window-option -g window-status-current-fg blue
 
 # start window numbering at 1 for easier switching
 set -g base-index 1
@@ -32,27 +33,6 @@ set -g pane-base-index 1
 # unicode
 setw -g utf8 on
 set -g status-utf8 on
-
-# bind resize commands to keys
-bind = resize-pane -D 10
-bind + resize-pane -U 10
-bind < resize-pane -L 10
-bind > resize-pane -R 10
-
-# set window split
-bind-key v split-window -h
-bind-key b split-window
-
-# reload config
-bind r source-file ~/.tmux.conf \; display-message "Config reloaded..."
-
-# Using C-a instead of C-b
-set-option -g prefix C-a
-unbind-key C-b
-bind-key C-a send-prefix
-
-# color
-set -g default-terminal "screen-256color"
 
 # Disable windows automatic renaming
 set-window-option -g automatic-rename off
@@ -63,6 +43,30 @@ set -g mouse-resize-pane on
 set -g mouse-select-pane on
 set -g mouse-select-window on
 
-# Load sessions configuration file
-bind S source-file ~/.tmux/sessions
 
+# color
+set -g default-terminal "xterm-256color"
+
+# Set status bar
+set -g status-left  ' #[fg=white,bold]#S'
+#set -g status-right '#[fg=foreground]#(uptime | cut -d "," -f 2-) '
+set -g status-right "#[fg=blue]#H "
+set -g status-fg    white
+set -g status-bg    colour242
+set -g status-attr  dim
+
+# Highlight window
+set-window-option -g window-status-current-attr   none
+set-window-option -g window-status-current-format '#[bg=colour39] #I #[bg=blue] #W '
+set-window-option -g window-status-attr   none
+set-window-option -g window-status-format '#[bg=colour244] #I #[bg=colour245] #W '
+set-window-option -g window-status-activity-attr   bold
+set-window-option -g window-status-activity-bg     red
+#set-window-option -g window-status-activity-format '#[bg=red] #I #[bg=colour245] #W '
+
+set -g pane-active-border-style blue
+
+# shortcut for synchronize-panes toggle
+# START:sync
+bind C-s set-window-option synchronize-panes
+# END:sync
