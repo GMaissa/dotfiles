@@ -54,6 +54,9 @@ export EDITOR=vim
 
 source ~/.bin/tmuxinator.zsh
 
+# Define username
+[[ -n "$SSH_CLIENT" ]] || export DEFAULT_USER="g.maissa"
+
 # Disable cowsay with ansible
 export ANSIBLE_NOCOWS=1
 

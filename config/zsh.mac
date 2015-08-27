@@ -53,6 +53,9 @@ source ~/.bin/tmuxinator.zsh
 CHROME_BIN='/Applications/Chromium.app/Contents/MacOS/Chromium'
 export CHROME_BIN
 
+# Define username
+[[ -n "$SSH_CLIENT" ]] || export DEFAULT_USER="g.maissa"
+
 # Disable cowsay with ansible
 export ANSIBLE_NOCOWS=1
 
