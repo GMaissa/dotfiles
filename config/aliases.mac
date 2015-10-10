@@ -55,3 +55,4 @@ alias getcomposer="curl -sS https://getcomposer.org/installer | php -- --install
 alias killtmux="tmux ls | grep : | cut -d. -f1 | awk '{print substr($1, 0, length($1)-1)}' | xargs ki"
 alias gettmuxlayout="tmux list-windows | sed -E 's/^(.*)layout (.*)\]\](.*)/\2]/'|pbcopy"
 alias killses="tmux kill-session"
+alias docker-start="docker-machine start default; docker-machine env default; eval '$(docker-machine env default)'"
