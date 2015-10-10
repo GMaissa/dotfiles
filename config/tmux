@@ -43,12 +43,11 @@ set -g mouse-resize-pane on
 set -g mouse-select-pane on
 set -g mouse-select-window on
 
-
 # color
 set -g default-terminal "xterm-256color"
 
 # Set status bar
-set -g status-left  ' #[fg=white,bold]#S'
+set -g status-left  ' #[fg=white,bold]#S '
 #set -g status-right '#[fg=foreground]#(uptime | cut -d "," -f 2-) '
 set -g status-right "#[fg=blue]#H "
 set -g status-fg    white
@@ -64,7 +63,7 @@ set-window-option -g window-status-activity-attr   bold
 set-window-option -g window-status-activity-bg     red
 #set-window-option -g window-status-activity-format '#[bg=red] #I #[bg=colour245] #W '
 
-set -g pane-active-border-style blue
+set -g pane-active-border-fg blue
 
 # shortcut for synchronize-panes toggle
 # START:sync
