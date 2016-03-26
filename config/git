@@ -1,6 +1,6 @@
 [core]
     editor = vim
-	excludesfile = ~/.gitignore_global
+	excludesfile = ~/.gitconfig.d/.gitignore_global
 [user]
 	name = Guillaume Maïssa
 	email = guillaume@maissa.fr
@@ -38,3 +38,9 @@
 	smudge = git-media-smudge %f
 [push]
     default = simple
+[rerere]
+	enabled = true
+[commit]
+	template = ~/.gitconfig.d/.gitcommit.template
+[credential]
+	helper = osxkeychain
