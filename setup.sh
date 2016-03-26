@@ -207,6 +207,19 @@ if [ ! -d ~/.gitconfig.d ]; then
 fi
 symlink_config "config/gitignore" ".gitconfig.d/.gitignore_global"
 symlink_config "config/gitcommit.template" ".gitconfig.d/.gitcommit.template"
+STEPMSG="Cloning SCM_BREEZE repo"
+if [ ! -d ~/.scm_breeze ]; then
+    echo -ne "${PROCESSMSG}${STEPMSG}"\\r
+    OUTPUT=$(git clone git://github.com/ndbroadbent/scm_breeze.git ~/.scm_breeze 2>&1 >/dev/null)
+    if [ $? -ne 0 ]; then
+        echo -e "${ERRORMSG}${STEPMSG}"
+        echo -e ${WARN}${OUTPUT}${DEFAULT}
+        exit 1
+    fi
+    echo -e "${SUCCESSMSG}${STEPMSG}"
+else
+    echo -e "${SKIPMSG}${STEPMSG}"
+fi
 
 # Install composer
 if [[ ${WITH_COMPOSER} -eq 1 ]]; then
