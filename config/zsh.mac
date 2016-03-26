@@ -21,7 +21,7 @@ fi
 # Which plugins would you like to load? (plugins can be found in ~/.oh-my-zsh/plugins/*)
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
-plugins=(git brew vagrant composer fabric git-flow phing sublime sudo symfony2 tmux ezpublish4 tmuxinator vi-mode golang github)
+plugins=(git git-extras brew vagrant composer fabric git-flow sudo symfony2 tmux ezpublish4 tmuxinator vi-mode go golang nppm osx docker docker-compose)
 
 source $ZSH/oh-my-zsh.sh
 
