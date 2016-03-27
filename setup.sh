@@ -134,6 +134,12 @@ symlink_config "config/vim" ".vimrc"
 if [ ! -d ~/.vim/backup ]; then
     mkdir -p ~/.vim/backup
 fi
+if [ ! -d ~/.vim/swap ]; then
+    mkdir -p ~/.vim/swap
+fi
+if [ ! -d ~/.vim/undo ]; then
+    mkdir -p ~/.vim/undo
+fi
 if [ ! -d ~/.vim/autoload ]; then
     mkdir -p ~/.vim/autoload
 fi
