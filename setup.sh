@@ -110,6 +110,7 @@ COMMANDS_LIST=(
     "ansible"
     "dnsmasq"
     "tree"
+    "htop"
 )
 for i in "${COMMANDS_LIST[@]}"
 do
