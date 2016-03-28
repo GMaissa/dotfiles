@@ -109,7 +109,6 @@ COMMANDS_LIST=(
     "openssl"
     "autojump"
     "go"
-    "pre-commit"
     "ansible"
     "dnsmasq"
     "tree"
