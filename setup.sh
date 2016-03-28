@@ -73,6 +73,7 @@ done
 # Create a dotfiles configuration file to share local config
 if [ ! -f ${HOME}/.dotfiles.conf ]; then
     echo -e "\n${INFO}DOTFILES CONFIG FILE${DEFAULT}"
+
     STEPMSG='Set dotfiles directory path'
     echo -ne "${PROCESSMSG}${STEPMSG}"\\r
     OUTPUT=$(echo "export DOTFILESDIR=\$HOME${FROM_HOME}" > ${HOME}/.dotfiles.conf 2>/dev/null)
@@ -82,6 +83,7 @@ if [ ! -f ${HOME}/.dotfiles.conf ]; then
         exit 1
     fi
     echo -e "${SUCCESSMSG}${STEPMSG}"
+
     STEPMSG='Register current user login'
     echo -ne "${PROCESSMSG}${STEPMSG}"\\r
     USERNAME=$(whoami)
@@ -180,21 +182,24 @@ install_vim_plugin jamessan/vim-gnupg gnupg.vim
 # Install bundles
 VIM_BUNDLE_LIST=(
     scrooloose/nerdtree
-    kien/ctrlp.vim
     kien/rainbow_parentheses.vim
-    chilicuil/conque
+    # Quickly move into a file
     Lokaltog/vim-easymotion
+    # Indentation guides
     nathanaelkane/vim-indent-guides
-    edsono/vim-matchit
+    # increment dates
     tpope/vim-speeddating
+    # surround character management
     tpope/vim-surround
     rizzatti/dash.vim
+    # Solarized theme
     altercation/vim-colors-solarized
+    # EditorConfig support for VIM
     editorconfig/editorconfig-vim
-    tmux-plugins/vim-tmux
-    markcornick/vim-vagrant
+    # Syntaxe file for Dockerfile
     ekalinin/Dockerfile.vim
     chase/vim-ansible-yaml
+    # Plugin for wakatime
     wakatime/vim-wakatime
 )
 for i in "${VIM_BUNDLE_LIST[@]}"
