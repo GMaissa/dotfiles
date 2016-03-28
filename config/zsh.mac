@@ -1,34 +1,22 @@
 # vim: ft=sh
 
+# Load dotfiles config
+. ~/.dotfiles.conf
+
 # Path to your oh-my-zsh installation.
-export ZSH=$HOME/.oh-my-zsh
+export ZSH=${DOTFILESDIR}/lib/oh-my-zsh
+
+# Path to your oh-my-zsh custom themes and plugins.
+export ZSH_CUSTOM=${DOTFILESDIR}/oh-my-zsh
 
 # Set name of the theme to load.
-# Look in ~/.oh-my-zsh/themes/
-# Optionally, if you set this to "random", it'll load a random theme each
-# time that oh-my-zsh is loaded.
-ZSH_THEME="gumai"
-
-# aliases
-if [[ -f "${HOME}/.aliases" ]]; then
-    source ${HOME}/.aliases
-fi
-if [[ -f "${HOME}/.aliases.local" ]]; then
-    source ${HOME}/.aliases.local
-fi
+#ZSH_THEME="gumai"
+ZSH_THEME="agnoster-gumai"
 
 # Which plugins would you like to load? (plugins can be found in ~/.oh-my-zsh/plugins/*)
-# Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
-# Example format: plugins=(rails git textmate ruby lighthouse)
-plugins=(git brew vagrant composer fabric git-flow phing sublime sudo symfony2 tmux ezpublish4)
+plugins=(git git-extras brew vagrant composer fabric git-flow sudo symfony2 tmux ezpublish4 tmuxinator vi-mode go golang nppm osx docker docker-compose)
 
 source $ZSH/oh-my-zsh.sh
-
-# User configuration
-export PATH="/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/bin"
-if [[ -d ${HOME}/.composer/vendor/bin ]]; then
-    export PATH="$PATH:${HOME}/.composer/vendor/bin"
-fi
 
 # Enable vi-mode
 bindkey -v
@@ -36,9 +24,54 @@ bindkey -v
 # Enable search in command history
 bindkey '^R' history-incremental-search-backward
 
+# User configuration
+export PATH="/usr/local/sbin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/bin:${DOTFILESDIR}/bin"
+if [[ -d ${HOME}/.composer/vendor/bin ]]; then
+    export PATH="$PATH:${HOME}/.composer/vendor/bin"
+fi
+
 # SVN Config
 export SVN_EDITOR=vim
 
 # GPG config
-GPG_TTY=`tty`
-export GPG_TTY
+export GPG_TTY=`tty`
+
+# Default editor
+export EDITOR=vim
+
+# Define Chrome path for chrome-driver, for TDD
+export CHROME_BIN='/Applications/Chromium.app/Contents/MacOS/Chromium'
+
+# Disable cowsay with ansible
+export ANSIBLE_NOCOWS=1
+
+# Disable tmux windows autotitle
+export DISABLE_AUTO_TITLE=true
+
+# Autostart tmux at shell launch
+export ZSH_TMUX_AUTOSTART=true
+
+# Define username
+[[ -n "$SSH_CLIENT" ]] || export DEFAULT_USER=${USERLOGIN}
+
+# Load iTerm2 advanced shell integration script
+test -e ${HOME}/.iterm2_shell_integration.zsh && source ${HOME}/.iterm2_shell_integration.zsh
+
+# Load tmuxinator (tmux session configuration) script
+[ -s ~/.bin/tmuxinator.zsh ] && source ~/.bin/tmuxinator.zsh
+
+# added by travis gem
+[ -s /Users/g.maissa/.travis/travis.sh ] && source /Users/g.maissa/.travis/travis.sh
+
+# Load SCM BREEZE (avanced git aliases) script
+[ -s "${DOTFILESDIR}/lib/scm_breeze/scm_breeze.sh" ] && source "${DOTFILESDIR}/lib/scm_breeze/scm_breeze.sh"
+
+# Load AutoJump (faster filesystem navigation) script
+[[ -s $(brew --prefix)/etc/profile.d/autojump.sh ]] && . $(brew --prefix)/etc/profile.d/autojump.sh
+
+# Load aliases files
+[ -s "${HOME}/.aliases" ] && source ${HOME}/.aliases
+[ -s "${HOME}/.aliases.local" ] && source ${HOME}/.aliases.local
+
+# Load custom local ZSH config
+[ -s ~/.zshrc_local ] && source ~/.zshrc_local

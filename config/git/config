@@ -1,10 +1,6 @@
 [core]
     editor = vim
-	excludesfile = ~/.gitignore_global
-[user]
-	name = Guillaume Maïssa
-	email = guillaume@maissa.fr
-	signingkey = 1D8E1988
+	excludesfile = ~/.gitconfig.d/.gitignore_global
 [mergetool]
     keepBackup = true
 [alias]
@@ -38,3 +34,11 @@
 	smudge = git-media-smudge %f
 [push]
     default = simple
+[rerere]
+	enabled = true
+[commit]
+	template = ~/.gitconfig.d/.gitcommit.template
+
+# Allow local customizations in the .gitconfig_local file
+[include]
+    path = ~/.gitconfig_local

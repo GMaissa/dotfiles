@@ -1,0 +1,6 @@
+[submodule "lib/oh-my-zsh"]
+	path = lib/oh-my-zsh
+	url = git@github.com:robbyrussell/oh-my-zsh.git
+[submodule "lib/scm_breeze"]
+	path = lib/scm_breeze
+	url = git@github.com:ndbroadbent/scm_breeze.git

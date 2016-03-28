@@ -1,8 +1,8 @@
 #!/bin/bash
 
+echo -e "\n${INFO}SOLARIZED THEME${DEFAULT}"
+STEPMSG="Applying Solarized theme"
 if [[ ! -f ${HOME}/.dircolors -o ! -d ${HOME}/.solarized ]];then
-    echo -e "\n${INFO}SOLARIZED THEME${DEFAULT}"
-    STEPMSG="Applying Solarized theme"
     echo -ne "${PROCESSMSG}${STEPMSG}"\\r
     if [[ ! -f ${HOME}/.dircolors ]];then
         OUTPUT=$(wget --no-check-certificate https://raw.github.com/seebi/dircolors-solarized/master/dircolors.ansi-dark ${HOME}/.dircolors 2>&1 >/dev/null)
@@ -19,6 +19,8 @@ if [[ ! -f ${HOME}/.dircolors -o ! -d ${HOME}/.solarized ]];then
             echo -e ${WARN}${OUTPUT}${DEFAULT}
             exit 1
         fi
+        echo -e "${SUCCESSMSG}${STEPMSG}"
     fi
-    echo -e "${SUCCESSMSG}${STEPMSG}"
+else
+    echo -e "${SKIPMSG}${STEPMSG}"
 fi
