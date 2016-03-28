@@ -1,5 +1,13 @@
 #!/bin/bash
 
+echo -e "\n${INFO}MAC COMMANDS${DEFAULT}"
+MAC_COMMANDS_LIST=(
+)
+for i in "${MAC_COMMANDS_LIST[@]}"
+do
+    check_command $i
+done
+
 if [[ ${WITH_CASKS} -eq 1 ]]; then
     echo -e "\n${INFO}CASK APPS${DEFAULT}"
     check_command "caskroom/cask/brew-cask"
