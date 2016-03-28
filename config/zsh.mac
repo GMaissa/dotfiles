@@ -1,14 +1,17 @@
 # vim: ft=sh
 
+# Load dotefiles config
+. ~/.dotfiles.conf
+
 # Path to your oh-my-zsh installation.
-export ZSH=$HOME/.oh-my-zsh
+export ZSH=${DOTFILESDIR}/lib/oh-my-zsh
 
 # Set name of the theme to load.
 # Look in ~/.oh-my-zsh/themes/
 # Optionally, if you set this to "random", it'll load a random theme each
 # time that oh-my-zsh is loaded.
 #ZSH_THEME="gumai"
-ZSH_THEME="gumai2"
+ZSH_THEME="agnoster-gumai"
 
 # aliases
 if [[ -f "${HOME}/.aliases" ]]; then
@@ -54,10 +57,16 @@ CHROME_BIN='/Applications/Chromium.app/Contents/MacOS/Chromium'
 export CHROME_BIN
 
 # Define username
-[[ -n "$SSH_CLIENT" ]] || export DEFAULT_USER="g.maissa"
+[[ -n "$SSH_CLIENT" ]] || export DEFAULT_USER=${USERLOGIN}
 
 # Disable cowsay with ansible
 export ANSIBLE_NOCOWS=1
 
 # Disable tmux windows autotitle
 export DISABLE_AUTO_TITLE=true
+
+export ZSH_TMUX_AUTOSTART=true
+
+[ -s "${DOTFILESDIR}/lib/scm_breeze/scm_breeze.sh" ] && source "${DOTFILESDIR}/lib/scm_breeze/scm_breeze.sh"
+
+[[ -s $(brew --prefix)/etc/profile.d/autojump.sh ]] && . $(brew --prefix)/etc/profile.d/autojump.sh

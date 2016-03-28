@@ -10,11 +10,9 @@ echo -e ${INFO} "     / /  / / /_/ /  / /_/ / /_/ / /_/ __/ / /  __(__  )     "$
 echo -e ${INFO} "    /_/  /_/\__  /   \____/\____/\__/_/ /_/_/\___/____/      "${DEFAULT};
 echo -e ${INFO} "           /____/                                            \n"${DEFAULT};
 
-# Repository of the oh-my-zsh project
-OHMYZSHREPO=git@github.com:robbyrussell/oh-my-zsh.git
-
 # Current path
 CUR_PATH=$(pwd)
+FROM_HOME=$(echo ${PWD#$HOME})
 
 WITH_COMPOSER=0
 OVERRIDE_CONFS=0
@@ -72,6 +70,29 @@ do
     shift
 done
 
+if [ ! -f ${HOME}/.dotfiles.conf ]; then
+    echo -e "\n${INFO}DOTFILES CONFIG FILE${DEFAULT}"
+    STEPMSG='Set dotfiles directory path'
+    echo -ne "${PROCESSMSG}${STEPMSG}"\\r
+    OUTPUT=$(echo "export DOTFILESDIR=\$HOME${FROM_HOME}" > ${HOME}/.dotfiles.conf 2>/dev/null)
+    if [ $? -ne 0 ]; then
+        echo -e "${ERRORMSG}${STEPMSG}"
+        echo -e ${WARN}${OUTPUT}${DEFAULT}
+        exit 1
+    fi
+    echo -e "${SUCCESSMSG}${STEPMSG}"
+    STEPMSG='Register current user login'
+    echo -ne "${PROCESSMSG}${STEPMSG}"\\r
+    USERNAME=$(whoami)
+    OUTPUT=$(echo "export USERLOGIN=${USERNAME}" >> ${HOME}/.dotfiles.conf 2>/dev/null)
+    if [ $? -ne 0 ]; then
+        echo -e "${ERRORMSG}${STEPMSG}"
+        echo -e ${WARN}${OUTPUT}${DEFAULT}
+        exit 1
+    fi
+    echo -e "${SUCCESSMSG}${STEPMSG}"
+fi
+
 # We need Git, Zsh Tmux, ... to be installed
 echo -e "\n${INFO}COMMANDS${DEFAULT}"
 COMMANDS_LIST=(
@@ -83,39 +104,37 @@ COMMANDS_LIST=(
     "git-flow"
     "tree"
     "openssl"
+    "autojump"
 )
 for i in "${COMMANDS_LIST[@]}"
 do
     check_command $i
 done
 
-echo -e "\n${INFO}SHELL${DEFAULT}"
-# Cloning the oh-my-zsh project if not already done
-STEPMSG="Cloning OH-MY-ZSH repo"
-if [ ! -d ~/.oh-my-zsh ]; then
-    echo -ne "${PROCESSMSG}${STEPMSG}"\\r
-    OUTPUT=$(git clone ${OHMYZSHREPO} ~/.oh-my-zsh 2>&1 >/dev/null)
-    if [ $? -ne 0 ]; then
-        echo -e "${ERRORMSG}${STEPMSG}"
-        echo -e ${WARN}${OUTPUT}${DEFAULT}
-        exit 1
-    fi
-    echo -e "${SUCCESSMSG}${STEPMSG}"
-else
-    echo -e "${SKIPMSG}${STEPMSG}"
+echo -e "\n${INFO}EXTERNAL LIBS${DEFAULT}"
+STEPMSG='Download external libraries'
+echo -ne "${PROCESSMSG}${STEPMSG}"\\r
+OUTPUT=$(git submodule init && git submodule update 2>&1 >/dev/null)
+if [ $? -ne 0 ]; then
+    echo -e "${ERRORMSG}${STEPMSG}"
+    echo -e ${WARN}${OUTPUT}${DEFAULT}
+    exit 1
 fi
+echo -e "${SUCCESSMSG}${STEPMSG}"
+
+echo -e "\n${INFO}SHELL${DEFAULT}"
 for file in oh-my-zsh/themes/*
 do
     if [ -f "$file" ];then
         THEME=$(basename "$file")
-        symlink_config "$file" ".oh-my-zsh/themes/${THEME}"
+        symlink_config "$file" "${FROM_HOME}/oh-my-zsh/themes/${THEME}"
     fi
 done
 for dir in oh-my-zsh/plugins/*
 do
     if [ -d "$dir" ];then
         PLUGIN=$(basename "$dir")
-        symlink_config "$dir" ".oh-my-zsh/plugins/${PLUGIN}"
+        symlink_config "$dir" "${FROM_HOME}/oh-my-zsh/plugins/${PLUGIN}"
     fi
 done
 
@@ -213,19 +232,6 @@ if [ ! -d ~/.gitconfig.d ]; then
 fi
 symlink_config "config/gitignore" ".gitconfig.d/.gitignore_global"
 symlink_config "config/gitcommit.template" ".gitconfig.d/.gitcommit.template"
-STEPMSG="Cloning SCM_BREEZE repo"
-if [ ! -d ~/.scm_breeze ]; then
-    echo -ne "${PROCESSMSG}${STEPMSG}"\\r
-    OUTPUT=$(git clone git://github.com/ndbroadbent/scm_breeze.git ~/.scm_breeze 2>&1 >/dev/null)
-    if [ $? -ne 0 ]; then
-        echo -e "${ERRORMSG}${STEPMSG}"
-        echo -e ${WARN}${OUTPUT}${DEFAULT}
-        exit 1
-    fi
-    echo -e "${SUCCESSMSG}${STEPMSG}"
-else
-    echo -e "${SKIPMSG}${STEPMSG}"
-fi
 
 # Install composer
 if [[ ${WITH_COMPOSER} -eq 1 ]]; then
