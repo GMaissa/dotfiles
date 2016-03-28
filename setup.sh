@@ -128,20 +128,6 @@ fi
 echo -e "${SUCCESSMSG}${STEPMSG}"
 
 echo -e "\n${INFO}SHELL${DEFAULT}"
-for file in oh-my-zsh/themes/*
-do
-    if [ -f "$file" ];then
-        THEME=$(basename "$file")
-        symlink_config "$file" "${FROM_HOME}/oh-my-zsh/themes/${THEME}"
-    fi
-done
-for dir in oh-my-zsh/plugins/*
-do
-    if [ -d "$dir" ];then
-        PLUGIN=$(basename "$dir")
-        symlink_config "$dir" "${FROM_HOME}/oh-my-zsh/plugins/${PLUGIN}"
-    fi
-done
 
 # Apply configuration for zsh
 symlink_config "config/zsh" ".zshrc"
