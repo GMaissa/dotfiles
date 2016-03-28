@@ -11,15 +11,6 @@ alias ssh="~/bin/ssh_cmds ssh"
 alias scp="~/bin/ssh_cmds scp"
 alias rsync="~/bin/ssh_cmds rsync"
 
-# ###########
-# SVN aliases
-alias sup="svn up"
-alias sco="svn co"
-alias sadd="svn add"
-alias scom="svn commit -m"
-alias sstat="svn status"
-alias svndiff="svn diff --ignore-eol-style -w"
-
 # ##########
 # LS aliases
 alias ls="ls $LS_OPTIONS"
@@ -38,26 +29,14 @@ alias hostsconfig="sudo vim /etc/hosts"
 # FIX TYPO aliases
 alias gti="git"
 
-# ###############
-# VAGRANT aliases
-alias vup="vagrant up"
-alias vssh"vagrant ssh"
-alias vdest="vagrant destroy"
-alias vba="vagrant box add -name"
-
 # ############
 # MISC aliases
 alias vi="vim"
 alias rsyncplus="rsync -P --bwlimit=100"
-
-# ##############
-# APACHE aliases
-alias aph="sudo /etc/init.d/apache2"
-alias a2es="a2ensite"
-alias a2ds="a2dissite"
-alias a2em="a2enmode"
-alias a2dm="a2dismode"
-alias a2se="cd /etc/apache2/sites-enabled"
+alias killtmux="tmux ls | grep : | cut -d. -f1 | awk '{print substr($1, 0, length($1)-1)}' | xargs ki"
+alias gettmuxlayout="tmux list-windows | sed -E 's/^(.*)layout (.*)\]\](.*)/\2]/'|pbcopy"
+alias killses="tmux kill-session"
+alias meteo="curl -4 wttr.in/Paris"
 
 # ######################
 # Terminal theme aliases
