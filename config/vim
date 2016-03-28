@@ -40,8 +40,8 @@ else
   set backupext   =-vimbackup
   set backupskip  =
 endif
-set directory     =$HOME/.vim/files/swap//
-set undodir       =$HOME/.vim/files/undo/
+set directory     =$HOME/.vim/swap/
+set undodir       =$HOME/.vim/undo/
 
 set history       =50                " keep 50 lines of command line history
 set ruler                            " show the cursor position all the time
