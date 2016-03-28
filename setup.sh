@@ -119,7 +119,7 @@ done
 echo -e "\n${INFO}EXTERNAL LIBS${DEFAULT}"
 STEPMSG='Download external libraries'
 echo -ne "${PROCESSMSG}${STEPMSG}"\\r
-OUTPUT=$(git submodule init && git submodule update 2>&1 >/dev/null)
+OUTPUT=$(git submodule update --init --recursive 2>&1 >/dev/null)
 if [ $? -ne 0 ]; then
     echo -e "${ERRORMSG}${STEPMSG}"
     echo -e ${WARN}${OUTPUT}${DEFAULT}
