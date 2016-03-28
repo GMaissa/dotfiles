@@ -109,8 +109,8 @@ COMMANDS_LIST=(
     "openssl"
     "autojump"
     "go"
-    "ansible"
-    "dnsmasq"
+#    "ansible"
+#    "dnsmasq"
     "tree"
     "htop"
 )
