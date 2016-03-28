@@ -196,6 +196,11 @@ VIM_BUNDLE_LIST=(
     rizzatti/dash.vim
     altercation/vim-colors-solarized
     editorconfig/editorconfig-vim
+    tmux-plugins/vim-tmux
+    markcornick/vim-vagrant
+    ekalinin/Dockerfile.vim
+    chase/vim-ansible-yaml
+    wakatime/vim-wakatime
 )
 for i in "${VIM_BUNDLE_LIST[@]}"
 do
