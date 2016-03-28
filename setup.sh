@@ -105,6 +105,11 @@ COMMANDS_LIST=(
     "tree"
     "openssl"
     "autojump"
+    "go"
+    "pre-commit"
+    "ansible"
+    "dnsmasq"
+    "tree"
 )
 for i in "${COMMANDS_LIST[@]}"
 do
