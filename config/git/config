@@ -1,10 +1,6 @@
 [core]
     editor = vim
 	excludesfile = ~/.gitconfig.d/.gitignore_global
-[user]
-	name = Guillaume Maïssa
-	email = guillaume@maissa.fr
-	signingkey = 1D8E1988
 [mergetool]
     keepBackup = true
 [alias]
@@ -42,5 +38,7 @@
 	enabled = true
 [commit]
 	template = ~/.gitconfig.d/.gitcommit.template
-[credential]
-	helper = osxkeychain
+
+# Allow local customizations in the .gitconfig_local file
+[include]
+    path = ~/.gitconfig_local
