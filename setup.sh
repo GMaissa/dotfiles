@@ -226,12 +226,12 @@ fi
 
 # Apply configuration for git
 echo -e "\n${INFO}GIT${DEFAULT}"
-symlink_config "config/git" ".gitconfig"
+symlink_config "config/git/config" ".gitconfig"
 if [ ! -d ~/.gitconfig.d ]; then
     mkdir -p ~/.gitconfig.d
 fi
-symlink_config "config/gitignore" ".gitconfig.d/.gitignore_global"
-symlink_config "config/gitcommit.template" ".gitconfig.d/.gitcommit.template"
+symlink_config "config/git/ignore" ".gitconfig.d/.gitignore_global"
+symlink_config "config/git/commit.template" ".gitconfig.d/.gitcommit.template"
 
 # Install composer
 if [[ ${WITH_COMPOSER} -eq 1 ]]; then
