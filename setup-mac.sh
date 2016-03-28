@@ -2,6 +2,7 @@
 
 echo -e "\n${INFO}MAC COMMANDS${DEFAULT}"
 MAC_COMMANDS_LIST=(
+    "docker-machine-nfs"
 )
 for i in "${MAC_COMMANDS_LIST[@]}"
 do

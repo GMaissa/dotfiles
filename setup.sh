@@ -70,6 +70,7 @@ do
     shift
 done
 
+# Create a dotfiles configuration file to share local config
 if [ ! -f ${HOME}/.dotfiles.conf ]; then
     echo -e "\n${INFO}DOTFILES CONFIG FILE${DEFAULT}"
     STEPMSG='Set dotfiles directory path'
@@ -117,6 +118,7 @@ do
     check_command $i
 done
 
+# Install external libraries (like oh-my-zsh, scm_breeze, ...) managed as submodules
 echo -e "\n${INFO}EXTERNAL LIBS${DEFAULT}"
 STEPMSG='Download external libraries'
 echo -ne "${PROCESSMSG}${STEPMSG}"\\r
@@ -128,6 +130,7 @@ if [ $? -ne 0 ]; then
 fi
 echo -e "${SUCCESSMSG}${STEPMSG}"
 
+# Configure shell
 echo -e "\n${INFO}SHELL${DEFAULT}"
 
 # Apply configuration for zsh
@@ -286,14 +289,6 @@ fi
 # Apply configuration for ssh
 if [[ ${WITH_SSH} -eq 1 ]]; then
     echo -e "\n${INFO}SSH${DEFAULT}"
-    # Adding a few usefull scripts
-    # You will be able to split the ssh configuration into multiple files
-    # ex: config.work config.personal ...
-    if [ ! -d ~/bin ]; then
-        mkdir ~/bin
-    fi
-    symlink_bin "ssh_cmds"
-    symlink_bin "ssh-copy-id"
 
     if [ ! -d ~/.ssh ]; then
         mkdir ~/.ssh
