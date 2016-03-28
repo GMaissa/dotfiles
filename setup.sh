@@ -237,6 +237,19 @@ if [ ! -d ~/.gitconfig.d ]; then
 fi
 symlink_config "config/git/ignore" ".gitconfig.d/.gitignore_global"
 symlink_config "config/git/commit.template" ".gitconfig.d/.gitcommit.template"
+if [ ! -f ~/.gitconfig_local ]; then
+    read -r -p "What is your full name ? " USERNAME
+    read -r -p "What is your email address? " USEREMAIL
+    STEPMSG="Configuring GIT user name and email"
+    echo -ne "${PROCESSMSG}${STEPMSG}"\\r
+    OUTPUT=$(cat templates/.gitconfig_local.tpl | sed -e "s|##USERNAME##|${USERNAME}|g" | sed -e "s|##USEREMAIL##|${USEREMAIL}|g" > ~/.gitconfig_local 2>/dev/null)
+    if [ $? -ne 0 ]; then
+        echo -e "${ERRORMSG}${STEPMSG}"
+        echo -e ${WARN}${OUTPUT}${DEFAULT}
+        exit 1
+    fi
+    echo -e "${SUCCESSMSG}${STEPMSG}"
+fi
 
 # Install composer
 if [[ ${WITH_COMPOSER} -eq 1 ]]; then
