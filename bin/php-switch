@@ -1,0 +1,7 @@
+#!/bin/sh
+
+DISABLED_VERSION=$(php -r "echo PHP_MAJOR_VERSION.PHP_MINOR_VERSION;")
+ENABLED_VERSION=$1
+
+brew unlink blackfire-php${DISABLED_VERSION} php${DISABLED_VERSION}
+brew link blackfire-php${ENABLED_VERSION} php${ENABLED_VERSION}
