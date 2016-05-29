@@ -14,7 +14,7 @@ export ZSH_CUSTOM=${DOTFILESDIR}/oh-my-zsh
 ZSH_THEME="agnoster-gumai"
 
 # Which plugins would you like to load? (plugins can be found in ~/.oh-my-zsh/plugins/*)
-plugins=(git git-extras brew vagrant composer fabric git-flow sudo symfony2 tmux ezpublish4 tmuxinator vi-mode go golang nppm osx docker docker-compose)
+plugins=(git git-extras brew vagrant composer fabric git-flow sudo symfony2 tmux ezpublish4 tmuxinator vi-mode go golang nppm osx docker docker-compose alias-tips)
 
 source $ZSH/oh-my-zsh.sh
 
@@ -50,6 +50,10 @@ export DISABLE_AUTO_TITLE=true
 
 # Autostart tmux at shell launch
 export ZSH_TMUX_AUTOSTART=true
+
+# Configure alias-tips
+export ZSH_PLUGINS_ALIAS_TIPS_TEXT=" There is an alias for that: "
+export ZSH_PLUGINS_ALIAS_TIPS_EXPAND=1
 
 # Define username
 [[ -n "$SSH_CLIENT" ]] || export DEFAULT_USER=${USERLOGIN}
