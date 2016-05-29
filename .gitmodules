@@ -4,3 +4,9 @@
 [submodule "lib/scm_breeze"]
 	path = lib/scm_breeze
 	url = https://github.com/ndbroadbent/scm_breeze.git
+[submodule "lib/powerline-fonts"]
+	path = lib/powerline-fonts
+	url = https://github.com/powerline/fonts.git
+[submodule "oh-my-zsh/plugins/alias-tips"]
+	path = oh-my-zsh/plugins/alias-tips
+	url = https://github.com/djui/alias-tips
