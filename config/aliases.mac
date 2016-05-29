@@ -6,17 +6,10 @@
 
 # ###########
 # SSH aliases
-alias cpid="~/bin/ssh-copy-id"
-alias ssh="~/bin/ssh_cmds ssh"
-alias scp="~/bin/ssh_cmds scp"
-alias rsync="~/bin/ssh_cmds rsync"
-
-# ##########
-# LS aliases
-alias ls="ls $LS_OPTIONS"
-alias ll="ls $LS_OPTIONS -lh"
-alias la="ls $LS_OPTIONS -lah"
-alias lt="ls $LS_OPTIONS -lhtr"
+alias cpid="ssh-copy-id"
+alias ssh="ssh_cmds ssh"
+alias scp="ssh_cmds scp"
+#alias rsync="ssh_cmds rsync"
 
 # ####################
 # EDIT CONFIGS aliases
@@ -32,7 +25,7 @@ alias gti="git"
 # ############
 # MISC aliases
 alias vi="vim"
-alias rsyncplus="rsync -P --bwlimit=100"
+#alias rsyncplus="rsync --bwlimit=400"
 alias restart-vb='sudo /Library/StartupItems/VirtualBox/VirtualBox restart'
 alias rgrep="grep -r"
 alias killtmux="tmux ls | grep : | cut -d. -f1 | awk '{print substr($1, 0, length($1)-1)}' | xargs ki"
