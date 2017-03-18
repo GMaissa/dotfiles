@@ -103,7 +103,7 @@ COMMANDS_LIST=(
   "tmux"
   "vim"
   "wget"
-  "gnupg2"
+#  "gnupg2"
   "git-flow"
   "tree"
   "openssl"
@@ -111,6 +111,7 @@ COMMANDS_LIST=(
   "go"
   "tree"
   "htop"
+  "ctags"
 )
 for i in "${COMMANDS_LIST[@]}"
 do
@@ -172,14 +173,15 @@ fi
 if [ ! -d ~/.vim/autoload ]; then
   mkdir -p ~/.vim/autoload
 fi
-if [ ! -d ~/.vim/bundle ]; then
-  mkdir -p ~/.vim/bundle
+if [ ! -d ~/.vim/plugged ]; then
+  mkdir -p ~/.vim/plugged
 fi
-# Install pathogen to manage vim plugins as bundles
-STEPMSG="Installing VIM plugin pathogen"
-if [ ! -f ~/.vim/autoload/pathogen.vim ]; then
+
+# Install Vim plugin manager Plug
+STEPMSG="Installing VIM plugin manager"
+if [ ! -f ~/.vim/autoload/plug.vim ]; then
   echo -ne "${PROCESSMSG}${STEPMSG}"\\r
-  OUTPUT=$(wget -P ~/.vim/autoload/ https://raw.github.com/tpope/vim-pathogen/master/autoload/pathogen.vim 2>&1 >/dev/null)
+  OUTPUT=$(curl -fLo ~/.vim/autoload/plug.vim https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim 2>&1 >/dev/null)
   if [ $? -ne 0 ]; then
     echo -e "${ERRORMSG}${STEPMSG}"
     echo -e ${WARN}${OUTPUT}${DEFAULT}
@@ -189,36 +191,6 @@ if [ ! -f ~/.vim/autoload/pathogen.vim ]; then
 else
   echo -e "${SKIPMSG}${STEPMSG}"
 fi
-# Install plugins
-install_vim_plugin jamessan/vim-gnupg gnupg.vim
-
-# Install bundles
-VIM_BUNDLE_LIST=(
-  scrooloose/nerdtree
-  kien/rainbow_parentheses.vim
-  # Quickly move into a file
-  Lokaltog/vim-easymotion
-  # Indentation guides
-  nathanaelkane/vim-indent-guides
-  # increment dates
-  tpope/vim-speeddating
-  # surround character management
-  tpope/vim-surround
-  rizzatti/dash.vim
-  # Solarized theme
-  altercation/vim-colors-solarized
-  # EditorConfig support for VIM
-  editorconfig/editorconfig-vim
-  # Syntaxe file for Dockerfile
-  ekalinin/Dockerfile.vim
-  chase/vim-ansible-yaml
-  # Plugin for wakatime
-  wakatime/vim-wakatime
-)
-for i in "${VIM_BUNDLE_LIST[@]}"
-do
-  install_vim_bundle $i
-done
 
 echo -e "\n${INFO}TMUX${DEFAULT}"
 # Install gem
@@ -341,9 +313,6 @@ if type "atom" >/dev/null 2>&1 ;then
   ATOM_PLUGIN_LIST=(
     vim-mode
     editorconfig
-    travis-ci-status
-    language-go
-    dash
   )
   for i in "${ATOM_PLUGIN_LIST[@]}"
   do
