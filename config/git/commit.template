@@ -10,13 +10,14 @@
 
 # --- COMMIT END ---
 # Type can be 
-#    feat     (new feature)
-#    fix      (bug fix)
-#    refactor (refactoring production code)
-#    style    (formatting, missing semi colons, etc; no code change)
-#    doc      (changes to documentation)
-#    test     (adding or refactoring tests; no production code change)
-#    uncat    (uncategorized commit - will not be listed in changelog)
+#    feat     : new feature
+#    fix      : bug fix
+#    wip      : While working on a fix/feature
+#    refactor : refactoring production code
+#    style    : formatting, missing semi colons, etc; no code change
+#    doc      : changes to documentation
+#    test     : adding or refactoring tests; no production code change
+#    uncat    : uncategorized commit - will not be listed in changelog
 # --------------------
 # Remember to
 #    Capitalize the subject line
