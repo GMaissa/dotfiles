@@ -1,76 +1,159 @@
 " Start personnal conf
 
-" enable pathogen to manage plugins as bundles
-execute pathogen#infect()
+" Start Plug
+call plug#begin('~/.vim/plugged')
 
-" Use Vim settings, rather than Vi settings (much better!).
-" This must be first, because it changes other options as a side effect.
-set nocompatible
+" Launch Config {{{
+    " Use Vim settings, rather than Vi settings (much better!).
+    " This must be first, because it changes other options as a side effect.
+    set nocompatible
+" }}}
 
-"" Encoding
-set encoding      =utf-8
-set fileencoding  =utf-8
-set fileencodings =utf-8
+" Colors {{{
+    syntax enable
+    Plug 'altercation/vim-colors-solarized', { 'do': 'ln -s ~/.vim/plugged/vim-colors-solarized/colors/solarized.vim ~/.vim/colors'} " Solarized theme
+    if $ITERM_PROFILE == "light"
+        set background=light
+    else
+        set background=dark
+    endif
+    colorscheme solarized
+" }}}
 
-set autoindent                       " Indent according to previous line.
-set paste                            " Enable paste mode
-set expandtab                        " Use spaces instead of tabs.
-set softtabstop   =4                 " Tab key indents by 4 spaces.
-set shiftwidth    =4                 " >> indents by 4 spaces.
-set shiftround                       " >> indents to next multiple of 'shiftwidth'.
+" Misc {{{
+    set ttyfast                          " Faster redrawing.
+    set backspace     =indent,eol,start  " Make backspace work as you would expect.
+" }}}
 
-set backspace     =indent,eol,start  " Make backspace work as you would expect.
-set hidden                           " Switch between buffers without having to save first.
-set laststatus    =2                 " Always show statusline.
-set display       =lastline          " Show as much as possible of the last line.
+" Editing {{{
+    set hidden                           " Switch between buffers without having to save first.
+    Plug 'tpope/vim-surround'            " Surround character management
+    Plug 'sjl/gundo.vim'                 " Plugin for gundo
+    Plug 'chase/vim-ansible-yaml'        " Syntaxe config for Ansible files
+    Plug 'ekalinin/Dockerfile.vim'       " Syntaxe config for Dockerfile
+    Plug 'elzr/vim-json'                 " Syntaxe config for Json files
+    Plug 'tpope/vim-speeddating'         " increment dates 
+    Plug 'editorconfig/editorconfig-vim' " EditorConfig support for VIM
+    Plug 'tomtom/tcomment_vim'           " comment / uncomment 
+    Plug 'Raimondi/delimitMate'          " automatic closing of quotes, parenthesis, brackets, etc
+" }}}
 
-set showmode                         " Show current mode in command-line.
-set showcmd                          " Show already typed keys when more are expected.
+" Spaces / Tabs {{{
+    set autoindent                       " Indent according to previous line.
+    set cindent                          " 
+    set expandtab                        " Use spaces instead of tabs.
+    set tabstop       =4                 " number of visual spaces per TAB
+    set softtabstop   =4                 " Tab key indents by 4 spaces.
+    set shiftwidth    =4                 " >> indents by 4 spaces.
+    set shiftround                       " >> indents to next multiple of 'shiftwidth'.
+    filetype indent on
+    filetype plugin on
 
-set incsearch                        " Highlight while searching with / or ?.
-set hlsearch                         " Keep matches highlighted.
+    Plug 'godlygeek/tabular'             " align data in tables
+    Plug 'jakobwesthoff/whitespacetrail' " removes whitespaces from end of lines
+    Plug 'sickill/vim-pasta'             " pasting with indentation 
+" }}}
 
-set ttyfast                          " Faster redrawing.
-set lazyredraw                       " Only redraw when necessary.
+" Encoding {{{
+    set encoding      =utf-8
+    set fileencoding  =utf-8
+    set fileencodings =utf-8
+" }}}
 
-if has("vms")
-  set nobackup                       " do not keep a backup file, use versions instead
-else
-  set backup       
-  set backupdir   =~/.vim/backup/
-  set backupext   =-vimbackup
-  set backupskip  =
-endif
-set directory     =$HOME/.vim/swap/
-set undodir       =$HOME/.vim/undo/
+" UI Config {{{
+    set laststatus    =2                 " Always show statusline.
+    set ruler                            " show the cursor position all the time
+    set guifont       =fixed
+    set nonumber                         " do not display line numbers
+    set display       =lastline          " Show as much as possible of the last line.
+    "set showmode                         " Show current mode in command-line.
+    set showcmd                          " Show already typed keys when more are expected.
+    set lazyredraw                       " Only redraw when necessary.
+    Plug 'nathanaelkane/vim-indent-guides' " Indentation guides
+" }}}
 
-set history       =50                " keep 50 lines of command line history
-set ruler                            " show the cursor position all the time
+" Searching {{{
+    set incsearch                        " Highlight while searching with / or ?.
+    set hlsearch                         " Keep matches highlighted.
+    " turn off search highlight
+    nnoremap <leader><space> :nohlsearch<CR>
+    Plug 'Shougo/neocomplete.vim'        " keyword completion system
+    Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' } "fuzzy finder
+    Plug 'junegunn/fzf.vim'"
+" }}}
 
-set guifont       =fixed
-set tabstop       =4
-set nonumber
+" Folding {{{
+    set foldenable                       " enable folding
+    set foldlevelstart =10               " open most folds by default
+    set foldnestmax    =10               " 10 nested fold max
+    set foldmethod     =indent           " fold based on indent level
+    set modelines=1
+" }}}
 
-syn on
+" Custom Leader {{{
+    let mapleader=" "                    " Remap leader key to space charac
 
-" Remap leader key to space charac
-let mapleader=" "
+    " Map Ctrl+n keys to NERDTree toggle
+    map <C-n> :NERDTreeToggle<CR>
 
-noremap <Leader>h :<C-u>split<CR>
-noremap <Leader>v :<C-u>vsplit<CR>
+    " Map Ctrl+u keys to Gundotoggle
+    map <C-u> :GundoToggle<CR>
+
+    noremap <Leader>h :<C-u>split<CR>
+    noremap <Leader>v :<C-u>vsplit<CR>
+" }}}
+
+" CtrlP Settings {{{
+    let g:ctrlp_custom_ignore = 'build/|.git/|\.(swp|pyc)$'
+" }}}
+
+" NERDTree Settings {{{ 
+"
+    Plug 'scrooloose/nerdtree', { 'on':  'NERDTreeToggle' }
+    let NERDTreeIgnore = ['\.pyc$', 'build', '.git']
+
+    " Close vim if the only open window is NERDTree
+    autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTreeType") && b:NERDTreeType == "primary") | q | endif
+" }}}
+
+" Mouvement {{{
+    Plug 'Lokaltog/vim-easymotion'
+    Plug 'vim-scripts/vis'
+" }}}
+
+" Tmux config {{{
+" }}}
+
+" git {{{
+    Plug 'tpope/vim-fugitive'           " GIT integration
+    Plug 'airblade/vim-gitgutter'       " show changed lines in gutter
+    Plug 'rhysd/committia.vim'          " show diff in own split when editing a COMMIT_EDITMSG 
+" }}}
+
+" Backups {{{
+    if has("vms")
+      set nobackup                       " do not keep a backup file, use versions instead
+    else
+      set backup
+      set backupdir   =~/.vim/backup/
+      set backupext   =-vimbackup
+      set backupskip  =
+    endif
+    set directory     =$HOME/.vim/swap/
+    set undodir       =$HOME/.vim/undo/
+" }}}
+
+" PHP {{{
+    Plug 'veloce/vim-behat'             " Manage .feature files as behat files
+    let g:feature_filetype='behat'
+    Plug 'joonty/vim-phpqa'             " Integrate PHP quality checking tools
+    let g:phpqa_codesniffer_args ="--standard=PSR2" " Set default coding standard
+    Plug 'wakatime/vim-wakatime'        " Quantify your coding inside Vim.
+" }}}
+
+" Stop Plug
+call plug#end()
 
 let Tlist_GainFocus_On_ToggleOpen=1
 
-" Map Ctrl+n keys to NERDTree toggle
-map <C-n> :NERDTreeToggle<CR>
-" Close vim if the only open window is NERDTree
-autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTreeType") && b:NERDTreeType == "primary") | q | endif
-
-" Setup solarized theme
-syntax enable
-if $ITERM_PROFILE == "light"
-    set background=light
-else
-    set background=dark
-endif
-colorscheme solarized
+" vim:foldmethod=marker:foldlevel=0
