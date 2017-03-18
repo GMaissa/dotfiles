@@ -3,7 +3,7 @@
 echo -e "\n${INFO}MAC COMMANDS${DEFAULT}"
 MAC_COMMANDS_LIST=(
   "pre-commit"
-  "docker-machine-nfs"
+  "fzf"
 )
 for i in "${MAC_COMMANDS_LIST[@]}"
 do
@@ -20,8 +20,6 @@ if [[ ${WITH_CASKS} -eq 1 ]]; then
     "bartender"
     "chromium"
     "controlplane"
-    "dash"
-    "delibar"
     "divvy"
     "dropbox"
     "evernote"
@@ -39,10 +37,6 @@ if [[ ${WITH_CASKS} -eq 1 ]]; then
     "stay"
     "atom"
     "the-unarchiver"
-    "transmission"
-    "tower"
-    "vagrant"
-    "virtualbox"
     "vlc"
   )
   for i in "${CASK_APPS_LIST[@]}"
