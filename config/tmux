@@ -10,7 +10,7 @@ bind < resize-pane -L 10
 bind > resize-pane -R 10
 
 # reload config
-bind r source-file ~/.tmux.conf \; display-message "Config reloaded..."
+bind r run "tmux source-file ~/.tmux.conf; stty -ixon"
 
 # Remap window navigation to vim
 #unbind-key j
