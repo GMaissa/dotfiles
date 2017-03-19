@@ -1,5 +1,17 @@
 #!/bin/bash
 
+# Install Mac apps {{{
+echo -e "\n${INFO}DEBIAN COMMANDS${DEFAULT}"
+DEBIAN_COMMANDS_LIST=(
+  "rubygems"
+)
+for i in "${DEBIAN_COMMANDS_LIST[@]}"
+do
+  check_command $i
+done
+# }}}
+
+# Install Solarized terminal theme {{{
 echo -e "\n${INFO}SOLARIZED THEME${DEFAULT}"
 STEPMSG="Applying Solarized theme"
 if [[ ! -f ${HOME}/.dircolors -o ! -d ${HOME}/.solarized ]];then
@@ -24,3 +36,6 @@ if [[ ! -f ${HOME}/.dircolors -o ! -d ${HOME}/.solarized ]];then
 else
   echo -e "${SKIPMSG}${STEPMSG}"
 fi
+# }}}
+
+" vim: ft=vim sw=2 foldenable foldmethod=marker foldlevel=0

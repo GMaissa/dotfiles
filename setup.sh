@@ -10,6 +10,7 @@ echo -e ${INFO} "     / /  / / /_/ /  / /_/ / /_/ / /_/ __/ / /  __(__  )     "$
 echo -e ${INFO} "    /_/  /_/\__  /   \____/\____/\__/_/ /_/_/\___/____/      "${DEFAULT};
 echo -e ${INFO} "           /____/                                            \n"${DEFAULT};
 
+# Init variables {{{
 # Current path
 CUR_PATH=$(pwd)
 FROM_HOME=$(echo ${PWD#$HOME})
@@ -27,13 +28,16 @@ if [[ "$(uname -s)" == "Darwin" ]]; then
 elif [[ "$(uname -s)" == "Linux" ]]; then
   if [ -f /etc/debian_version ]; then
     OS='debian'
-    INSTALLCMD='aptitude install -y'
+    INSTALLCMD='apt-get install -y'
   elif [ -f /etc/redhat-release ]; then
     OS='redhat'
     INSTALLCMD='yum install -y'
   fi
 fi
 
+# }}}
+
+# Help {{{
 display_help()
 {
 #    echo -e $INFO
@@ -49,8 +53,9 @@ display_help()
 #  echo -e $DEFAULT
   exit
 }
+# }}}
 
-# Check command arguments
+# Check command arguments {{{
 while test $# -gt 0
 do
   case "$1" in
@@ -69,8 +74,9 @@ do
   esac
   shift
 done
+# }}}
 
-# Create a dotfiles configuration file to share local config
+# Create a dotfiles configuration file to shared local config {{{
 if [ ! -f ${HOME}/.dotfiles.conf ]; then
   echo -e "\n${INFO}DOTFILES CONFIG FILE${DEFAULT}"
 
@@ -95,7 +101,9 @@ if [ ! -f ${HOME}/.dotfiles.conf ]; then
   fi
   echo -e "${SUCCESSMSG}${STEPMSG}"
 fi
+# }}}
 
+# Install required apps {{{
 # We need Git, Zsh Tmux, ... to be installed
 echo -e "\n${INFO}COMMANDS${DEFAULT}"
 COMMANDS_LIST=(
@@ -112,29 +120,16 @@ COMMANDS_LIST=(
   "tree"
   "htop"
   "ctags"
+  "cmake"
 )
 for i in "${COMMANDS_LIST[@]}"
 do
   check_command $i
 done
-MAC_COMMANDS_LIST=(
-  "ansible"
-  "dnsmasq"
-)
-DEBIAN_COMMANDS_LIST=(
-  "rubygems"
-)
-REDHAT_COMMANDS_LIST=(
-  "rubygems"
-)
-OS_COMMANDS_LIST=$(echo "${OS}_COMMANDS_LIST" | tr "[:lower:]" "[:upper:]")
-ARRAY=${OS_COMMANDS_LIST[@]}
-for i in "${!ARRAY}"
-do
-  check_command $i
-done
 
-# Install external libraries (like oh-my-zsh, scm_breeze, ...) managed as submodules
+# }}}
+
+# Install external libraries (like oh-my-zsh, scm_breeze, ...) {{{
 echo -e "\n${INFO}EXTERNAL LIBS${DEFAULT}"
 STEPMSG='Download external libraries'
 echo -ne "${PROCESSMSG}${STEPMSG}"\\r
@@ -145,8 +140,9 @@ if [ $? -ne 0 ]; then
   exit 1
 fi
 echo -e "${SUCCESSMSG}${STEPMSG}"
+# }}}
 
-# Configure shell
+# Configure shell {{{
 echo -e "\n${INFO}SHELL${DEFAULT}"
 
 # Apply configuration for zsh
@@ -155,10 +151,9 @@ symlink_config "config/zsh" ".zshrc"
 # Enable common aliases
 symlink_config "config/aliases" ".aliases"
 
-# Apply configuration for tmux
-symlink_config "config/tmux" ".tmux.conf"
+# }}}
 
-# Apply configuration for vim
+# Apply configuration for vim {{{
 echo -e "\n${INFO}VIM${DEFAULT}"
 symlink_config "config/vim" ".vimrc"
 if [ ! -d ~/.vim/backup ]; then
@@ -191,6 +186,10 @@ if [ ! -f ~/.vim/autoload/plug.vim ]; then
 else
   echo -e "${SKIPMSG}${STEPMSG}"
 fi
+# }}}
+
+# Apply configuration for tmux {{{
+symlink_config "config/tmux" ".tmux.conf"
 
 echo -e "\n${INFO}TMUX${DEFAULT}"
 # Install gem
@@ -204,6 +203,7 @@ if [ ! -f ~/.bin/tmuxinator.zsh ]; then
   fi
   echo -ne "${PROCESSMSG}${STEPMSG}"\\r
   OUTPUT=$(wget -P ~/.bin/ https://raw.githubusercontent.com/tmuxinator/tmuxinator/master/completion/tmuxinator.zsh 2>&1 >/dev/null)
+
   if [ $? -ne 0 ]; then
     echo -e "${ERRORMSG}${STEPMSG}"
     echo -e ${WARN}${OUTPUT}${DEFAULT}
@@ -213,8 +213,9 @@ if [ ! -f ~/.bin/tmuxinator.zsh ]; then
 else
   echo -e "${SKIPMSG}${STEPMSG}"
 fi
+# }}}
 
-# Apply configuration for git
+# Apply configuration for git {{{
 echo -e "\n${INFO}GIT${DEFAULT}"
 symlink_config "config/git/config" ".gitconfig"
 if [ ! -d ~/.gitconfig.d ]; then
@@ -235,8 +236,9 @@ if [ ! -f ~/.gitconfig_local ]; then
   fi
   echo -e "${SUCCESSMSG}${STEPMSG}"
 fi
+# }}}
 
-# Install composer
+# Install composer {{{
 if [[ ${WITH_COMPOSER} -eq 1 ]]; then
   echo -e "\n${INFO}COMPOSER${DEFAULT}"
   if [ ! -f /usr/local/bin/composer ]; then
@@ -271,8 +273,9 @@ if [[ ${WITH_COMPOSER} -eq 1 ]]; then
     install_composer_pkg $i
   done
 fi
+# }}}
 
-# Install NodeJS packages
+# Install NodeJS packages {{{
 if [[ ${WITH_NODE} -eq 1 ]]; then
   echo -e "\n${INFO}NODEJS${DEFAULT}"
 
@@ -282,14 +285,16 @@ if [[ ${WITH_NODE} -eq 1 ]]; then
     "grunt-cli"
     "bower"
     "bower-installer"
+    "gulp"
   )
   for i in "${NODE_PKG_LIST[@]}"
   do
     install_node_pkg $i
   done
 fi
+# }}}
 
-# Apply configuration for ssh
+# Apply configuration for ssh {{{
 if [[ ${WITH_SSH} -eq 1 ]]; then
   echo -e "\n${INFO}SSH${DEFAULT}"
 
@@ -303,21 +308,14 @@ if [[ ${WITH_SSH} -eq 1 ]]; then
     . ~/Dropbox/dotfiles/ssh/setup.sh
   fi
 fi
+# }}}
 
+# Custom OS setup {{{
 if [ -f "$(dirname $0)/setup-${OS}.sh" ];then
   . $(dirname $0)/setup-${OS}.sh
 fi
-
-if type "atom" >/dev/null 2>&1 ;then
-  echo -e "\n${INFO}ATOM PLUGINS${DEFAULT}"
-  ATOM_PLUGIN_LIST=(
-    vim-mode
-    editorconfig
-  )
-  for i in "${ATOM_PLUGIN_LIST[@]}"
-  do
-    install_atom_plugin $i
-  done
-fi
+# }}}
 
 echo -e ${INFO}"\nYou are all set. You can now define zsh as your default shell using the command :\nchsh -s $(which zsh)"${DEFAULT}
+
+" vim: ft=vim sw=2 foldenable foldmethod=marker foldlevel=0

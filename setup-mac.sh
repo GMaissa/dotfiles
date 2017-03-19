@@ -1,7 +1,10 @@
 #!/bin/bash
 
+# Install Mac apps {{{
 echo -e "\n${INFO}MAC COMMANDS${DEFAULT}"
 MAC_COMMANDS_LIST=(
+  "ansible"
+  "dnsmasq"
   "pre-commit"
   "fzf"
 )
@@ -44,7 +47,9 @@ if [[ ${WITH_CASKS} -eq 1 ]]; then
     install_cask_app $i
   done
 fi
+# }}}
 
+# Install custom font for Terminal {{{
 echo -e "\n${INFO}FONTS${DEFAULT}"
 STEPMSG="Installing AnonymousPro fonts"
 if [ ! -f "/Library/Fonts/Anonymice Powerline.ttf" ]; then
@@ -65,3 +70,6 @@ if [ ! -f "/Library/Fonts/Anonymice Powerline.ttf" ]; then
 else
   echo -e "${SKIPMSG}${STEPMSG}"
 fi
+# }}}
+
+" vim: ft=vim sw=2 foldenable foldmethod=marker foldlevel=0

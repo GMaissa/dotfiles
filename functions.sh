@@ -84,47 +84,6 @@ check_command()
   fi
 }
 
-install_vim_bundle()
-{
-  REPO=$1
-  BUNDLE=$(echo $REPO | cut -d'/' -f 2)
-  STEPMSG="Installing VIM bundle ${BUNDLE}"
-  if [ ! -d ~/.vim/bundle/"${BUNDLE}" ]; then
-    echo -ne "${PROCESSMSG}${STEPMSG}"\\r
-    OUTPUT=$(git clone https://github.com/${REPO} ~/.vim/bundle/${BUNDLE} 2>&1 >/dev/null)
-    if [ $? -ne 0 ]; then
-      echo -e "${ERRORMSG}${STEPMSG}"
-      echo -e ${WARN}${OUTPUT}${DEFAULT}
-      exit 1
-    fi
-    echo -e "${SUCCESSMSG}${STEPMSG}"
-  else
-    echo -e "${SKIPMSG}${STEPMSG}"
-  fi
-}
-
-install_vim_plugin()
-{
-  REPO=$1
-  PLUGIN=$2
-  STEPMSG="Installing VIM plugin ${PLUGIN}"
-  if [ ! -d ~/.vim/plugin ]; then
-    mkdir ~/.vim/plugin
-  fi
-  if [ ! -f ~/.vim/plugin/"${PLUGIN}" ]; then
-    echo -ne "${PROCESSMSG}${STEPMSG}"\\r
-    OUTPUT=$(wget -P ~/.vim/plugin/ https://raw.githubusercontent.com/${REPO}/master/plugin/${PLUGIN} 2>&1 >/dev/null)
-    if [ $? -ne 0 ]; then
-      echo -e "${ERRORMSG}${STEPMSG}"
-      echo -e ${WARN}${OUTPUT}${DEFAULT}
-      exit 1
-    fi
-    echo -e "${SUCCESSMSG}${STEPMSG}"
-  else
-    echo -e "${SKIPMSG}${STEPMSG}"
-  fi
-}
-
 install_gpg_key()
 {
   GPGKEY=$1
@@ -203,25 +162,6 @@ install_cask_app()
     echo -ne "${PROCESSMSG}${STEPMSG}"\\r
     # Install the app or exit the script (option -e in the shebang) if failed
     OUTPUT=$(brew cask install ${APP} 2>&1 >/dev/null)
-    if [ $? -ne 0 ]; then
-      echo -e "${ERRORMSG}${STEPMSG}"
-      echo -e ${WARN}${OUTPUT}${DEFAULT}
-      exit 1
-    fi
-    echo -e "${SUCCESSMSG}${STEPMSG}"
-  else
-    echo -e "${SKIPMSG}${STEPMSG}"
-  fi
-}
-
-install_atom_plugin()
-{
-  PLUGIN=$1
-  STEPMSG="Installing Atom plugin ${PLUGIN}"
-  if [ ! -d ~/.atom/packages/"${PLUGIN}" ] ;then
-    echo -ne "${PROCESSMSG}${STEPMSG}"\\r
-    # Install the plugin or exit the script (option -e in the shebang) if failed
-    OUTPUT=$(apm install ${PLUGIN} 2>&1 >/dev/null)
     if [ $? -ne 0 ]; then
       echo -e "${ERRORMSG}${STEPMSG}"
       echo -e ${WARN}${OUTPUT}${DEFAULT}
