@@ -29,8 +29,6 @@ call plug#begin('~/.vim/plugged')
 " }}}
 
 " Colors {{{
-"  syntax enable
-
   " Solarized theme
   Plug 'altercation/vim-colors-solarized', { 'do': 'ln -s ~/.vim/plugged/vim-colors-solarized/colors/solarized.vim ~/.vim/colors'}
   if $ITERM_PROFILE == 'light'
@@ -42,8 +40,6 @@ call plug#begin('~/.vim/plugged')
 " }}}
 
 " Editing {{{
-"  set hidden               " Switch between buffers without having to save first.
-
   " Surround character management
   Plug 'tpope/vim-surround'
 
@@ -76,8 +72,6 @@ call plug#begin('~/.vim/plugged')
 " }}}
 
 " Spaces / Tabs {{{
-"  set backspace   =indent,eol,start  " Make backspace work as you would expect.
-"  set autoindent             " Indent according to previous line.
   set cindent
 
   " Use spaces instead of tabs.
@@ -95,10 +89,6 @@ call plug#begin('~/.vim/plugged')
   " >> indents to next multiple of 'shiftwidth'.
   set shiftround
 
-"  if has('autocmd')
-"    filetype plugin indent on
-"  endif
-
   " align data in tables
   Plug 'godlygeek/tabular'
 
@@ -109,34 +99,17 @@ call plug#begin('~/.vim/plugged')
   Plug 'sickill/vim-pasta'
 " }}}
 
-" Encoding {{{
-"  if &encoding ==# 'latin1' && has('gui_running')
-"    set encoding    =utf-8
-"  endif 
-" }}}
-
 " UI Config {{{
-"  set laststatus  =2           " Always show statusline.
-"  set ruler                " show the cursor position all the time
   set guifont=fixed
-"  set nonumber               " do not display line numbers
-"  set display     =lastline      " Show as much as possible of the last line.
-"  set noshowmode             " Show mode in statusbar, not separately.
-"
+
   " Show already typed keys when more are expected.
   set showcmd
 
-"  set lazyredraw             " Only redraw when necessary.
-"
   " Indentation guides
   Plug 'nathanaelkane/vim-indent-guides'
 " }}}
 
 " Searching {{{
-"  set incsearch                           " Highlight while searching with / or ?.
-                                    " turn off search highlight
-"  nnoremap <leader><space> :nohlsearch<CR>
-
   " keyword completion system
   Plug 'Shougo/neocomplete.vim'
 
@@ -198,9 +171,6 @@ call plug#begin('~/.vim/plugged')
   Plug 'Lokaltog/vim-easymotion'
 
   Plug 'vim-scripts/vis'
-" }}}
-
-" Tmux config {{{
 " }}}
 
 " git {{{
