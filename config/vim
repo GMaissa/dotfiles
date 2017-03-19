@@ -1,159 +1,272 @@
 " Start personnal conf
 
+"" Launch Config {{{
+"  " Use Vim settings, rather than Vi settings (much better!).
+"  " This must be first, because it changes other options as a side effect.
+"  set nocompatible
+"" }}}
+
 " Start Plug
 call plug#begin('~/.vim/plugged')
 
-" Launch Config {{{
-    " Use Vim settings, rather than Vi settings (much better!).
-    " This must be first, because it changes other options as a side effect.
-    set nocompatible
-" }}}
-
-" Colors {{{
-    syntax enable
-    Plug 'altercation/vim-colors-solarized', { 'do': 'ln -s ~/.vim/plugged/vim-colors-solarized/colors/solarized.vim ~/.vim/colors'} " Solarized theme
-    if $ITERM_PROFILE == "light"
-        set background=light
-    else
-        set background=dark
-    endif
-    colorscheme solarized
-" }}}
-
 " Misc {{{
-    set ttyfast                          " Faster redrawing.
-    set backspace     =indent,eol,start  " Make backspace work as you would expect.
-" }}}
+  " Faster redrawing.
+  set ttyfast
 
-" Editing {{{
-    set hidden                           " Switch between buffers without having to save first.
-    Plug 'tpope/vim-surround'            " Surround character management
-    Plug 'sjl/gundo.vim'                 " Plugin for gundo
-    Plug 'chase/vim-ansible-yaml'        " Syntaxe config for Ansible files
-    Plug 'ekalinin/Dockerfile.vim'       " Syntaxe config for Dockerfile
-    Plug 'elzr/vim-json'                 " Syntaxe config for Json files
-    Plug 'tpope/vim-speeddating'         " increment dates 
-    Plug 'editorconfig/editorconfig-vim' " EditorConfig support for VIM
-    Plug 'tomtom/tcomment_vim'           " comment / uncomment 
-    Plug 'Raimondi/delimitMate'          " automatic closing of quotes, parenthesis, brackets, etc
-" }}}
-
-" Spaces / Tabs {{{
-    set autoindent                       " Indent according to previous line.
-    set cindent                          " 
-    set expandtab                        " Use spaces instead of tabs.
-    set tabstop       =4                 " number of visual spaces per TAB
-    set softtabstop   =4                 " Tab key indents by 4 spaces.
-    set shiftwidth    =4                 " >> indents by 4 spaces.
-    set shiftround                       " >> indents to next multiple of 'shiftwidth'.
-    filetype indent on
-    filetype plugin on
-
-    Plug 'godlygeek/tabular'             " align data in tables
-    Plug 'jakobwesthoff/whitespacetrail' " removes whitespaces from end of lines
-    Plug 'sickill/vim-pasta'             " pasting with indentation 
-" }}}
-
-" Encoding {{{
-    set encoding      =utf-8
-    set fileencoding  =utf-8
-    set fileencodings =utf-8
-" }}}
-
-" UI Config {{{
-    set laststatus    =2                 " Always show statusline.
-    set ruler                            " show the cursor position all the time
-    set guifont       =fixed
-    set nonumber                         " do not display line numbers
-    set display       =lastline          " Show as much as possible of the last line.
-    "set showmode                         " Show current mode in command-line.
-    set showcmd                          " Show already typed keys when more are expected.
-    set lazyredraw                       " Only redraw when necessary.
-    Plug 'nathanaelkane/vim-indent-guides' " Indentation guides
-" }}}
-
-" Searching {{{
-    set incsearch                        " Highlight while searching with / or ?.
-    set hlsearch                         " Keep matches highlighted.
-    " turn off search highlight
-    nnoremap <leader><space> :nohlsearch<CR>
-    Plug 'Shougo/neocomplete.vim'        " keyword completion system
-    Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' } "fuzzy finder
-    Plug 'junegunn/fzf.vim'"
-" }}}
-
-" Folding {{{
-    set foldenable                       " enable folding
-    set foldlevelstart =10               " open most folds by default
-    set foldnestmax    =10               " 10 nested fold max
-    set foldmethod     =indent           " fold based on indent level
-    set modelines=1
+  " Extended sensitive vim configuration
+  Plug 'GMaissa/vimrc.vim'
 " }}}
 
 " Custom Leader {{{
-    let mapleader=" "                    " Remap leader key to space charac
+  " Remap leader key to space charac
+  let mapleader='\<Space>'
 
-    " Map Ctrl+n keys to NERDTree toggle
-    map <C-n> :NERDTreeToggle<CR>
+  " Map Ctrl+u keys to Gundotoggle
+  map <C-u> :GundoToggle<CR>
 
-    " Map Ctrl+u keys to Gundotoggle
-    map <C-u> :GundoToggle<CR>
+  noremap <Leader>h :<C-u>split<CR>
+  noremap <Leader>v :<C-u>vsplit<CR>
+" }}}
 
-    noremap <Leader>h :<C-u>split<CR>
-    noremap <Leader>v :<C-u>vsplit<CR>
+" Colors {{{
+"  syntax enable
+
+  " Solarized theme
+  Plug 'altercation/vim-colors-solarized', { 'do': 'ln -s ~/.vim/plugged/vim-colors-solarized/colors/solarized.vim ~/.vim/colors'}
+  if $ITERM_PROFILE == 'light'
+    set background=light
+  else
+    set background=dark
+  endif
+  colorscheme solarized
+" }}}
+
+" Editing {{{
+"  set hidden               " Switch between buffers without having to save first.
+
+  " Surround character management
+  Plug 'tpope/vim-surround'
+
+  " Plugin for gundo
+  Plug 'sjl/gundo.vim'
+
+  " Syntaxe config for Ansible files
+  Plug 'chase/vim-ansible-yaml'
+
+  " Syntaxe config for Dockerfile
+  Plug 'ekalinin/Dockerfile.vim'
+
+  " Syntaxe config for Json files
+  Plug 'elzr/vim-json'
+
+  " increment dates
+  Plug 'tpope/vim-speeddating'
+
+  " EditorConfig support for VIM
+  Plug 'editorconfig/editorconfig-vim'
+
+  " comment / uncomment
+  Plug 'tomtom/tcomment_vim'
+
+  " automatic closing of quotes, parenthesis, brackets, etc
+  Plug 'Raimondi/delimitMate'
+
+  " Registers management
+  Plug 'junegunn/vim-peekaboo'
+" }}}
+
+" Spaces / Tabs {{{
+"  set backspace   =indent,eol,start  " Make backspace work as you would expect.
+"  set autoindent             " Indent according to previous line.
+  set cindent
+
+  " Use spaces instead of tabs.
+  set expandtab
+
+  " number of visual spaces per TAB
+  set tabstop=4
+
+  " Tab key indents by 4 spaces.
+  set softtabstop=4
+
+  " >> indents by 4 spaces.
+  set shiftwidth=4
+
+  " >> indents to next multiple of 'shiftwidth'.
+  set shiftround
+
+"  if has('autocmd')
+"    filetype plugin indent on
+"  endif
+
+  " align data in tables
+  Plug 'godlygeek/tabular'
+
+  " removes whitespaces from end of lines
+  Plug 'jakobwesthoff/whitespacetrail'
+
+  " pasting with indentation
+  Plug 'sickill/vim-pasta'
+" }}}
+
+" Encoding {{{
+"  if &encoding ==# 'latin1' && has('gui_running')
+"    set encoding    =utf-8
+"  endif 
+" }}}
+
+" UI Config {{{
+"  set laststatus  =2           " Always show statusline.
+"  set ruler                " show the cursor position all the time
+  set guifont=fixed
+"  set nonumber               " do not display line numbers
+"  set display     =lastline      " Show as much as possible of the last line.
+"  set noshowmode             " Show mode in statusbar, not separately.
+"
+  " Show already typed keys when more are expected.
+  set showcmd
+
+"  set lazyredraw             " Only redraw when necessary.
+"
+  " Indentation guides
+  Plug 'nathanaelkane/vim-indent-guides'
+" }}}
+
+" Searching {{{
+"  set incsearch                           " Highlight while searching with / or ?.
+                                    " turn off search highlight
+"  nnoremap <leader><space> :nohlsearch<CR>
+
+  " keyword completion system
+  Plug 'Shougo/neocomplete.vim'
+
+  " fuzzy finder
+  Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
+
+  " fuzzy finder for vim
+  Plug 'junegunn/fzf.vim'
+" }}}
+
+" Folding {{{
+  " enable folding
+  set foldenable
+
+  " open most folds by default
+  set foldlevelstart =10
+
+  " 10 nested fold max
+  set foldnestmax=10
+
+  " fold based on indent level
+  set foldmethod=indent
+
+  set modelines=1
 " }}}
 
 " CtrlP Settings {{{
-    let g:ctrlp_custom_ignore = 'build/|.git/|\.(swp|pyc)$'
+  " ## INGORE FILES
+  if exists('&wildignorecase')
+    set wildignorecase
+  endif
+
+  set wildignore+=.git
+  set wildignore+=*.ai,*.bmp,*.gif,*.ico,*.jpg,*.jpeg,*.png,*.psd,*.webp
+  set wildignore+=*.avi,*.m4a,*.mp3,*.oga,*.ogg,*.wav,*.webm
+  set wildignore+=*.eot,*.otf,*.ttf,*.woff
+  set wildignore+=*.doc,*.pdf
+  set wildignore+=*.zip,*.tar.gz,*.tar.bz2,*.rar,*.tar.xz
+  set wildignore+=*.min.*
+  set wildignore+=*.swp,.lock,.DS_Store,._*,*~
+  set wildignore+=*/tmp/*,*/dist/*,*/coverage/*,*/cache/*,*/build/*
+  set wildignore+=*/log/*,*/logs/*
+
+  Plug 'kien/ctrlp.vim'
 " }}}
 
-" NERDTree Settings {{{ 
-"
-    Plug 'scrooloose/nerdtree', { 'on':  'NERDTreeToggle' }
-    let NERDTreeIgnore = ['\.pyc$', 'build', '.git']
+" NERDTree Settings {{{
+  Plug 'scrooloose/nerdtree'
 
-    " Close vim if the only open window is NERDTree
-    autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTreeType") && b:NERDTreeType == "primary") | q | endif
+  Plug 'jistr/vim-nerdtree-tabs'
+
+  let NERDTreeIgnore = ['\.pyc$', 'build', '.git']
+
+  " Map Ctrl+n keys to NERDTree toggle
+  map <C-n> :NERDTreeTabsToggle<CR>
 " }}}
 
 " Mouvement {{{
-    Plug 'Lokaltog/vim-easymotion'
-    Plug 'vim-scripts/vis'
+  Plug 'Lokaltog/vim-easymotion'
+
+  Plug 'vim-scripts/vis'
 " }}}
 
 " Tmux config {{{
 " }}}
 
 " git {{{
-    Plug 'tpope/vim-fugitive'           " GIT integration
-    Plug 'airblade/vim-gitgutter'       " show changed lines in gutter
-    Plug 'rhysd/committia.vim'          " show diff in own split when editing a COMMIT_EDITMSG 
+  " GIT integration
+  Plug 'tpope/vim-fugitive'
+
+  " show changed lines in gutter
+  Plug 'airblade/vim-gitgutter'
+
+  " show diff in own split when editing a COMMIT_EDITMSG
+  Plug 'rhysd/committia.vim'
+
+  " Display git status in NerdTree
+  Plug 'Xuyuanp/nerdtree-git-plugin'
 " }}}
 
 " Backups {{{
-    if has("vms")
-      set nobackup                       " do not keep a backup file, use versions instead
-    else
-      set backup
-      set backupdir   =~/.vim/backup/
-      set backupext   =-vimbackup
-      set backupskip  =
-    endif
-    set directory     =$HOME/.vim/swap/
-    set undodir       =$HOME/.vim/undo/
+  if has('vms')
+    set nobackup
+  else
+    set backup
+    set backupdir   =~/.vim/backup/
+    set backupext   =-vimbackup
+    set backupskip  =
+  endif
+  set directory   =$HOME/.vim/swap/
+  set undodir     =$HOME/.vim/undo/
 " }}}
 
 " PHP {{{
-    Plug 'veloce/vim-behat'             " Manage .feature files as behat files
-    let g:feature_filetype='behat'
-    Plug 'joonty/vim-phpqa'             " Integrate PHP quality checking tools
-    let g:phpqa_codesniffer_args ="--standard=PSR2" " Set default coding standard
-    Plug 'wakatime/vim-wakatime'        " Quantify your coding inside Vim.
+  " Manage .feature files as behat files
+  Plug 'veloce/vim-behat'
+  let g:feature_filetype='behat'
+
+  " Integrate PHP quality checking tools
+  Plug 'joonty/vim-phpqa'
+  " Set default coding standard
+  let g:phpqa_codesniffer_args ='--standard=PSR2'
+
+  " Quantify your coding inside Vim.
+  Plug 'wakatime/vim-wakatime'
+
+  Plug 'StanAngeloff/php.vim'
+
+  Plug 'shawncplus/phpcomplete.vim'
+  let g:phpcomplete_mappings = {
+    \ 'jump_to_def': ',g',
+    \ }
+
+  " Autocompletion
+  Plug 'Valloric/YouCompleteMe', { 'do': './install.py --clang-completer'}
 " }}}
 
 " Stop Plug
 call plug#end()
 
 let Tlist_GainFocus_On_ToggleOpen=1
+
+function! PhpSyntaxOverride()
+  hi! def link phpDocTags  phpDefine
+  hi! def link phpDocParam phpType
+endfunction
+
+augroup phpSyntaxOverride
+  autocmd!
+  autocmd FileType php call PhpSyntaxOverride()
+augroup END
 
 " vim:foldmethod=marker:foldlevel=0
