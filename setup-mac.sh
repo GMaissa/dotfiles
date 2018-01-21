@@ -37,10 +37,9 @@ if [[ ${WITH_CASKS} -eq 1 ]]; then
     "phpstorm"
     "skype"
     "spotify"
-    "stay"
-    "atom"
     "the-unarchiver"
     "vlc"
+    "slack"
   )
   for i in "${CASK_APPS_LIST[@]}"
   do
