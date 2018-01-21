@@ -16,7 +16,7 @@ export ZSH_CUSTOM=${DOTFILESDIR}/oh-my-zsh
 ZSH_THEME="agnoster-gumai"
 
 # Which plugins would you like to load? (plugins can be found in ~/.oh-my-zsh/plugins/*)
-plugins=(git git-extras composer fabric git-flow sudo symfony2 tmux tmuxinator vi-mode go golang docker docker-compose alias-tips rsync gulp grunt bower brew nppm osx)
+plugins=(git git-extras composer fabric git-flow sudo symfony2 tmux tmuxinator vi-mode go golang docker docker-compose alias-tips rsync gulp grunt bower brew nppm osx fzf)
 
 source $ZSH/oh-my-zsh.sh
 
