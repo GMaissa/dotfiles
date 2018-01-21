@@ -23,17 +23,11 @@ source $ZSH/oh-my-zsh.sh
 # Enable vi-mode
 bindkey -v
 
-# Enable search in command history
-bindkey '^R' history-incremental-search-backward
-
 # User configuration
 export PATH="/usr/local/sbin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/bin:${DOTFILESDIR}/bin"
 if [[ -d ${HOME}/.composer/vendor/bin ]]; then
     export PATH="$PATH:${HOME}/.composer/vendor/bin"
 fi
-
-# SVN Config
-export SVN_EDITOR=vim
 
 # GPG config
 GPG_TTY=`tty`
@@ -89,5 +83,3 @@ test -e ${HOME}/.iterm2_shell_integration.zsh && source ${HOME}/.iterm2_shell_in
 # Define Chrome path for chrome-driver, for TDD
 export CHROME_BIN='/Applications/Chromium.app/Contents/MacOS/Chromium'
 
-IP_SET=$(ifconfig lo0 | grep 'inet ' | cut -d" " -f2 | grep "10.254.254.254" | wc -l)
-[[ ! ${IP_SET} ]] && sudo ifconfig lo0 alias 10.254.254.254
