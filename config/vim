@@ -15,6 +15,11 @@ call plug#begin('~/.vim/plugged')
 
   " Extended sensitive vim configuration
   Plug 'GMaissa/vimrc.vim'
+
+  " asynchronous execution library
+  Plug 'Shougo/vimproc.vim', {'do' : 'make'}
+
+  Plug 'Shougo/unite.vim'
 " }}}
 
 " Custom Leader {{{
@@ -31,7 +36,7 @@ call plug#begin('~/.vim/plugged')
 " Colors {{{
   " Solarized theme
   Plug 'altercation/vim-colors-solarized', { 'do': 'ln -s ~/.vim/plugged/vim-colors-solarized/colors/solarized.vim ~/.vim/colors'}
-  if $ITERM_PROFILE == 'light'
+  if $ITERM_PROFILE == 'Light'
     set background=light
   else
     set background=dark
