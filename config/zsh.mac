@@ -83,3 +83,7 @@ test -e ${HOME}/.iterm2_shell_integration.zsh && source ${HOME}/.iterm2_shell_in
 # Define Chrome path for chrome-driver, for TDD
 export CHROME_BIN='/Applications/Chromium.app/Contents/MacOS/Chromium'
 
+
+# Automatically added by Platform.sh CLI installer
+export PATH="/Users/g.maissa/.platformsh/bin:$PATH"
+. '/Users/g.maissa/.platformsh/shell-config.rc' 2>/dev/null
