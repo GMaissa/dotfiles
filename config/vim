@@ -18,7 +18,7 @@ call plug#begin('~/.vim/plugged')
 
   " asynchronous execution library
   Plug 'Shougo/vimproc.vim', {'do' : 'make'}
-
+  
   Plug 'Shougo/unite.vim'
 " }}}
 
@@ -210,38 +210,45 @@ call plug#begin('~/.vim/plugged')
   Plug 'veloce/vim-behat'
   let g:feature_filetype='behat'
 
-  " Integrate PHP quality checking tools
-  Plug 'joonty/vim-phpqa'
-  " Set default coding standard
-  let g:phpqa_codesniffer_args ='--standard=PSR2'
+"  " Integrate PHP quality checking tools
+"  Plug 'joonty/vim-phpqa'
+"  " Set default coding standard
+"  let g:phpqa_codesniffer_args ='--standard=PSR2'
 
   " Quantify your coding inside Vim.
   Plug 'wakatime/vim-wakatime'
 
   Plug 'StanAngeloff/php.vim'
 
-  Plug 'shawncplus/phpcomplete.vim'
-  let g:phpcomplete_mappings = {
-    \ 'jump_to_def': ',g',
-    \ }
-
   " Autocompletion
   Plug 'Valloric/YouCompleteMe', { 'do': './install.py --clang-completer'}
+
+"  Plug 'm2mdas/phpcomplete-extended'
+"  Plug 'm2mdas/phpcomplete-extended-symfony'
+
+  " manage use statement
+  Plug 'arnaud-lb/vim-php-namespace'
+  function! IPhpInsertUse()
+    call PhpInsertUse()
+    call feedkeys('a',  'n')
+  endfunction
+  autocmd FileType php inoremap <Leader>u <Esc>:call IPhpInsertUse()<CR>
+  autocmd FileType php noremap <Leader>u :call PhpInsertUse()<CR>
+
+  function! PhpSyntaxOverride()
+    hi! def link phpDocTags  phpDefine
+    hi! def link phpDocParam phpType
+  endfunction
+  
+  augroup phpSyntaxOverride
+    autocmd!
+    autocmd FileType php call PhpSyntaxOverride()
+  augroup END
 " }}}
 
 " Stop Plug
 call plug#end()
 
 let Tlist_GainFocus_On_ToggleOpen=1
-
-function! PhpSyntaxOverride()
-  hi! def link phpDocTags  phpDefine
-  hi! def link phpDocParam phpType
-endfunction
-
-augroup phpSyntaxOverride
-  autocmd!
-  autocmd FileType php call PhpSyntaxOverride()
-augroup END
 
 " vim:foldmethod=marker:foldlevel=0
