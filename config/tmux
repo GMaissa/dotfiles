@@ -30,10 +30,6 @@ set -g visual-activity on
 set -g base-index 1
 set -g pane-base-index 1
 
-# unicode
-setw -g utf8 on
-set -g status-utf8 on
-
 # Disable windows automatic renaming
 set-window-option -g automatic-rename off
 
