@@ -153,6 +153,18 @@ do
   check_command $i
 done
 
+GEMS_LIST=(
+  "wraith"
+  "tmuxinator"
+  "docker-compose"
+  "docker-sync"
+  "dotenv"
+)
+for i in "${GEMS_LIST[@]}"
+do
+  install_gem $i
+done
+
 # }}}
 
 # Install external libraries (like oh-my-zsh, scm_breeze, ...) {{{
@@ -218,8 +230,6 @@ fi
 symlink_config "config/tmux" ".tmux.conf"
 
 echo -e "\n${INFO}TMUX${DEFAULT}"
-# Install gem
-install_gem tmuxinator
 
 # Install tmuxinator autocompletion script for zsh
 STEPMSG="Installing tmuxinator autocompletion script for zsh"
