@@ -282,10 +282,7 @@ if [[ ${WITH_COMPOSER} -eq 1 ]]; then
     echo -e "${SUCCESSMSG}${STEPMSG}"
   fi
   COMPOSER_PKG_LIST=(
-    "squizlabs/php_codesniffer"
-    "phpunit/phpunit"
-    "phpmd/phpmd"
-    "sebastian/phpcpd"
+    "hirak/prestissimo"
   )
   for i in "${COMPOSER_PKG_LIST[@]}"
   do
