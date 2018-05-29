@@ -159,6 +159,7 @@ GEMS_LIST=(
   "docker-compose"
   "docker-sync"
   "dotenv"
+  "bundler"
 )
 for i in "${GEMS_LIST[@]}"
 do
