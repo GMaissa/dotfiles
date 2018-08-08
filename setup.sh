@@ -131,8 +131,6 @@ COMMANDS_LIST=(
   "openssl"
   "pgcli"
   "php72"
-  "php72-intl"
-  "pre-commit"
   "python3"
   "rbenv"
   "rsync"
@@ -351,5 +349,3 @@ fi
 # }}}
 
 echo -e ${INFO}"\nYou are all set. You can now define zsh as your default shell using the command :\nchsh -s $(which zsh)"${DEFAULT}
-
-" vim: ft=vim sw=2 foldenable foldmethod=marker foldlevel=0

@@ -3,9 +3,6 @@
 # Install Mac apps {{{
   echo -e "\n${INFO}MAC COMMANDS${DEFAULT}"
   MAC_COMMANDS_LIST=(
-    "ansible"
-    "dnsmasq"
-    "pre-commit"
     "fzf"
   )
   for i in "${MAC_COMMANDS_LIST[@]}"
@@ -15,7 +12,6 @@
 
   if [[ ${WITH_CASKS} -eq 1 ]]; then
     echo -e "\n${INFO}CASK APPS${DEFAULT}"
-    check_command "caskroom/cask/brew-cask"
 
     CASK_APPS_LIST=(
     #    "alfred"
@@ -27,14 +23,12 @@
     #    "evernote"
     #    "firefox"
     #    "flux"
-    #    "gpgtools"
     #    "hyperdock"
     #    "istat-menus"
-    #    "iterm2-beta"
+    #    "iterm2"
     #    "slack"
     #    "spotify"
     #    "the-unarchiver"
-    #    "vlc"
     )
     for i in "${CASK_APPS_LIST[@]}"
     do
@@ -66,4 +60,3 @@
   fi
 # } }}
 
-" vim: ft=vim sw=2 foldenable foldmethod=marker foldlevel=0
