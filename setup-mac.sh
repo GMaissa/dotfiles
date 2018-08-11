@@ -65,5 +65,24 @@
   else
     echo -e "${SKIPMSG}${STEPMSG}"
   fi
-# } }}
 
+  STEPMSG="Installing DejaVu fonts"
+  if [ ! -f "/Library/Fonts/DejaVu Sans Mono for Powerline.ttf" ]; then
+    echo -ne "${PROCESSMSG}${STEPMSG}"\\r
+    OUTPUT1=$(sudo wget --no-check-certificate -P /Library/Fonts/ https://github.com/powerline/fonts/blob/master/DejaVuSansMono/DejaVu%20Sans%20Mono%20for%20Powerline.ttf 2>&1 >/dev/null)
+    OUTPUT2=$(sudo wget --no-check-certificate -P /Library/Fonts/ https://github.com/powerline/fonts/blob/master/DejaVuSansMono/DejaVu%20Sans%20Mono%20Oblique%20for%20Powerline.ttf 2>&1 >/dev/null)
+    OUTPUT3=$(sudo wget --no-check-certificate -P /Library/Fonts/ https://github.com/powerline/fonts/blob/master/DejaVuSansMono/DejaVu%20Sans%20Mono%20Bold%20for%20Powerline.ttf 2>&1 >/dev/null)
+    OUTPUT4=$(sudo wget --no-check-certificate -P /Library/Fonts/ https://github.com/powerline/fonts/blob/master/DejaVuSansMono/DejaVu%20Sans%20Mono%20Bold%20Oblique%20for%20Powerline.ttf 2>&1 >/dev/null)
+    if [ $? -ne 0 ]; then
+      echo -e "${ERRORMSG}${STEPMSG}"
+      echo -e ${WARN}${OUTPUT1}${DEFAULT}
+      echo -e ${WARN}${OUTPUT2}${DEFAULT}
+      echo -e ${WARN}${OUTPUT3}${DEFAULT}
+      echo -e ${WARN}${OUTPUT4}${DEFAULT}
+      exit 1
+    fi
+    echo -e "${SUCCESSMSG}${STEPMSG}"
+  else
+    echo -e "${SKIPMSG}${STEPMSG}"
+  fi
+# } }}
