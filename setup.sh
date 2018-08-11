@@ -143,7 +143,7 @@ COMMANDS_LIST=(
   "vim"
   "watch"
   "wget"
-  "yarn"
+#  "yarn"
   "zsh"
 )
 for i in "${COMMANDS_LIST[@]}"
