@@ -1,12 +1,13 @@
-Host *
-    User root
-
 Host github.com
-     IdentityFile ~/.ssh/phabriks_dsa
+    IdentityFile ~/.ssh/id_rsa
+
+Host github.com-work
+    Hostname github.com
+    IdentityFile ~/.ssh/id_rsa
 
 Host bitbucket.org
-     IdentityFile ~/.ssh/phabriks_dsa
+    IdentityFile ~/.ssh/id_rsa
 
-Host *.local
-     IdentityFile ~/.ssh/id_rsa
-     #IdentityFile /Users/g.maissa/.vagrant.d/insecure_private_key
+Host bitbucket.org-work
+    Hostname bitbucket.org
+    IdentityFile ~/.ssh/work_rsa
