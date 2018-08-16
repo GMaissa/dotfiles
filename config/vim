@@ -24,7 +24,7 @@ call plug#begin('~/.vim/plugged')
 
 " Custom Leader {{{
   " Remap leader key to space charac
-  let mapleader='\<Space>'
+  let mapleader="\<Space>"
 
   " Map Ctrl+u keys to Gundotoggle
   map <C-u> :GundoToggle<CR>
@@ -215,9 +215,6 @@ call plug#begin('~/.vim/plugged')
   " Set default coding standard
   let g:phpqa_codesniffer_args ='--standard=PSR2'
 
-  " Quantify your coding inside Vim.
-  Plug 'wakatime/vim-wakatime'
-
   Plug 'StanAngeloff/php.vim'
 
   Plug 'shawncplus/phpcomplete.vim'
@@ -225,8 +222,6 @@ call plug#begin('~/.vim/plugged')
     \ 'jump_to_def': ',g',
     \ }
 
-  " Autocompletion
-  Plug 'Valloric/YouCompleteMe', { 'do': './install.py --clang-completer'}
 " }}}
 
 " Stop Plug
