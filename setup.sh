@@ -109,9 +109,7 @@ echo -e "\n${INFO}COMMANDS${DEFAULT}"
 COMMANDS_LIST=(
   "ansible"
   "autojump"
-  "brew-php-switcher"
   "cmake"
-  "ctags"
   "diff-so-fancy"
   "dnsmasq"
   "dos2unix"
@@ -119,13 +117,10 @@ COMMANDS_LIST=(
   "git-extras"
   "git-flow"
   "git-standup"
-#  "gnupg2"
   "gnu-sed"
   "gnu-tar"
-  "go"
   "gpg-agent"
   "htop"
-  "jsawk"
   "mycli"
   "netcat"
   "openssl"
@@ -143,8 +138,10 @@ COMMANDS_LIST=(
   "vim"
   "watch"
   "wget"
-#  "yarn"
   "zsh"
+#  "brew-php-switcher"
+#  "gnupg2"
+#  "yarn"
 )
 for i in "${COMMANDS_LIST[@]}"
 do
@@ -349,3 +346,4 @@ fi
 # }}}
 
 echo -e ${INFO}"\nYou are all set. You can now define zsh as your default shell using the command :\nchsh -s $(which zsh)"${DEFAULT}
+
