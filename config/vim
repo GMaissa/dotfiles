@@ -219,11 +219,23 @@ call plug#begin('~/.vim/plugged')
   let g:phpqa_codesniffer_args ='--standard=PSR2'
 
   Plug 'StanAngeloff/php.vim'
+  Plug 'phpactor/phpactor', {'for': 'php', 'do': 'composer install'}
 
-  Plug 'shawncplus/phpcomplete.vim'
-  let g:phpcomplete_mappings = {
-    \ 'jump_to_def': ',g',
-    \ }
+  Plug 'ncm2/ncm2'
+  Plug 'roxma/nvim-yarp'
+  Plug 'phpactor/ncm2-phpactor'
+" }}}
+
+" PHPActor config {{{
+  nmap <Leader>u :call phpactor#UseAdd()<CR> " Include use statement
+  nmap <Leader>mm :call phpactor#ContextMenu()<CR> " Invoke the context menu
+  nmap <Leader>nn :call phpactor#Navigate()<CR> " Invoke the navigation menu
+  nmap <Leader>o :call phpactor#GotoDefinition()<CR> " Goto definition of class or class member under the cursor
+  nmap <Leader>tt :call phpactor#Transform()<CR> " Transform the classes in the current file
+  nmap <Leader>cc :call phpactor#ClassNew()<CR> " Generate a new class (replacing the current file)
+  nmap <silent><Leader>ee :call phpactor#ExtractExpression(v:false)<CR> " Extract expression (normal mode)
+  vmap <silent><Leader>ee :<C-U>call phpactor#ExtractExpression(v:true)<CR> " Extract expression from selection
+  vmap <silent><Leader>em :<C-U>call phpactor#ExtractMethod()<CR> " Extract method from selection
 
 " }}}
 
