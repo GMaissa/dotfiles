@@ -30,9 +30,6 @@ if [[ -d ${HOME}/.composer/vendor/bin ]]; then
     export PATH="$PATH:${HOME}/.composer/vendor/bin"
 fi
 
-# SVN Config
-export SVN_EDITOR=vim
-
 # GPG config
 GPG_TTY=`tty`
 export GPG_TTY
