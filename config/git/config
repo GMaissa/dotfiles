@@ -56,3 +56,18 @@
     log = diff-highlight | less
     show = diff-highlight | less
     diff = diff-highlight | less
+
+[diff]
+#  tool = pstorm
+  tool = vimdiff
+[difftool]
+  prompt = false
+[difftool.pstorm]
+  cmd = /usr/local/bin/pstorm diff "$LOCAL" "$REMOTE"
+[merge]
+#  tool = pstorm
+  tool = vimdiff
+[mergetool.pstorm]
+  cmd = /usr/local/bin/pstorm merge "$LOCAL" "$REMOTE" "$BASE" "$MERGED"
+[rebase]
+	autoStash = true
