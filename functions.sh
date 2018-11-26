@@ -161,7 +161,7 @@ install_cask_app()
   if [ ${INSTALLED} == null ]; then
     echo -ne "${PROCESSMSG}${STEPMSG}"\\r
     # Install the app or exit the script (option -e in the shebang) if failed
-    OUTPUT=$(brew cask install ${APP} 2>&1 >/dev/null)
+    OUTPUT=$(brew cask install ${APP} --appdir=~/Applications 2>&1 >/dev/null)
     if [ $? -ne 0 ]; then
       echo -e "${ERRORMSG}${STEPMSG}"
       echo -e ${WARN}${OUTPUT}${DEFAULT}
