@@ -14,6 +14,7 @@
     echo -e "\n${INFO}CASK APPS${DEFAULT}"
 
     CASK_APPS_LIST=(
+        "1Password"
         "alfred"
         "amethyst"
         "appcleaner"
@@ -24,6 +25,7 @@
         "dropbox"
         "evernote"
         "firefox"
+        "firezilla"
         "flux"
         "flycut"
         "google-chrome"
@@ -37,6 +39,7 @@
         "postman"
         "slack"
         "spotify"
+        "https://github.com/Homebrew/homebrew-cask/blob/bd476a797af0abd1a4c59219df00931f34dcd12b/Casks/textexpander.rb"
         "the-unarchiver"
         "tripmode"
         "tunnelblick"
