@@ -33,11 +33,11 @@ call plug#begin('~/.vim/plugged')
 " Colors {{{
   " Solarized theme
   Plug 'altercation/vim-colors-solarized', { 'do': 'ln -s ~/.vim/plugged/vim-colors-solarized/colors/solarized.vim ~/.vim/colors'}
-  if $ITERM_PROFILE == 'Light'
-    set background=light
-  else
-    set background=dark
-  endif
+"  if $ITERM_PROFILE == 'Light'
+"    set background=light
+"  else
+"    set background=dark
+"  endif
   colorscheme solarized
 " }}}
 
@@ -217,6 +217,7 @@ call plug#begin('~/.vim/plugged')
   Plug 'joonty/vim-phpqa'
   " Set default coding standard
   let g:phpqa_codesniffer_args ='--standard=PSR2'
+  let g:phpqa_codesniffer_cmd='./bin/phpcs'
 
   Plug 'StanAngeloff/php.vim'
   Plug 'phpactor/phpactor', {'for': 'php', 'do': 'composer install'}
