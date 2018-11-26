@@ -107,6 +107,4 @@ test -e ${HOME}/.iterm2_shell_integration.zsh && source ${HOME}/.iterm2_shell_in
 # uninstall by removing these lines or running `tabtab uninstall yo`
 [[ -f /usr/local/lib/node_modules/yo/node_modules/tabtab/.completions/yo.zsh ]] && . /usr/local/lib/node_modules/yo/node_modules/tabtab/.completions/yo.zsh
 
-# Define Chrome path for chrome-driver, for TDD
-export CHROME_BIN='/Applications/Chromium.app/Contents/MacOS/Chromium'
-
+export PATH="/usr/local/opt/node@8/bin:$PATH"
