@@ -15,11 +15,11 @@
 
     CASK_APPS_LIST=(
         "alfred"
+        "amethyst"
         "appcleaner"
         "bartender"
         "cheatsheet"
         "controlplane"
-        "divvy"
         "docker"
         "dropbox"
         "evernote"
@@ -34,6 +34,7 @@
         "macvim"
         "osxfuse"
         "phpstorm"
+        "postman"
         "slack"
         "spotify"
         "the-unarchiver"
