@@ -17,7 +17,7 @@ call plug#begin('~/.vim/plugged')
   Plug 'GMaissa/vimrc.vim'
 
   " asynchronous execution library
-  Plug 'Shougo/vimproc.vim', {'do' : 'make'}
+"  Plug 'Shougo/vimproc.vim', {'do' : 'make'}
 
   Plug 'Shougo/unite.vim'
 " }}}
@@ -254,5 +254,8 @@ augroup phpSyntaxOverride
   autocmd!
   autocmd FileType php call PhpSyntaxOverride()
 augroup END
+
+set laststatus=2 "show the status line
+set statusline=%-10.3n  "buffer number
 
 " vim:foldmethod=marker:foldlevel=0

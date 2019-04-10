@@ -48,7 +48,9 @@ source $ZSH/oh-my-zsh.sh
 bindkey -v
 
 # User configuration
-export PATH="/usr/local/sbin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/bin:${DOTFILESDIR}/bin"
+GNUTARPATH=/usr/local/opt/gnu-tar/libexec/gnubin
+GNUSEDPATH=/usr/local/opt/gnu-sed/libexec/gnubin
+export PATH="${GNUTARPATH}:${GNUSEDPATH}:/usr/local/sbin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/bin:${DOTFILESDIR}/bin"
 if [[ -d ${HOME}/bin ]]; then
     export PATH="$PATH:${HOME}/bin"
 fi
@@ -107,4 +109,3 @@ test -e ${HOME}/.iterm2_shell_integration.zsh && source ${HOME}/.iterm2_shell_in
 # uninstall by removing these lines or running `tabtab uninstall yo`
 [[ -f /usr/local/lib/node_modules/yo/node_modules/tabtab/.completions/yo.zsh ]] && . /usr/local/lib/node_modules/yo/node_modules/tabtab/.completions/yo.zsh
 
-export PATH="/usr/local/opt/node@8/bin:$PATH"

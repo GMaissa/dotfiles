@@ -54,8 +54,8 @@
 
 [pager]
     log = diff-highlight | less
-    show = diff-highlight | less
-    diff = diff-highlight | less
+    show = diff-so-fancy | less --tabs=1,5 -RFX
+    diff = diff-so-fancy | less --tabs=1,5 -RFX
 
 [diff]
 #  tool = pstorm
