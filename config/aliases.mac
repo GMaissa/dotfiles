@@ -7,9 +7,9 @@
 # ###########
 # SSH aliases
 alias cpid="ssh-copy-id"
-alias ssh="ssh_cmds ssh"
-alias scp="ssh_cmds scp"
-alias rsync="ssh_cmds rsync"
+#alias ssh="ssh_cmds ssh"
+#alias scp="ssh_cmds scp"
+#alias rsync="ssh_cmds rsync"
 
 # ####################
 # EDIT CONFIGS aliases
