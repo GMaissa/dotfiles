@@ -1,6 +1,6 @@
 [core]
     editor = vim
-	excludesfile = ~/.gitconfig.d/.gitignore_global
+	excludesFile = ~/.gitignore
 [mergetool]
     keepBackup = true
 [alias]
@@ -58,16 +58,23 @@
     diff = diff-so-fancy | less --tabs=1,5 -RFX
 
 [diff]
-#  tool = pstorm
-  tool = vimdiff
+  tool = pstorm
+#  tool = vimdiff
 [difftool]
   prompt = false
 [difftool.pstorm]
   cmd = /usr/local/bin/pstorm diff "$LOCAL" "$REMOTE"
 [merge]
-#  tool = pstorm
-  tool = vimdiff
+  tool = pstorm
+#  tool = vimdiff
 [mergetool.pstorm]
   cmd = /usr/local/bin/pstorm merge "$LOCAL" "$REMOTE" "$BASE" "$MERGED"
 [rebase]
 	autoStash = true
+[tag]
+	sort = version:refname
+[filter "lfs"]
+	clean = git-lfs clean -- %f
+	smudge = git-lfs smudge -- %f
+	process = git-lfs filter-process
+	required = true
