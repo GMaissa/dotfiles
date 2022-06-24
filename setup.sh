@@ -120,7 +120,7 @@ COMMANDS_LIST=(
   "git-standup"
   "gnu-sed"
   "gnu-tar"
-  "gpg-agent"
+#  "gpg-agent"
   "htop"
   "mycli"
   "netcat"

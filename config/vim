@@ -20,6 +20,8 @@ call plug#begin('~/.vim/plugged')
 "  Plug 'Shougo/vimproc.vim', {'do' : 'make'}
 
   Plug 'Shougo/unite.vim'
+
+  Plug 'jeffkreeftmeijer/vim-nightfall', { 'branch': 'main' }
 " }}}
 
 " Custom Leader {{{
