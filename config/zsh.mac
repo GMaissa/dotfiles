@@ -50,13 +50,17 @@ bindkey -v
 # User configuration
 GNUTARPATH=/usr/local/opt/gnu-tar/libexec/gnubin
 GNUSEDPATH=/usr/local/opt/gnu-sed/libexec/gnubin
-export PATH="${GNUTARPATH}:${GNUSEDPATH}:/usr/local/sbin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/bin:${DOTFILESDIR}/bin"
+RBENVPATH=$HOME/.rbenv/bin
+NODEPATH=/usr/local/opt/node@10/bin
+export PATH="${NODEPATH}:${RBENVPATH}:${GNUTARPATH}:${GNUSEDPATH}:/usr/local/sbin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/bin:${DOTFILESDIR}/bin"
 if [[ -d ${HOME}/bin ]]; then
     export PATH="$PATH:${HOME}/bin"
 fi
 if [[ -d ${HOME}/.composer/vendor/bin ]]; then
     export PATH="$PATH:${HOME}/.composer/vendor/bin"
 fi
+
+eval "$(rbenv init -)"
 
 # GPG config
 GPG_TTY=`tty`
@@ -109,3 +113,7 @@ test -e ${HOME}/.iterm2_shell_integration.zsh && source ${HOME}/.iterm2_shell_in
 # uninstall by removing these lines or running `tabtab uninstall yo`
 [[ -f /usr/local/lib/node_modules/yo/node_modules/tabtab/.completions/yo.zsh ]] && . /usr/local/lib/node_modules/yo/node_modules/tabtab/.completions/yo.zsh
 
+
+[ -s "/Users/gmaissa/.scm_breeze/scm_breeze.sh" ] && source "/Users/gmaissa/.scm_breeze/scm_breeze.sh"
+export PATH="/usr/local/opt/php@7.2/bin:$PATH"
+export PATH="/usr/local/opt/php@7.2/sbin:$PATH"
