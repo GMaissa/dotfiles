@@ -47,18 +47,18 @@ set -g status-left  ' #[fg=white,bold]#S '
 set -g status-right "#[fg=blue]#H "
 set -g status-fg    white
 set -g status-bg    colour242
-set -g status-attr  dim
+#set -g status-attr  dim
 
 # Highlight window
-set-window-option -g window-status-current-attr   none
+#set-window-option -g window-status-current-attr   none
 set-window-option -g window-status-current-format '#[bg=colour39] #I #[bg=blue] #W '
-set-window-option -g window-status-attr   none
+#set-window-option -g window-status-attr   none
 set-window-option -g window-status-format '#[bg=colour244] #I #[bg=colour245] #W '
-set-window-option -g window-status-activity-attr   bold
-set-window-option -g window-status-activity-bg     red
+#set-window-option -g window-status-activity-attr   bold
+#set-window-option -g window-status-activity-bg     red
 #set-window-option -g window-status-activity-format '#[bg=red] #I #[bg=colour245] #W '
 
-set -g pane-active-border-fg blue
+#set -g pane-active-border-fg blue
 
 # shortcut for synchronize-panes toggle
 # START:sync
