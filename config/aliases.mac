@@ -38,3 +38,5 @@ alias meteo="curl -H 'Accept-Language: fr' -4 wttr.in/Paris"
 alias cat="bat"
 alias ping="prettyping"
 alias top="htop"
+
+alias brew='env PATH="${PATH//$(pyenv root)\/shims:/}" brew'
