@@ -157,13 +157,13 @@ install_cask_app()
 {
   APP=$1
   STEPMSG="Installing ${APP}"
-  INSTALLED=$(brew cask list | grep "${APP}" | wc -l)
-  INSTALLED=null
+  INSTALLED=$(brew list --cask | grep "${APP}" | wc -l)
+  #INSTALLED=null
   if [ ${INSTALLED} == null ]; then
     echo -ne "${PROCESSMSG}${STEPMSG}"\\r
     # Install the app or exit the script (option -e in the shebang) if failed
     #OUTPUT=$(brew cask install ${APP} --appdir=~/Applications 2>&1 >/dev/null)
-    OUTPUT=$(brew cask install ${APP} 2>&1 >/dev/null)
+    OUTPUT=$(brew install --cask ${APP} 2>&1 >/dev/null)
     if [ $? -ne 0 ]; then
       echo -e "${ERRORMSG}${STEPMSG}"
       echo -e ${WARN}${OUTPUT}${DEFAULT}
