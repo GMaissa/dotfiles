@@ -32,6 +32,7 @@ alias killtmux="tmux ls | grep : | cut -d. -f1 | awk '{print substr($1, 0, lengt
 alias gettmuxlayout="tmux list-windows | sed -E 's/^(.*)layout (.*)\]\](.*)/\2]/'|pbcopy"
 alias killses="tmux kill-session"
 alias meteo="curl -H 'Accept-Language: fr' -4 wttr.in/Paris"
+alias python="python3"
 
 # ########################
 # Replace native commandes
