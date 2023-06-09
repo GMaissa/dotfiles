@@ -126,13 +126,12 @@ COMMANDS_LIST=(
   "netcat"
   "openssl"
   "pgcli"
-  "php72"
+  "php@7.4"
   "prettyping"
   "python3"
   "rbenv"
   "rsync"
   "socat"
-  "sshfs"
   "tmux"
   "tree"
   "unison"
@@ -141,9 +140,6 @@ COMMANDS_LIST=(
   "watch"
   "wget"
   "zsh"
-#  "brew-php-switcher"
-#  "gnupg2"
-#  "yarn"
 )
 for i in "${COMMANDS_LIST[@]}"
 do
@@ -151,9 +147,7 @@ do
 done
 
 GEMS_LIST=(
-  "wraith"
   "tmuxinator"
-  "docker-compose"
   "docker-sync"
   "dotenv"
   "bundler"
@@ -302,25 +296,6 @@ if [[ ${WITH_COMPOSER} -eq 1 ]]; then
   for i in "${COMPOSER_PKG_LIST[@]}"
   do
     install_composer_pkg $i
-  done
-fi
-# }}}
-
-# Install NodeJS packages {{{
-if [[ ${WITH_NODE} -eq 1 ]]; then
-  echo -e "\n${INFO}NODEJS${DEFAULT}"
-
-  check_command "node"
-
-  NODE_PKG_LIST=(
-    "grunt-cli"
-    "bower"
-    "bower-installer"
-    "gulp"
-  )
-  for i in "${NODE_PKG_LIST[@]}"
-  do
-    install_node_pkg $i
   done
 fi
 # }}}
