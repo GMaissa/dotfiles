@@ -34,12 +34,13 @@ call plug#begin('~/.vim/plugged')
 
 " Colors {{{
   " Solarized theme
-  Plug 'altercation/vim-colors-solarized', { 'do': 'ln -s ~/.vim/plugged/vim-colors-solarized/colors/solarized.vim ~/.vim/colors/'}
-"  if $ITERM_PROFILE == 'light'
-"    set background=light
-"  else
-"    set background=dark
-"  endif
+  Plug 'altercation/vim-colors-solarized', { 'do': 'mkdir ~/.vim/colors/ && ln -s ~/.vim/plugged/vim-colors-solarized/colors/solarized.vim ~/.vim/colors/'}
+  syntax enable
+  if $ITERM_PROFILE == 'light'
+    set background=light
+  else
+    set background=dark
+  endif
   colorscheme solarized
 " }}}
 
