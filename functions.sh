@@ -139,7 +139,7 @@ install_gem()
   GEM=$1
   STEPMSG="Installing Gem ${GEM}"
   INSTALLED=$(gem list --local | grep ${GEM} | wc -l)
-  if [ ${INSTALLED} == null ]; then
+  if [ ${INSTALLED} == 0 ]; then
     echo -ne "${PROCESSMSG}${STEPMSG}"\\r
     OUTPUT=$(sudo gem install "${GEM}" 2>&1 >/dev/null)
     if [ $? -ne 0 ]; then
@@ -159,7 +159,7 @@ install_cask_app()
   STEPMSG="Installing ${APP}"
   INSTALLED=$(brew list --cask | grep "${APP}" | wc -l)
   #INSTALLED=null
-  if [ ${INSTALLED} == null ]; then
+  if [ ${INSTALLED} == 0 ]; then
     echo -ne "${PROCESSMSG}${STEPMSG}"\\r
     # Install the app or exit the script (option -e in the shebang) if failed
     #OUTPUT=$(brew cask install ${APP} --appdir=~/Applications 2>&1 >/dev/null)
