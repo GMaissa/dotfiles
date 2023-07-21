@@ -55,6 +55,7 @@ if [[ -d ${HOME}/.composer/vendor/bin ]]; then
     export PATH="$PATH:${HOME}/.composer/vendor/bin"
 fi
 
+eval "$(/opt/homebrew/bin/brew shellenv)"
 eval "$(rbenv init -)"
 
 # GPG config
@@ -120,3 +121,4 @@ command -v pyenv >/dev/null || export PATH="$PYENV_ROOT/bin:$PATH"
 eval "$(pyenv init -)"
 export PATH="/usr/local/opt/php@7.4/bin:$PATH"
 export PATH="/usr/local/opt/php@7.4/sbin:$PATH"
+
