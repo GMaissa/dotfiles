@@ -123,6 +123,7 @@ COMMANDS_LIST=(
   "gnu-tar"
 #  "gpg-agent"
   "htop"
+  "mkcert"
   "mycli"
   "netcat"
   "nvm"
